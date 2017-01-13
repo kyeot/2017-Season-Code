@@ -1,7 +1,4 @@
 package org.usfirst.frc.team2783.robot.commands;
-
-
-
 import org.usfirst.frc.team2783.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
