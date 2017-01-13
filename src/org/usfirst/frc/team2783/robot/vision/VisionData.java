@@ -88,7 +88,38 @@ public class VisionData {
 		return contourArray;
 
 	}
-	
+
+	public ArrayList<Contour[]> getGearGoals(){
+
+		ArrayList<Contour> contourFilterArray = getContours();
+		ArrayList<Contour[]> goalArray = new ArrayList<>();
+		ArrayList<Contour> tempContours = new ArrayList<>();
+		
+		
+		for(int i = 0; i >= contourFilterArray.size(); i++){
+			double aspectRatio = contourFilterArray.get(i).getWidth()/contourFilterArray.get(i).getHeight();
+			if(aspectRatio < 3 && aspectRatio > 2){
+				tempContours.add(contourFilterArray.get(i));
+			}
+		}
+		
+		Contour[] goal = null;
+		
+		for(int i = 0; i >= tempContours.size(); i++){
+			if(i%2 == 0){
+				goal = new Contour[2];
+			}
+			goal[i%2] = tempContours.get(i);
+			if(i%2 == 1){
+				goalArray.add(goal);
+			}
+			
+		}
+			
+		return goalArray;
+		
+	}
+
 	public ArrayList<Contour> getGoals(){
 		
 		ArrayList<Contour> contourFilterArray = getContours();
@@ -97,7 +128,6 @@ public class VisionData {
 		// TODO: Filter array based upon aspect ratio (and min area?) of contours
 		goalArray = contourFilterArray;
 		
-		/*
 		// Filtering getContours by Aspect Ratio and putting them into an ArrayList
 		for(int i = 0; i >= contourFilterArray.size(); i++){
 			double aspectRatio = contourFilterArray.get(i).getWidth()/contourFilterArray.get(i).getHeight();
@@ -105,11 +135,11 @@ public class VisionData {
 				goalArray.add(contourFilterArray.get(i));
 			}
 		}
-		*/
+		
 			
 		return goalArray;
 		
-	}
+		}
 	
 	public Contour getLargestGoal(){
 		
