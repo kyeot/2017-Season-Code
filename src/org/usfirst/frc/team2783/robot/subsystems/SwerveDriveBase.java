@@ -75,7 +75,7 @@ public class SwerveDriveBase extends Subsystem {
 			
 			
 			
-			pidCont.setInputRange(0, 360);
+			pidCont.setInputRange(-360, 360);
 			pidCont.setContinuous();
 			
 			enc.setDistancePerPulse(0.875);
@@ -89,14 +89,21 @@ public class SwerveDriveBase extends Subsystem {
 			}
 			
 			double curAngle = getAngle();
+			if(curAngle > 359 || curAngle < -359) {
+				enc.reset();
+			}
+			
 	    	if(Math.abs(angle - curAngle) > 90 && Math.abs(angle - curAngle) < 270 && angle != 0) {
-	    		angle = ((int)angle + 180)%360;
+	    		angle = (angle +180)%360;
 	    		speed = -speed;
 	    	}
 	    	
-			System.out.println(curAngle);
+	    	if(Math.abs(angle - curAngle) > 180) {
+    			angle -= 360;
+    		}
+	    	
 	    	setAngle(angle);
-	    	setSpeed(speed*0.3);
+	    	setSpeed(speed);
 		}
 		
 		public void setAngle(double angle) {
@@ -113,7 +120,7 @@ public class SwerveDriveBase extends Subsystem {
 		}
 
 		public double getEncPercent() {
-			return Math.abs(enc.getDistance() / ENCODER_TICKS_FOR_ADJUSTER_TRAVEL);
+			return enc.getDistance() / ENCODER_TICKS_FOR_ADJUSTER_TRAVEL;
 		}
 		
 		public double getAngle() {
@@ -215,10 +222,10 @@ public class SwerveDriveBase extends Subsystem {
     	double C = fbMot - rotMot*(W/R);
     	double D = fbMot + rotMot*(W/R);
     	
-    	double frSpd = Math.sqrt((B*B) + (C*C));
-    	double flSpd = Math.sqrt((B*B) + (D*D));
-    	double rlSpd = Math.sqrt((A*A) + (D*D));
-    	double rrSpd = Math.sqrt((A*A) + (C*C));
+    	double frSpd = Math.sqrt((B*B) + (D*D));
+    	double flSpd = Math.sqrt((B*B) + (C*C));
+    	double rlSpd = Math.sqrt((A*A) + (C*C));
+    	double rrSpd = Math.sqrt((A*A) + (D*D));
     	
     	double t = 180/Math.PI;
     	
@@ -245,7 +252,6 @@ public class SwerveDriveBase extends Subsystem {
     	flMod.setModule(flAng, flSpd);
     	rrMod.setModule(rrAng, rrSpd);
     	rlMod.setModule(rlAng, rlSpd);
-    	
     }
     
     //Returns navX sensor ?
