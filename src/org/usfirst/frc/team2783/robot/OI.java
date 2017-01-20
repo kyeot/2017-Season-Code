@@ -1,12 +1,20 @@
 package org.usfirst.frc.team2783.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
+import org.usfirst.frc.team2783.robot.commands.BallGatherer;
+import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	
+	Joystick manipulator = new Joystick(1);
+	
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.
@@ -35,5 +43,17 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	
-	public static Joystick xBoxController = new Joystick(RobotMap.XBOX_CONTROLLER_ID);
+	Button shooter = new JoystickButton(manipulator, 1);
+	
+	Button gatherer = new JoystickButton(manipulator, 2);
+
+	
+	public OI() {
+		
+		shooter.whileHeld(new ShooterDrive());
+		
+		gatherer.toggleWhenPressed(new BallGatherer());
+		
+	}
+	
 }
