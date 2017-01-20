@@ -1,12 +1,15 @@
 
 package org.usfirst.frc.team2783.robot;
 
+import java.io.IOException;
+
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -21,6 +24,7 @@ public class Robot extends IterativeRobot {
 
 	public static final SwerveDriveBase swerveBase = new SwerveDriveBase();
 	public static OI oi;
+	private final NetworkTable grip = NetworkTable.getTable("grip");
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
