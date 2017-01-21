@@ -22,6 +22,8 @@ public class RobotMap {
 	final public static int XBOX_CONTROLLER_ID = 0;
 	final public static int MANIPULATOR_CONTROLLER_ID = 1;
 	
+	final public static int GATHERER_WHEEL_ID = 9;
+	final public static int SHOOTER_WHEEL_ID = 10;
 
 	final public static int FRONT_LEFT_WHEEL = 0;
 	final public static int FRONT_RIGHT_WHEEL = 1;
