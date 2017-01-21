@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2783.robot.commands;
 
-import org.usfirst.frc.team2783.robot.OI;
 import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
 
@@ -9,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ShooterDrive extends Command {
+public class GearShifter extends Command {
 
-    public ShooterDrive() {
+    public GearShifter() {
     	requires(new ShooterBase());
     	
         // Use requires() here to declare subsystem dependencies
@@ -24,8 +23,8 @@ public class ShooterDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooterBase.setShooterSpeedVbus(1);
-   
+    	Robot.shooterBase.shiftGear(0.1);
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

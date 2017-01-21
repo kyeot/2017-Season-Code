@@ -22,9 +22,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public static final SwerveDriveBase swerveBase = new SwerveDriveBase();
-	public static OI oi;
 	public static final ShooterBase shooterBase = new ShooterBase();
-
+	public static OI oi;
+	
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
