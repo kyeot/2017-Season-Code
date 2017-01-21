@@ -43,9 +43,9 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	
-	Button shooter = new JoystickButton(manipulator, 1);
+	Button shooter = new JoystickButton(manipulator, 5);
 	
-	Button gatherer = new JoystickButton(manipulator, 2);
+	Button gatherer = new JoystickButton(manipulator, 4);
 
 	
 	public OI() {
