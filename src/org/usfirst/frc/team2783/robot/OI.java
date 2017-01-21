@@ -5,7 +5,8 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team2783.robot.commands.BallGatherer;
-import org.usfirst.frc.team2783.robot.commands.GearShifter;
+import org.usfirst.frc.team2783.robot.commands.GearShifterHighGear;
+import org.usfirst.frc.team2783.robot.commands.GearShifterLowGear;
 import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
 
 /**
@@ -46,7 +47,8 @@ public class OI {
 	
 	Button shooter = new JoystickButton(manipulator, 5);
 	Button gatherer = new JoystickButton(manipulator, 4);
-	Button gearShifter = new JoystickButton(manipulator, 1);
+	Button gearShifterHighGear = new JoystickButton(manipulator, 1);
+	Button gearShifterLowGear = new JoystickButton(manipulator, 2);
 	
 	
 	public OI() {
@@ -55,7 +57,9 @@ public class OI {
 		
 		gatherer.toggleWhenPressed(new BallGatherer());
 		
-		gearShifter.whileHeld(new GearShifter());
+		gearShifterHighGear.whenPressed(new GearShifterHighGear());
+		
+		gearShifterLowGear.whenPressed(new GearShifterLowGear());
 		
 	}
 	

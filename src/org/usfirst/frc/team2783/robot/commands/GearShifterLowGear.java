@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class GearShifter extends Command {
+public class GearShifterLowGear extends Command {
 
-    public GearShifter() {
+    public GearShifterLowGear() {
     	requires(new ShooterBase());
     	
         // Use requires() here to declare subsystem dependencies
@@ -23,7 +23,7 @@ public class GearShifter extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooterBase.shiftGear(0.1);
+    	Robot.shooterBase.shiftGear(0);
     	
     }
 
