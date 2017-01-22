@@ -22,9 +22,9 @@ public class SwerveDrive extends Command {
     protected void execute() {
     	
     	//Sets input for swerveDrive method as input from controller stick axes. Note: FBValue is negative as required by doc linked to in swerveDrive method
-    	Double FBValue = -(OI.xBoxController.getRawAxis(1));
+    	Double FBValue = (OI.xBoxController.getRawAxis(1));
     	Double RLValue = -(OI.xBoxController.getRawAxis(0));
-    	Double rotValue = OI.xBoxController.getRawAxis(4);
+    	Double rotValue = -OI.xBoxController.getRawAxis(4);
     	
     	if (FBValue > -.2 && FBValue < .2){
     		FBValue = 0.0;
@@ -35,6 +35,13 @@ public class SwerveDrive extends Command {
     	if (rotValue > -.2 && rotValue < .2){
     		rotValue = 0.0;
     	}
+    	
+    	if(OI.xBoxController.getRawButton(5)) {
+    		FBValue *= 0.5;
+    		RLValue *= 0.5;
+    		rotValue *= 0.5;
+    	}
+    	
     	Robot.swerveBase.swerveDrive(FBValue, RLValue, rotValue);
     	
     }
