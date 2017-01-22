@@ -27,9 +27,9 @@ public class SwerveDriveBase extends Subsystem {
 	
 	private AHRS navSensor;
 	
-	private final double p = 0.05;    //0.015;
-	private final double i = 0.0025;    //0.005;
-	private final double d = 0.005;    //0.125;
+	private final double kp = 0.025;
+	private final double ki = 0.025;
+	private final double kd = 0.025;
 	
 	final private double ENCODER_TICKS_FOR_ADJUSTER_TRAVEL = 1;
 	
@@ -54,6 +54,8 @@ public class SwerveDriveBase extends Subsystem {
 		PIDController pidCont;
 		PIDOutputClass pidOut;
 		
+		double lastAngle;
+		
 		public SwerveModule(
 				VictorSP swivelMot,
 				CANTalon driveMot,
@@ -68,7 +70,7 @@ public class SwerveDriveBase extends Subsystem {
 						);
 			
 			pidCont = new PIDController(
-							p, i, d,
+							kp, ki, kd,
 							enc,
 							pidOut
 						);
@@ -89,7 +91,7 @@ public class SwerveDriveBase extends Subsystem {
 			}
 			
 			double curAngle = getAngle();
-			if(curAngle > 359 || curAngle < -359) {
+			if(curAngle >= 360 || curAngle <= -360) {
 				enc.reset();
 			}
 			
@@ -216,7 +218,7 @@ public class SwerveDriveBase extends Subsystem {
     public void swerveDrive(double fbMot, double rlMot, double rotMot) {
     	//Swerve Math Taken from: https://www.chiefdelphi.com/media/papers/2426
     	
-    	double curAngle = getNavSensor().getAngle();
+    	double curAngle = getGyroAngle(true);
     	double temp = fbMot*(cosDeg(curAngle)) + rlMot*(sinDeg(curAngle));
     	rlMot = fbMot*(sinDeg(curAngle)) + -(rlMot*(cosDeg(curAngle)));
     	fbMot = temp;
@@ -269,6 +271,20 @@ public class SwerveDriveBase extends Subsystem {
     	} else {
     		return null;
     	}
+    }
+    
+    public double getGyroAngle(boolean reversed) {
+    	if(reversed) {
+    		return (getNavSensor().getAngle()+180.0)%360;
+    	} else
+    		return getNavSensor().getAngle();
+    }
+    
+    public void setZero() {
+    	frMod.setAngle(0);
+    	flMod.setAngle(0);
+    	rrMod.setAngle(0);
+    	rlMod.setAngle(0);
     }
     
     public void setRobotBrake(boolean bool) {
