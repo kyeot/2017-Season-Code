@@ -102,8 +102,16 @@ public class SwerveDriveBase extends Subsystem {
     			angle -= 360;
     		}
 	    	
-	    	setAngle(angle);
-	    	setSpeed(speed);
+		    if(speed == 0) {
+	    		setAngle(lastAngle);
+		    	setSpeed(speed);
+	    	} else {
+	    		setAngle(angle);
+	    		setSpeed(speed);
+	    		
+	    		lastAngle = angle;
+	    	}
+	    	
 		}
 		
 		public void setAngle(double angle) {
