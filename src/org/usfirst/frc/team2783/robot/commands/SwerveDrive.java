@@ -42,6 +42,14 @@ public class SwerveDrive extends Command {
     		rotValue *= 0.5;
     	}
     	
+    	if(OI.xBoxController.getRawButton(3)) {
+    		Robot.swerveBase.setZero();
+    	}
+    	
+    	if(OI.xBoxController.getRawButton(4)) {
+    		Robot.swerveBase.getNavSensor().reset();
+    	}
+    	
     	Robot.swerveBase.swerveDrive(FBValue, RLValue, rotValue);
     	
     }
