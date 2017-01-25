@@ -28,7 +28,7 @@ public class SwerveDriveBase extends Subsystem {
 	private AHRS navSensor;
 	
 	private final double kp = 0.025;
-	private final double ki = 0.025;
+	private final double ki = 0.04;
 	private final double kd = 0.025;
 	
 	final private double ENCODER_TICKS_FOR_ADJUSTER_TRAVEL = 1;
@@ -281,6 +281,11 @@ public class SwerveDriveBase extends Subsystem {
     }
     
     public void setZero() {
+    	frMod.lastAngle = 0;
+    	flMod.lastAngle = 0;
+    	rrMod.lastAngle = 0;
+    	rlMod.lastAngle = 0;
+    	
     	frMod.setAngle(0);
     	flMod.setAngle(0);
     	rrMod.setAngle(0);
