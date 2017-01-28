@@ -23,8 +23,8 @@ public class RobotMap {
 	final public static int MANIPULATOR_CONTROLLER_ID = 1;
 	
 	final public static int GATHERER_WHEEL_ID = 5;
-	final public static int SHOOTER_WHEEL_1_ID = 4;
-	final public static int SHOOTER_WHEEL_2_ID = 5;
+	final public static int SHOOTER_WHEEL_1_ID = 6;
+	final public static int SHOOTER_WHEEL_2_ID = 7;
 	
 	final public static int GEAR_SHIFTER_ID = 4;
 

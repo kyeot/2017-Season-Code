@@ -10,6 +10,7 @@ import com.ctre.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,11 +19,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ShooterBase extends Subsystem {
 
-	private Victor shooterWheelMotor1 = new Victor(RobotMap.SHOOTER_WHEEL_1_ID);
+	private VictorSP shooterWheelMotor1 = new VictorSP(RobotMap.SHOOTER_WHEEL_1_ID);
 	
-	private Victor shooterWheelMotor2 = new Victor(RobotMap.SHOOTER_WHEEL_2_ID);
+	private VictorSP shooterWheelMotor2 = new VictorSP(RobotMap.SHOOTER_WHEEL_2_ID);
 	
-	private Victor gathererMotor = new Victor(RobotMap.GATHERER_WHEEL_ID);
+	private VictorSP gathererMotor = new VictorSP(RobotMap.GATHERER_WHEEL_ID);
 	
 	private Servo gearShifter = new Servo(RobotMap.GEAR_SHIFTER_ID);
 	

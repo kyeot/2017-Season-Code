@@ -16,7 +16,7 @@ import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
  */
 public class OI {
 	
-	Joystick manipulator = new Joystick(RobotMap.MANIPULATOR_CONTROLLER_ID);
+	public static Joystick manipulator = new Joystick(RobotMap.MANIPULATOR_CONTROLLER_ID);
 	public static Joystick xBoxController = new Joystick(RobotMap.XBOX_CONTROLLER_ID);
 	
 	//// CREATING BUTTONS
