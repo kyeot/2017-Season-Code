@@ -22,7 +22,7 @@ public class ShooterBase extends Subsystem {
 	
 	private Victor shooterWheelMotor2 = new Victor(RobotMap.SHOOTER_WHEEL_2_ID);
 	
-	private Talon gathererMotor = new Talon(RobotMap.GATHERER_WHEEL_ID);
+	private Victor gathererMotor = new Victor(RobotMap.GATHERER_WHEEL_ID);
 	
 	private Servo gearShifter = new Servo(RobotMap.GEAR_SHIFTER_ID);
 	

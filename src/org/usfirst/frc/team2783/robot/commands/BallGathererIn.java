@@ -1,17 +1,17 @@
 package org.usfirst.frc.team2783.robot.commands;
 
 import org.usfirst.frc.team2783.robot.Robot;
-import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class BallGatherer extends Command {
+public class BallGathererIn extends Command {
 
-    public BallGatherer() {
-    	requires(new ShooterBase());
+    public BallGathererIn() {
+    	requires(Robot.shooterBase);
+    	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -22,7 +22,7 @@ public class BallGatherer extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooterBase.setGathererSpeedVbus(1);
+    	Robot.shooterBase.setGathererSpeedVbus(-1);
     	
     }
 

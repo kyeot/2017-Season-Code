@@ -4,7 +4,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import org.usfirst.frc.team2783.robot.commands.BallGatherer;
+import org.usfirst.frc.team2783.robot.commands.BallGathererIn;
+import org.usfirst.frc.team2783.robot.commands.BallGathererOut;
 import org.usfirst.frc.team2783.robot.commands.GearShifterHighGear;
 import org.usfirst.frc.team2783.robot.commands.GearShifterLowGear;
 import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
@@ -15,7 +16,8 @@ import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
  */
 public class OI {
 	
-	Joystick manipulator = new Joystick(1);
+	Joystick manipulator = new Joystick(RobotMap.MANIPULATOR_CONTROLLER_ID);
+	public static Joystick xBoxController = new Joystick(RobotMap.XBOX_CONTROLLER_ID);
 	
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
@@ -45,8 +47,9 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	
-	Button shooter = new JoystickButton(manipulator, 5);
-	Button gatherer = new JoystickButton(manipulator, 4);
+	Button shooter = new JoystickButton(manipulator, 7);
+	Button gathererIn = new JoystickButton(manipulator, 6);
+	Button gathererOut = new JoystickButton(manipulator, 5);
 	Button gearShifterHighGear = new JoystickButton(manipulator, 1);
 	Button gearShifterLowGear = new JoystickButton(manipulator, 2);
 	
@@ -55,7 +58,9 @@ public class OI {
 		
 		shooter.whileHeld(new ShooterDrive());
 		
-		gatherer.toggleWhenPressed(new BallGatherer());
+		gathererOut.toggleWhenPressed(new BallGathererOut());
+		
+		gathererIn.toggleWhenPressed(new BallGathererIn());
 		
 		gearShifterHighGear.whenPressed(new GearShifterHighGear());
 		
