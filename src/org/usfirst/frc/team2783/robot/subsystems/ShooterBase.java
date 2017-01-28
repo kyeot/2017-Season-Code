@@ -18,9 +18,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ShooterBase extends Subsystem {
 
-	private Talon shooterWheelMotor1 = new Talon(9);
+	private Victor shooterWheelMotor1 = new Victor(4);
 	
-	private Talon shooterWheelMotor2 = new Talon(10);
+	private Victor shooterWheelMotor2 = new Victor(5);
 	
 	private Talon gathererMotor = new Talon(11);
 	
