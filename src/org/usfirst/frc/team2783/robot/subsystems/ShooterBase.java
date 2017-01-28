@@ -18,13 +18,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class ShooterBase extends Subsystem {
 
-	private Victor shooterWheelMotor1 = new Victor(4);
+	private Victor shooterWheelMotor1 = new Victor(RobotMap.SHOOTER_WHEEL_1_ID);
 	
-	private Victor shooterWheelMotor2 = new Victor(5);
+	private Victor shooterWheelMotor2 = new Victor(RobotMap.SHOOTER_WHEEL_2_ID);
 	
-	private Talon gathererMotor = new Talon(11);
+	private Talon gathererMotor = new Talon(RobotMap.GATHERER_WHEEL_ID);
 	
-	private Servo gearShifter = new Servo(4);
+	private Servo gearShifter = new Servo(RobotMap.GEAR_SHIFTER_ID);
 	
 	public void setShooterSpeedVbus(double vbusOutput) {
 		shooterWheelMotor1.set(vbusOutput);
