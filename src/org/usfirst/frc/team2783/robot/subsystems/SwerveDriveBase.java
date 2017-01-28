@@ -1,11 +1,13 @@
 package org.usfirst.frc.team2783.robot.subsystems;
 
 import org.usfirst.frc.team2783.robot.RobotMap;
+import org.usfirst.frc.team2783.robot.commands.JoystickSwerveDrive;
 import org.usfirst.frc.team2783.robot.commands.SwerveDrive;
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
@@ -27,9 +29,9 @@ public class SwerveDriveBase extends Subsystem {
 	
 	private AHRS navSensor;
 	
-	private final double kp = 0.025;
-	private final double ki = 0.04;
-	private final double kd = 0.025;
+	private final double kp = 0.022; //0.025
+	private final double ki = 0.04; //0.04
+	private final double kd = 0.025; //0.025
 	
 	final private double ENCODER_TICKS_FOR_ADJUSTER_TRAVEL = 1;
 	
@@ -47,7 +49,7 @@ public class SwerveDriveBase extends Subsystem {
 	}
 	
 	public class SwerveModule {
-		
+		  
 		VictorSP swivelMot;
 		CANTalon driveMot;
 		Encoder enc;
@@ -169,28 +171,36 @@ public class SwerveDriveBase extends Subsystem {
     					new VictorSP(RobotMap.FRONT_RIGHT_SWIVEL),
     					new CANTalon(RobotMap.FRONT_RIGHT_WHEEL),
     					new Encoder(new DigitalInput(2), 
-    								new DigitalInput(3))
+    								new DigitalInput(3),
+    								false,
+    								EncodingType.k4X)
     				);
     	
     	flMod = new SwerveModule(
     					new VictorSP(RobotMap.FRONT_LEFT_SWIVEL),
     					new CANTalon(RobotMap.FRONT_LEFT_WHEEL),
     					new Encoder(new DigitalInput(0), 
-    								new DigitalInput(1))
+    								new DigitalInput(1),
+    								false,
+    								EncodingType.k4X)
     				);
     	
     	rrMod = new SwerveModule(
     					new VictorSP(RobotMap.REAR_RIGHT_SWIVEL),
     					new CANTalon(RobotMap.REAR_RIGHT_WHEEL),
     					new Encoder(new DigitalInput(6), 
-    								new DigitalInput(7))
+    								new DigitalInput(7),
+    								false,
+    								EncodingType.k4X)
     				);
     			
     	rlMod = new SwerveModule(
     					new VictorSP(RobotMap.REAR_LEFT_SWIVEL),
     					new CANTalon(RobotMap.REAR_LEFT_WHEEL),
     					new Encoder(new DigitalInput(4), 
-    								new DigitalInput(5))
+    								new DigitalInput(5),
+    								false,
+    								EncodingType.k4X)
     				); // ):
     	
     }
