@@ -36,6 +36,7 @@ public class OI {
 	// button.whenReleased(new ExampleCommand());
 	
 	public static Joystick xBoxController = new Joystick(RobotMap.XBOX_CONTROLLER_ID);
+	public static Joystick joystick = new Joystick(RobotMap.JOYSTICK_ID);
 	
 	public OI() {
 	}

@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SwerveDrive extends Command {
+public class JoystickSwerveDrive extends Command {
 
-    public SwerveDrive() {
+    public JoystickSwerveDrive() {
     	requires(Robot.swerveBase);
     }
 
@@ -22,9 +22,9 @@ public class SwerveDrive extends Command {
     protected void execute() {
     	
     	//Sets input for swerveDrive method as input from controller stick axes. Note: FBValue is negative as required by doc linked to in swerveDrive method
-    	Double fbValue = (OI.xBoxController.getRawAxis(1));
-    	Double rlValue = -(OI.xBoxController.getRawAxis(0));
-    	Double rotValue = OI.xBoxController.getRawAxis(4);
+    	Double fbValue = (OI.joystick.getRawAxis(1));
+    	Double rlValue = -(OI.joystick.getRawAxis(0));
+    	Double rotValue = -OI.joystick.getRawAxis(2);
     	
     	if ((fbValue > -.2 && fbValue < .2) && (rlValue > -.2 && rlValue < .2)){
     		fbValue = 0.0;
@@ -35,17 +35,20 @@ public class SwerveDrive extends Command {
     		rotValue = 0.0;
     	}
     	
-    	if(OI.xBoxController.getRawButton(5)) {
+    	if(OI.joystick.getRawButton(1)) {
+    		System.out.println(1);
     		fbValue *= 0.5;
     		rlValue *= 0.5;
     		rotValue *= 0.5;
     	}
     	
-    	if(OI.xBoxController.getRawButton(3)) {
+    	if(OI.joystick.getRawButton(4)) {
+    		System.out.println(4);
     		Robot.swerveBase.setZero();
     	}
     	
-    	if(OI.xBoxController.getRawButton(4)) {
+    	if(OI.joystick.getRawButton(2)) {
+    		System.out.println(2);
     		Robot.swerveBase.getNavSensor().reset();
     	}
     	

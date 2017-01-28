@@ -18,7 +18,7 @@ public class RobotMap {
 	// public static int rangefinderModule = 1;
 	
 	final public static int XBOX_CONTROLLER_ID = 0;
-	
+	final public static int JOYSTICK_ID = 1;
 
 	final public static int FRONT_LEFT_WHEEL = 0;
 	final public static int FRONT_RIGHT_WHEEL = 1;
