@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2783.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -36,4 +37,10 @@ public class OI {
 	// button.whenReleased(new ExampleCommand());
 	
 	public static Joystick xBoxController = new Joystick(RobotMap.XBOX_CONTROLLER_ID);
+	public JoystickButton visionButton = new JoystickButton(xBoxController, 1);
+	
+	
+	public OI(){
+		
+	}
 }
