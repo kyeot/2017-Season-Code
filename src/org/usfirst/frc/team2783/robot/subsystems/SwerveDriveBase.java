@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2783.robot.subsystems;
 
 import org.usfirst.frc.team2783.robot.RobotMap;
-import org.usfirst.frc.team2783.robot.commands.JoystickSwerveDrive;
 import org.usfirst.frc.team2783.robot.commands.SwerveDrive;
 
 import com.ctre.CANTalon;
@@ -29,12 +28,14 @@ public class SwerveDriveBase extends Subsystem {
 	
 	private AHRS navSensor;
 	
+	//IDs kp ki and kd
 	private final double kp = 0.022; //0.025
 	private final double ki = 0.04; //0.04
 	private final double kd = 0.025; //0.025
 	
 	final private double ENCODER_TICKS_FOR_ADJUSTER_TRAVEL = 1;
 	
+	//Class for controlling PIDOutput
 	public class PIDOutputClass implements PIDOutput {
 		private VictorSP motor;
 		
@@ -48,24 +49,30 @@ public class SwerveDriveBase extends Subsystem {
 		}
 	}
 	
+	//Class used for making and controlling Swerve Modules
 	public class SwerveModule {
 		  
-		VictorSP swivelMot;
 		CANTalon driveMot;
+		VictorSP swivelMot;
 		Encoder enc;
-		PIDController pidCont;
+		
 		PIDOutputClass pidOut;
+		PIDController pidCont;
+		
 		
 		double lastAngle;
 		
+		//Constructor
 		public SwerveModule(
+				Encoder enc,
 				VictorSP swivelMot,
-				CANTalon driveMot,
-				Encoder enc) {
+				CANTalon driveMot
+				) {
 			
 			this.swivelMot = swivelMot;
-			this.driveMot = driveMot;
 			this.enc = enc;
+			this.driveMot = driveMot;
+			
 			
 			pidOut = new PIDOutputClass(
 							swivelMot
@@ -78,7 +85,6 @@ public class SwerveDriveBase extends Subsystem {
 						);
 			
 			
-			
 			pidCont.setInputRange(-360, 360);
 			pidCont.setContinuous();
 			
@@ -86,26 +92,32 @@ public class SwerveDriveBase extends Subsystem {
 			enc.setSamplesToAverage(127);
 		}
 		
+		//Sets a swerve modules angle and speed
 		public void setModule(double angle, double speed) {
 			
+			//Keeps the angle within 0 and 360
 			if(angle < 0) {
 				angle += 360;
 			}
 			
+			//Resets the encoder if it gets too high or low
 			double curAngle = getAngle();
 			if(curAngle >= 360 || curAngle <= -360) {
 				enc.reset();
 			}
 			
+			//Makes the module go to the opposite angle and go backwards when it's quicker than turning all the way around
 	    	if(Math.abs(angle - curAngle) > 90 && Math.abs(angle - curAngle) < 270 && angle != 0) {
 	    		angle = (angle +180)%360;
 	    		speed = -speed;
 	    	}
 	    	
+	    	//
 	    	if(Math.abs(angle - curAngle) > 180) {
     			angle -= 360;
     		}
 	    	
+	    	//Makes it so when you stop moving it doesn't reset the angle to 0, but leaves it where it was
 		    if(speed == 0) {
 	    		setAngle(lastAngle);
 		    	setSpeed(speed);
@@ -118,23 +130,28 @@ public class SwerveDriveBase extends Subsystem {
 	    	
 		}
 		
+		//Sets the module to a specific angle
 		public void setAngle(double angle) {
 			pidCont.enable();
 			pidCont.setSetpoint(angle);
 		}
-
+		
+		//Sets the drive motor's speed
 		public void setSpeed(double speed) {
 			driveMot.set(speed);
 		}
 		
+		//Sets the Swivel Motor's speed
 		public void setSwivel(double speed) {
 			swivelMot.set(speed);
 		}
 
+		//Returns where the Encoder is
 		public double getEncPercent() {
 			return enc.getDistance() / ENCODER_TICKS_FOR_ADJUSTER_TRAVEL;
 		}
 		
+		//Gets the current angle of the module
 		public double getAngle() {
 			if (enc != null) {
 				return (getEncPercent());
@@ -143,16 +160,19 @@ public class SwerveDriveBase extends Subsystem {
 			}
 		}
 		
+		//Sets a motor to brake mode
 		public void setBrake(boolean bool) {
 			driveMot.enableBrakeMode(bool);
 		}
 		
 	}
 	
+	//Returns the cosine of an angle in radians
 	public double cosDeg(double deg) {
 		return Math.cos(Math.toRadians(deg));
 	}
 	
+	//Returns the sine of an angle in radians
 	public double sinDeg(double deg) {
 		return Math.sin(Math.toRadians(deg));
 	}
@@ -167,6 +187,8 @@ public class SwerveDriveBase extends Subsystem {
 	         DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
 	     }
     	
+    	
+    	//Creates the front right Swerve Module
     	frMod = new SwerveModule(
     					new VictorSP(RobotMap.FRONT_RIGHT_SWIVEL),
     					new CANTalon(RobotMap.FRONT_RIGHT_WHEEL),
@@ -176,6 +198,7 @@ public class SwerveDriveBase extends Subsystem {
     								EncodingType.k4X)
     				);
     	
+    	//Creates the front left Swerve Module
     	flMod = new SwerveModule(
     					new VictorSP(RobotMap.FRONT_LEFT_SWIVEL),
     					new CANTalon(RobotMap.FRONT_LEFT_WHEEL),
@@ -185,6 +208,7 @@ public class SwerveDriveBase extends Subsystem {
     								EncodingType.k4X)
     				);
     	
+    	//Creates the rear right Swerve Module
     	rrMod = new SwerveModule(
     					new VictorSP(RobotMap.REAR_RIGHT_SWIVEL),
     					new CANTalon(RobotMap.REAR_RIGHT_WHEEL),
@@ -194,6 +218,7 @@ public class SwerveDriveBase extends Subsystem {
     								EncodingType.k4X)
     				);
     			
+    	//Creates the rear left Swerve Module
     	rlMod = new SwerveModule(
     					new VictorSP(RobotMap.REAR_LEFT_SWIVEL),
     					new CANTalon(RobotMap.REAR_LEFT_WHEEL),
@@ -205,6 +230,7 @@ public class SwerveDriveBase extends Subsystem {
     	
     }
 
+    //Initiates SwerveDrive as the Default Command
     public void initDefaultCommand() {
         setDefaultCommand(new SwerveDrive());
     }
@@ -260,6 +286,8 @@ public class SwerveDriveBase extends Subsystem {
     	if(max < rrSpd) max = rrSpd;
     	//I'm so sorry Jake
     	
+    	//Father Jacobs forgives you
+    	
     	if(max > 1) {
     		frSpd /= max;
     		flSpd /= max;
@@ -283,6 +311,7 @@ public class SwerveDriveBase extends Subsystem {
     	}
     }
     
+    //Returns the Gyro Angle
     public double getGyroAngle(boolean reversed) {
     	if(reversed) {
     		return (getNavSensor().getAngle()+180.0)%360;
@@ -290,6 +319,7 @@ public class SwerveDriveBase extends Subsystem {
     		return getNavSensor().getAngle();
     }
     
+    //Sets all module's angles to 0
     public void setZero() {
     	frMod.lastAngle = 0;
     	flMod.lastAngle = 0;
@@ -302,6 +332,7 @@ public class SwerveDriveBase extends Subsystem {
     	rlMod.setAngle(0);
     }
     
+    //Sets every module on the robot to brake
     public void setRobotBrake(boolean bool) {
     	frMod.setBrake(bool);
     	flMod.setBrake(bool);

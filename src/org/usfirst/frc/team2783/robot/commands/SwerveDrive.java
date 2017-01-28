@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SwerveDrive extends Command {
 
+	//Makes SwerveDrive require the subsystem swerveBase
     public SwerveDrive() {
     	requires(Robot.swerveBase);
     }
@@ -26,25 +27,30 @@ public class SwerveDrive extends Command {
     	Double rlValue = -(OI.xBoxController.getRawAxis(0));
     	Double rotValue = OI.xBoxController.getRawAxis(4);
     	
+    	//Makes it so if the left stick is barely moved at all it doesn't move at all
     	if ((fbValue > -.2 && fbValue < .2) && (rlValue > -.2 && rlValue < .2)){
     		fbValue = 0.0;
     		rlValue = 0.0;
     	}
     	
+    	//Makes it so if the right stick is barely moved at all it doesn't move at all
     	if (rotValue > -.2 && rotValue < .2){
     		rotValue = 0.0;
     	}
     	
+    	//While the left bumper is held goes half speed
     	if(OI.xBoxController.getRawButton(5)) {
     		fbValue *= 0.5;
     		rlValue *= 0.5;
     		rotValue *= 0.5;
     	}
     	
+    	//If the X button is pressed resets the Swerve Modules
     	if(OI.xBoxController.getRawButton(3)) {
     		Robot.swerveBase.setZero();
     	}
     	
+    	//If Y is pressed resets the field orientation
     	if(OI.xBoxController.getRawButton(4)) {
     		Robot.swerveBase.getNavSensor().reset();
     	}
