@@ -251,13 +251,15 @@ public class SwerveDriveBase extends Subsystem {
     }
     
     //Method for calculating and setting Speed and Angle of individual wheels given 3 movement inputs
-    public void swerveDrive(double fbMot, double rlMot, double rotMot) {
+    public void swerveDrive(double fbMot, double rlMot, double rotMot, boolean fieldOriented) {
     	//Swerve Math Taken from: https://www.chiefdelphi.com/media/papers/2426
     	
-    	double curAngle = getGyroAngle(true);
-    	double temp = fbMot*(cosDeg(curAngle)) + rlMot*(sinDeg(curAngle));
-    	rlMot = fbMot*(sinDeg(curAngle)) + -(rlMot*(cosDeg(curAngle)));
-    	fbMot = temp;
+    	if(fieldOriented) {
+	    	double curAngle = getGyroAngle(true);
+	    	double temp = fbMot*(cosDeg(curAngle)) + rlMot*(sinDeg(curAngle));
+	    	rlMot = fbMot*(sinDeg(curAngle)) + -(rlMot*(cosDeg(curAngle)));
+	    	fbMot = temp;
+    	}
     	
     	double L = 1.0;
     	double W = 1.0;

@@ -52,7 +52,7 @@ public class JoystickSwerveDrive extends Command {
     		Robot.swerveBase.getNavSensor().reset();
     	}
     	
-    	Robot.swerveBase.swerveDrive(fbValue, rlValue, rotValue);
+    	Robot.swerveBase.swerveDrive(fbValue, rlValue, rotValue, true);
     	
     }
 

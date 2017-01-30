@@ -23,9 +23,9 @@ public class SwerveDrive extends Command {
     protected void execute() {
     	
     	//Sets input for swerveDrive method as input from controller stick axes. Note: FBValue is negative as required by doc linked to in swerveDrive method
-    	Double fbValue = (OI.xBoxController.getRawAxis(1));
-    	Double rlValue = -(OI.xBoxController.getRawAxis(0));
-    	Double rotValue = OI.xBoxController.getRawAxis(4);
+    	Double fbValue = OI.xBoxController.getRawAxis(1);
+    	Double rlValue = -OI.xBoxController.getRawAxis(0);
+    	Double rotValue = -OI.xBoxController.getRawAxis(4);
     	
     	//Makes it so if the left stick is barely moved at all it doesn't move at all
     	if ((fbValue > -.2 && fbValue < .2) && (rlValue > -.2 && rlValue < .2)){
@@ -55,7 +55,14 @@ public class SwerveDrive extends Command {
     		Robot.swerveBase.getNavSensor().reset();
     	}
     	
-    	Robot.swerveBase.swerveDrive(fbValue, rlValue, rotValue);
+    	if(OI.xBoxController.getRawButton(6)) {
+    		rlValue = -rlValue;
+    		System.out.println("Docking Mode");
+    		
+    		Robot.swerveBase.swerveDrive(fbValue, rlValue, rotValue, false);
+    	} else {
+    		Robot.swerveBase.swerveDrive(fbValue, rlValue, rotValue, true);
+    	}
     	
     }
 
