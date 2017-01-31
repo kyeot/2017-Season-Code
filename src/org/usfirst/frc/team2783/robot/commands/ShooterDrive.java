@@ -2,7 +2,7 @@ package org.usfirst.frc.team2783.robot.commands;
 
 import org.usfirst.frc.team2783.robot.OI;
 import org.usfirst.frc.team2783.robot.Robot;
-import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
+import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShooterDrive extends Command {
 
     public ShooterDrive() {
-    	requires(new ShooterBase());
+    	requires(Robot.retriever);
     	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -24,7 +24,7 @@ public class ShooterDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooterBase.setShooterSpeedVbus(1);
+    	Robot.retriever.setShooterSpeedVbus(1);
    
     }
 

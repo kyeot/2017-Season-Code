@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2783.robot.commands;
 
 import org.usfirst.frc.team2783.robot.Robot;
-import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
+import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class GearShifterHighGear extends Command {
 
     public GearShifterHighGear() {
-    	requires(new ShooterBase());
+    	requires(Robot.retriever);
     	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -23,7 +23,7 @@ public class GearShifterHighGear extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooterBase.shiftGear(180);
+    	Robot.retriever.shiftGear(180);
     	
     }
 

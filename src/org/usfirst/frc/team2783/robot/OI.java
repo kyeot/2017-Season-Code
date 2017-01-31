@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import org.usfirst.frc.team2783.robot.commands.BallGathererIn;
-import org.usfirst.frc.team2783.robot.commands.BallGathererOut;
+import org.usfirst.frc.team2783.robot.commands.ToggleRetriever;
+import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
 import org.usfirst.frc.team2783.robot.commands.GearShifterHighGear;
 import org.usfirst.frc.team2783.robot.commands.GearShifterLowGear;
 import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
@@ -36,7 +36,7 @@ public class OI {
 	// three ways:
 
 	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
+	// until it is finished as detzermined by it's isFinished method.
 	// button.whenPressed(new ExampleCommand());
 
 	// Run the command while the button is being held down and interrupt it once
@@ -58,9 +58,9 @@ public class OI {
 		
 		shooter.whileHeld(new ShooterDrive());
 		
-		gathererOut.toggleWhenPressed(new BallGathererOut());
+		gathererOut.whenPressed(new ToggleRetriever(RetrieverDirection.RET_OUT));
 		
-		gathererIn.toggleWhenPressed(new BallGathererIn());
+		gathererIn.whenPressed(new ToggleRetriever(RetrieverDirection.RET_IN));
 		
 		gearShifterHighGear.whenPressed(new GearShifterHighGear());
 		
