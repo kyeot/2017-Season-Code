@@ -1,20 +1,24 @@
 package org.usfirst.frc.team2783.robot.commands;
 
+import org.usfirst.frc.team2783.robot.OI;
 import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
+import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class GearShifterHighGear extends Command {
+public class Climb extends Command {
 
-    public GearShifterHighGear() {
-    	requires(Robot.retriever);
-    	
+	
+    public Climb() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	
+    	requires(Robot.retriever);
+    	
     }
 
     // Called just before this Command runs the first time
@@ -23,7 +27,13 @@ public class GearShifterHighGear extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.retriever.shiftGear(180);
+    	if(OI.manipulator.getRawButton(5)){
+    		Robot.retriever.shiftGear(180);
+    		
+    		Robot.retriever.setGathererSpeedVbus(1);
+    	}
+    	
+    	else{Robot.retriever.setBrake(true);}
     	
     }
 

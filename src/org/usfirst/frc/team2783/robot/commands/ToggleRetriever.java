@@ -24,6 +24,8 @@ public class ToggleRetriever extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.retriever.shiftGear(0);
+    	
     	Robot.retriever.toggleRetriever(direction);
     }
 

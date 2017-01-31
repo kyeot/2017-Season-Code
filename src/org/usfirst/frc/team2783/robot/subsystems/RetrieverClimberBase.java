@@ -5,6 +5,8 @@ import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
 import org.usfirst.frc.team2783.robot.commands.UpdateRetriever;
 import org.usfirst.frc.team2783.robot.util.DiscreteToggle;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -15,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class RetrieverClimberBase extends Subsystem {
 	
-	private VictorSP gathererMotor = new VictorSP(RobotMap.GATHERER_WHEEL_ID);
+	private CANTalon gathererMotor = new CANTalon(RobotMap.GATHERER_WHEEL_ID);
 	
 	private Servo gearShifter = new Servo(RobotMap.GEAR_SHIFTER_ID);
 
@@ -43,6 +45,10 @@ public class RetrieverClimberBase extends Subsystem {
 		
 		System.out.println("kill yourself");
 		
+	}
+	
+	public void setBrake(boolean bool) {
+		gathererMotor.enableBrakeMode(bool);
 	}
 	
 	public void toggleRetriever(RetrieverDirection direction) {
