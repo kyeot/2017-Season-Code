@@ -36,10 +36,7 @@ public class RetrieverClimberBase extends Subsystem {
 		this.retrieverOutToggle = new DiscreteToggle();
 		
 	}
-	
-	public void setShooterSpeedVbus(double vbusOutput) {
-	}
-	
+
 	public void setGathererSpeedVbus(double vbusOutput) {
 		gathererMotor.set(vbusOutput);
 		
@@ -61,7 +58,7 @@ public class RetrieverClimberBase extends Subsystem {
 		}
 	}
 	
-public void updateRetriever() {
+	public void updateRetriever() {
     	
     	if(this.retrieverInToggle.getValue()) {
     		gathererMotor.set(0.75);

@@ -47,16 +47,16 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	
-	Button shooter = new JoystickButton(manipulator, 7);
+	Button shooter = new JoystickButton(manipulator, 8);
 	Button gathererIn = new JoystickButton(manipulator, 6);
 	Button climber = new JoystickButton(manipulator, 5);
-	Button gearShifterHighGear = new JoystickButton(manipulator, 1);
-	Button gearShifterLowGear = new JoystickButton(manipulator, 2);
+	Button gearShifterHighGear = new JoystickButton(manipulator, 3);
+	Button gearShifterLowGear = new JoystickButton(manipulator, 4);
 	
 	
 	public OI() {
 		
-		shooter.whileHeld(new ShooterDrive());
+		shooter.toggleWhenPressed(new ShooterDrive());
 		
 		climber.whileHeld(new Climb());
 		
@@ -64,7 +64,6 @@ public class OI {
 		
 		gearShifterHighGear.whenPressed(new Climb());
 		
-		gearShifterLowGear.whenPressed(new GearShifterLowGear());
 		
 	}
 	

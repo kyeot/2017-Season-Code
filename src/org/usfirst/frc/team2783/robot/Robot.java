@@ -2,6 +2,7 @@
 package org.usfirst.frc.team2783.robot;
 
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
+import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -22,6 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	//public static final SwerveDriveBase swerveBase = new SwerveDriveBase();
+	public static final ShooterBase shooterBase = new ShooterBase();
 	public static final RetrieverClimberBase retriever = new RetrieverClimberBase();
 	public static final SwerveDriveBase swerveBase = new SwerveDriveBase();
 	public static OI oi;
