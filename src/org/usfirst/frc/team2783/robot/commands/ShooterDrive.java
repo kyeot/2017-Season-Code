@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ShooterDrive extends Command {
 
     public ShooterDrive() {
-    	requires(Robot.shooterBase);
+    	requires(new ShooterBase());
     	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class GearShifterHighGear extends Command {
 
     public GearShifterHighGear() {
-    	requires(Robot.shooterBase);
+    	requires(new ShooterBase());
     	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
