@@ -33,8 +33,6 @@ public class Climb extends Command {
     		Robot.retriever.setGathererSpeedVbus(1);
     	}
     	
-    	else{Robot.retriever.setBrake(true);}
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

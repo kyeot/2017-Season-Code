@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class RetrieverClimberBase extends Subsystem {
 	
-	private CANTalon gathererMotor = new CANTalon(RobotMap.GATHERER_WHEEL_ID);
+	private VictorSP gathererMotor = new VictorSP(RobotMap.GATHERER_WHEEL_ID);
 	
 	private Servo gearShifter = new Servo(RobotMap.GEAR_SHIFTER_ID);
 
@@ -42,10 +42,6 @@ public class RetrieverClimberBase extends Subsystem {
 		
 		System.out.println("kill yourself");
 		
-	}
-	
-	public void setBrake(boolean bool) {
-		gathererMotor.enableBrakeMode(bool);
 	}
 	
 	public void toggleRetriever(RetrieverDirection direction) {
