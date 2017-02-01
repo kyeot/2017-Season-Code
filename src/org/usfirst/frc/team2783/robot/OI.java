@@ -43,7 +43,7 @@ public class OI {
 	
 	
 	public OI(){
-		visionButton.toggleWhenPressed(new VisionTrigger());
+		visionButton.whileHeld(new VisionTrigger());
 
 		
 	}
