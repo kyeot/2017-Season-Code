@@ -21,10 +21,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class SwerveDriveBase extends Subsystem {
 	
-	private SwerveModule frMod;
-	private SwerveModule flMod;
-	private SwerveModule rrMod;
-	private SwerveModule rlMod;
+	public SwerveModule frMod;
+	public SwerveModule flMod;
+	public SwerveModule rrMod;
+	public SwerveModule rlMod;
 	
 	private AHRS navSensor;
 	
@@ -64,14 +64,14 @@ public class SwerveDriveBase extends Subsystem {
 		
 		//Constructor
 		public SwerveModule(
-				Encoder enc,
 				VictorSP swivelMot,
-				CANTalon driveMot
+				CANTalon driveMot,
+				Encoder enc
 				) {
 			
+			this.driveMot = driveMot;
 			this.swivelMot = swivelMot;
 			this.enc = enc;
-			this.driveMot = driveMot;
 			
 			
 			pidOut = new PIDOutputClass(
