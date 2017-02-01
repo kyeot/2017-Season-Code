@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2783.robot;
 
+import org.usfirst.frc.team2783.robot.commands.VisionTrigger;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -41,6 +43,8 @@ public class OI {
 	
 	
 	public OI(){
+		visionButton.toggleWhenPressed(new VisionTrigger());
+
 		
 	}
 }

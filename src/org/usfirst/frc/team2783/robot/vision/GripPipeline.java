@@ -39,14 +39,7 @@ public class GripPipeline implements VisionPipeline {
 	private double centerX = 0.0;
 	private final Object imgLock = new Object();
 	private AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera.local");
-	private VisionThread visionThread = new VisionThread(this.camera, this, pipeline -> {
-        if (!pipeline.findContoursOutput().isEmpty()) {
-        Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-        synchronized (imgLock) {
-            centerX = r.x + (r.width / 2);
-        }
-    }
-});
+	private VisionThread visionThread;
 
 	static {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -232,7 +225,19 @@ public class GripPipeline implements VisionPipeline {
 
 	public void startThread(){
 		camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+		visionThread = new VisionThread(this.camera, this, pipeline -> {
+	        if (!pipeline.findContoursOutput().isEmpty()) {
+	        Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+	        synchronized (imgLock) {
+	            centerX = r.x + (r.width / 2);
+	        }
+	    }
+	});
 		visionThread.start();
+	}
+	
+	public void stopThread(){
+		visionThread = null;
 	}
 
 	public double getCenterX() {
