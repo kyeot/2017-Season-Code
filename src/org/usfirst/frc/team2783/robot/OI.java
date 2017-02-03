@@ -48,7 +48,7 @@ public class OI {
 	// button.whenReleased(new ExampleCommand());
 	
 	Button shooter = new JoystickButton(manipulator, 8);
-	Button gathererIn = new JoystickButton(manipulator, 6);
+	Button gatherer = new JoystickButton(manipulator, 6);
 	Button climber = new JoystickButton(manipulator, 5);
 	Button gearShifterHighGear = new JoystickButton(manipulator, 3);
 	Button gearShifterLowGear = new JoystickButton(manipulator, 4);
@@ -58,9 +58,9 @@ public class OI {
 		
 		shooter.toggleWhenPressed(new ShooterDrive());
 		
-		climber.whileHeld(new Climb());
+		climber.whileHeld(new ToggleRetriever(RetrieverDirection.RET_IN));
 		
-		gathererIn.whenPressed(new ToggleRetriever(RetrieverDirection.RET_IN));
+		gatherer.whenPressed(new ToggleRetriever(RetrieverDirection.RET_IN));
 		
 		gearShifterHighGear.whenPressed(new Climb());
 		

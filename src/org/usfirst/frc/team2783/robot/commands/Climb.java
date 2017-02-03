@@ -4573,14 +4573,15 @@ Wrap it up, guys.
 I had virtually no rehearsal for that.
  */
 public class Climb extends Command {
-
 	
-    public Climb() {
+	private RetrieverDirection direction;
+	
+    public Climb(RetrieverDirection direction) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	
     	requires(Robot.retriever);
     	
+    	this.direction = direction;
     }
 
     // Called just before this Command runs the first time
@@ -4593,7 +4594,7 @@ public class Climb extends Command {
     	if(OI.manipulator.getRawButton(5)){
     		Robot.retriever.shiftGear(180);
     		
-    		Robot.retriever.setGathererSpeedVbus(1);
+    		Robot.retriever.toggleRetriever(direction);
     	}
     	
     }
