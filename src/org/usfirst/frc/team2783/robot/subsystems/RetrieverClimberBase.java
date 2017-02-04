@@ -57,11 +57,11 @@ public class RetrieverClimberBase extends Subsystem {
 	public void updateRetriever() {
     	
     	if(this.retrieverInToggle.getValue()) {
-    		gathererMotor.set(0.75);
-        	SmartDashboard.putNumber("Ball Retriever Speed", 0.75);
+    		gathererMotor.set(1);
+        	SmartDashboard.putNumber("Ball Retriever Speed", 1);
     	} else if(this.retrieverOutToggle.getValue()) {
-    		gathererMotor.set(-0.75);
-        	SmartDashboard.putNumber("Ball Retriever Speed", -0.75);    		
+    		gathererMotor.set(-1);
+        	SmartDashboard.putNumber("Ball Retriever Speed", -1);    		
     	} else {
     		gathererMotor.set(0);
     	}
