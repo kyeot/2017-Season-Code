@@ -1,7 +1,12 @@
 
 package org.usfirst.frc.team2783.robot;
 
+<<<<<<< HEAD
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.DriveTest;
+=======
+import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
+import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
+>>>>>>> refs/remotes/origin/manipulator
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
 
 
@@ -9,6 +14,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -23,12 +29,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
+	//public static final SwerveDriveBase swerveBase = new SwerveDriveBase();
+	public static final ShooterBase shooterBase = new ShooterBase();
+	public static final RetrieverClimberBase retriever = new RetrieverClimberBase();
 	public static final SwerveDriveBase swerveBase = new SwerveDriveBase();
 	public static OI oi;
+<<<<<<< HEAD
 	public static Command autonomous;
 	public static NetworkTable smartDashTable;
 	
 
+=======
+	
+	
+>>>>>>> refs/remotes/origin/manipulator
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
