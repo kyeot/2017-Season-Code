@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team2783.robot.commands.ToggleRetriever;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
+import org.usfirst.frc.team2783.robot.commands.Agitator;
 import org.usfirst.frc.team2783.robot.commands.Climb;
-import org.usfirst.frc.team2783.robot.commands.GearShifterLowGear;
 import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
 
 /**
@@ -50,19 +50,18 @@ public class OI {
 	Button shooter = new JoystickButton(manipulator, 8);
 	Button gatherer = new JoystickButton(manipulator, 6);
 	Button climber = new JoystickButton(manipulator, 5);
-	Button gearShifterHighGear = new JoystickButton(manipulator, 3);
-	Button gearShifterLowGear = new JoystickButton(manipulator, 4);
+	Button agitator = new JoystickButton(manipulator, 4);
 	
 	
 	public OI() {
 		
 		shooter.toggleWhenPressed(new ShooterDrive());
 		
-		climber.whileHeld(new ToggleRetriever(RetrieverDirection.RET_IN));
+		agitator.whileHeld(new Agitator());
+		
+		climber.whileHeld(new Climb(RetrieverDirection.RET_IN));
 		
 		gatherer.whenPressed(new ToggleRetriever(RetrieverDirection.RET_IN));
-		
-		gearShifterHighGear.whenPressed(new Climb());
 		
 		
 	}
