@@ -1,12 +1,9 @@
 
 package org.usfirst.frc.team2783.robot;
 
-<<<<<<< HEAD
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.DriveTest;
-=======
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
 import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
->>>>>>> refs/remotes/origin/manipulator
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
 
 
