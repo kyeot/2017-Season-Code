@@ -57,9 +57,9 @@ public class OI {
 		
 		shooter.toggleWhenPressed(new ShooterDrive());
 		
-		agitator.whileHeld(new Agitator());
+		agitator.whenPressed(new Agitator());
 		
-		climber.whileHeld(new Climb(RetrieverDirection.RET_IN));
+		climber.whenPressed(new Climb(RetrieverDirection.RET_IN));
 		
 		gatherer.whenPressed(new ToggleRetriever(RetrieverDirection.RET_IN));
 		
