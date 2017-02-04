@@ -1,21 +1,21 @@
 package org.usfirst.frc.team2783.robot.commands.autonomous.modes;
 
 import org.usfirst.frc.team2783.robot.commands.autonomous.AutoDrive;
-import org.usfirst.frc.team2783.robot.commands.autonomous.AutoRetrieve;
-import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
+import org.usfirst.frc.team2783.robot.commands.autonomous.AutoShoot;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class DriveTest extends CommandGroup {
+public class GetGearAndShoot extends CommandGroup {
 
-    public DriveTest() {
+    public GetGearAndShoot() {
     	
-    	addSequential(new AutoDrive(0, 0, 1, true, 1));
-    	addParallel(new AutoRetrieve(RetrieverDirection.RET_IN, 1));
-    	addSequential(new AutoDrive(0.75, 0, 0, true, 1));
+    	addSequential(new AutoDrive(1, 0, 0.25, true, 2));
+    	addSequential(new AutoDrive(0.5, 0, 0, true, 1));
+    	addSequential(new AutoDrive(-0.5, 0, 0.25, true, 2));
+    	addSequential(new AutoShoot(1, 0, 5));
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());

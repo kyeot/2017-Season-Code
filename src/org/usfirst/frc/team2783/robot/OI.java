@@ -47,13 +47,6 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	
-<<<<<<< HEAD
-	public static Joystick xBoxController = new Joystick(RobotMap.XBOX_CONTROLLER_ID);
-	public static Joystick joystick = new Joystick(RobotMap.JOYSTICK_ID);
-	
-	public OI() {
-	}
-=======
 	Button shooter = new JoystickButton(manipulator, 8);
 	Button gatherer = new JoystickButton(manipulator, 6);
 	Button climber = new JoystickButton(manipulator, 5);
@@ -73,5 +66,4 @@ public class OI {
 		
 	}
 	
->>>>>>> refs/remotes/origin/manipulator
 }

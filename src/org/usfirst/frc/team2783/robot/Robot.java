@@ -34,15 +34,10 @@ public class Robot extends IterativeRobot {
 	public static final RetrieverClimberBase retriever = new RetrieverClimberBase();
 	public static final SwerveDriveBase swerveBase = new SwerveDriveBase();
 	public static OI oi;
-<<<<<<< HEAD
 	public static Command autonomous;
 	public static NetworkTable smartDashTable;
 	
 
-=======
-	
-	
->>>>>>> refs/remotes/origin/manipulator
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
