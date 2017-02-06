@@ -13,8 +13,9 @@ public class DriveTest extends CommandGroup {
 
     public DriveTest() {
     	
-    	addSequential(new AutoDrive(0, 0, 1, true, 1));
+    	addSequential(new AutoDrive(0.75, 0, 0, true, 1));
     	addParallel(new AutoRetrieve(RetrieverDirection.RET_IN, 1));
+    	addSequential(new AutoDrive(0, 0, 1, true, 1));
     	addSequential(new AutoDrive(0.75, 0, 0, true, 1));
     	
         // Add Commands here:

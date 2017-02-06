@@ -12,7 +12,7 @@ public class GetGearAndShoot extends CommandGroup {
 
     public GetGearAndShoot() {
     	
-    	addSequential(new AutoDrive(1, 0, 0.25, true, 2));
+    	addSequential(new AutoDrive(1, 0, 0.125, true, 2));
     	addSequential(new AutoDrive(0.5, 0, 0, true, 1));
     	addSequential(new AutoDrive(-0.5, 0, 0.25, true, 2));
     	addSequential(new AutoShoot(1, 0, 5));
