@@ -46,13 +46,17 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
-		this.smartDashTable = NetworkTable.getTable("SmartDashboard");
 		
 		CameraServer usbCameraServer = CameraServer.getInstance();
 		usbCameraServer.startAutomaticCapture("cam0", 0);
 		
+		this.smartDashTable = NetworkTable.getTable("SmartDashboard");
+		
 		String[] autonomousList = {"DriveTest"};
         this.smartDashTable.putStringArray("Auto List", autonomousList);
+        
+		
+		
 	}
 
 	/**
