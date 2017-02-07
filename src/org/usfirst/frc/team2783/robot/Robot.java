@@ -50,6 +50,8 @@ public class Robot extends IterativeRobot {
 		CameraServer usbCameraServer = CameraServer.getInstance();
 		usbCameraServer.startAutomaticCapture("cam0", 0);
 		
+		usbCameraServer.startAutomaticCapture("cam1", 1);
+		
 		this.smartDashTable = NetworkTable.getTable("SmartDashboard");
 		
 		String[] autonomousList = {"DriveTest"};
