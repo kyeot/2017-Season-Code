@@ -34,9 +34,11 @@ public class GripPipeline implements VisionPipeline {
 	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
 	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 	
-	private static final int IMG_WIDTH = 320;
-	private static final int IMG_HEIGHT = 240;
+	public static final int IMG_WIDTH = 320;
+	public static final int IMG_HEIGHT = 240;
 	private double centerX = 0.0;
+	private double area = 0.0;
+	private double theta;
 	private final Object imgLock = new Object();
 	private AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera.local");
 	private VisionThread visionThread;
@@ -165,8 +167,7 @@ public class GripPipeline implements VisionPipeline {
 		}
 		Imgproc.dilate(src, dst, kernel, anchor, (int)iterations, borderType, borderValue);
 	}
-
-
+	
 	private void hsvThreshold(Mat input, double[] hue, double[] sat, double[] val,
 	    Mat out) {
 		Imgproc.cvtColor(input, out, Imgproc.COLOR_BGR2HSV);
@@ -227,9 +228,10 @@ public class GripPipeline implements VisionPipeline {
 		camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
 		visionThread = new VisionThread(this.camera, this, pipeline -> {
 	        if (!pipeline.findContoursOutput().isEmpty()) {
-	        Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+	        Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));	        		
 	        synchronized (imgLock) {
 	            centerX = r.x + (r.width / 2);
+	            area = r.area();	            
 	        }
 	    }
 	});
@@ -244,6 +246,11 @@ public class GripPipeline implements VisionPipeline {
 		return centerX;
 	}
 
+	public double getArea() {
+		return area;
+	}
+	
+	public double 
 
 
 
