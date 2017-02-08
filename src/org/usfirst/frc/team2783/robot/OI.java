@@ -40,11 +40,12 @@ public class OI {
 	
 	public static Joystick xBoxController = new Joystick(RobotMap.XBOX_CONTROLLER_ID);
 	public JoystickButton visionButton = new JoystickButton(xBoxController, 1);
-	
+	public static Joystick joystick = new Joystick(RobotMap.JOYSTICK_ID);
 	
 	public OI(){
 		visionButton.whileHeld(new VisionTrigger());
 
-		
-	}
+
+	
+
 }

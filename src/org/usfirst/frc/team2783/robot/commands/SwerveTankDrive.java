@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class SwerveTankDrive extends Command {
 
+	//Makes SwerveTankDrive require the subsystem swerveBase
     public SwerveTankDrive() {
         requires(Robot.swerveBase);
     }
@@ -21,6 +22,7 @@ public class SwerveTankDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     
+    	//Gets the raw axis of both sticks
     	Robot.swerveBase.tankDrive(
     			OI.xBoxController.getRawAxis(2),
     			OI.xBoxController.getRawAxis(3)

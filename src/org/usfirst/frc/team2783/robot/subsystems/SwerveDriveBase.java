@@ -6,6 +6,7 @@ import org.usfirst.frc.team2783.robot.commands.SwerveDrive;
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
@@ -20,19 +21,21 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class SwerveDriveBase extends Subsystem {
 	
-	private SwerveModule frMod;
-	private SwerveModule flMod;
-	private SwerveModule rrMod;
-	private SwerveModule rlMod;
+	public SwerveModule frMod;
+	public SwerveModule flMod;
+	public SwerveModule rrMod;
+	public SwerveModule rlMod;
 	
 	private AHRS navSensor;
 	
-	private final double p = 0.05;    //0.015;
-	private final double i = 0.0025;    //0.005;
-	private final double d = 0.005;    //0.125;
+	//IDs kp ki and kd
+	private final double kp = 0.022; //0.025
+	private final double ki = 0.04; //0.04
+	private final double kd = 0.025; //0.025
 	
 	final private double ENCODER_TICKS_FOR_ADJUSTER_TRAVEL = 1;
 	
+	//Class for controlling PIDOutput
 	public class PIDOutputClass implements PIDOutput {
 		private VictorSP motor;
 		
@@ -46,33 +49,40 @@ public class SwerveDriveBase extends Subsystem {
 		}
 	}
 	
+	//Class used for making and controlling Swerve Modules
 	public class SwerveModule {
-		
-		VictorSP swivelMot;
+		  
 		CANTalon driveMot;
+		VictorSP swivelMot;
 		Encoder enc;
-		PIDController pidCont;
-		PIDOutputClass pidOut;
 		
+		PIDOutputClass pidOut;
+		PIDController pidCont;
+		
+		
+		double lastAngle;
+		
+		//Constructor
 		public SwerveModule(
 				VictorSP swivelMot,
 				CANTalon driveMot,
-				Encoder enc) {
+				Encoder enc
+				) {
 			
-			this.swivelMot = swivelMot;
 			this.driveMot = driveMot;
+			this.swivelMot = swivelMot;
 			this.enc = enc;
+			
 			
 			pidOut = new PIDOutputClass(
 							swivelMot
 						);
 			
 			pidCont = new PIDController(
-							p, i, d,
+							kp, ki, kd,
 							enc,
 							pidOut
 						);
-			
 			
 			
 			pidCont.setInputRange(-360, 360);
@@ -82,47 +92,66 @@ public class SwerveDriveBase extends Subsystem {
 			enc.setSamplesToAverage(127);
 		}
 		
+		//Sets a swerve modules angle and speed
 		public void setModule(double angle, double speed) {
 			
+			//Keeps the angle within 0 and 360
 			if(angle < 0) {
 				angle += 360;
 			}
 			
+			//Resets the encoder if it gets too high or low
 			double curAngle = getAngle();
-			if(curAngle > 359 || curAngle < -359) {
+			if(curAngle >= 360 || curAngle <= -360) {
 				enc.reset();
 			}
 			
+			//Makes the module go to the opposite angle and go backwards when it's quicker than turning all the way around
 	    	if(Math.abs(angle - curAngle) > 90 && Math.abs(angle - curAngle) < 270 && angle != 0) {
 	    		angle = (angle +180)%360;
 	    		speed = -speed;
 	    	}
 	    	
+	    	//
 	    	if(Math.abs(angle - curAngle) > 180) {
     			angle -= 360;
     		}
 	    	
-	    	setAngle(angle);
-	    	setSpeed(speed);
+	    	//Makes it so when you stop moving it doesn't reset the angle to 0, but leaves it where it was
+		    if(speed == 0) {
+	    		setAngle(lastAngle);
+		    	setSpeed(speed);
+	    	} else {
+	    		setAngle(angle);
+	    		setSpeed(speed);
+	    		
+	    		lastAngle = angle;
+	    	}
+	    	
 		}
 		
+		//Sets the module to a specific angle
 		public void setAngle(double angle) {
 			pidCont.enable();
 			pidCont.setSetpoint(angle);
 		}
-
+		
+		//Sets the drive motor's speed
 		public void setSpeed(double speed) {
 			driveMot.set(speed);
 		}
 		
+		//Sets the Swivel Motor's speed
 		public void setSwivel(double speed) {
 			swivelMot.set(speed);
 		}
 
+		//Returns where the Encoder is
 		public double getEncPercent() {
 			return enc.getDistance() / ENCODER_TICKS_FOR_ADJUSTER_TRAVEL;
 		}
 		
+		//Gets the current angle of the module
 		public double getAngle() {
 			if (enc != null) {
 				return (getEncPercent());
@@ -131,16 +160,19 @@ public class SwerveDriveBase extends Subsystem {
 			}
 		}
 		
+		//Sets a motor to brake mode
 		public void setBrake(boolean bool) {
 			driveMot.enableBrakeMode(bool);
 		}
 		
 	}
 	
+	//Returns the cosine of an angle in radians
 	public double cosDeg(double deg) {
 		return Math.cos(Math.toRadians(deg));
 	}
 	
+	//Returns the sine of an angle in radians
 	public double sinDeg(double deg) {
 		return Math.sin(Math.toRadians(deg));
 	}
@@ -155,36 +187,50 @@ public class SwerveDriveBase extends Subsystem {
 	         DriverStation.reportError("Error instantiating navX MXP:  " + ex.getMessage(), true);
 	     }
     	
+    	
+    	//Creates the front right Swerve Module
     	frMod = new SwerveModule(
     					new VictorSP(RobotMap.FRONT_RIGHT_SWIVEL),
     					new CANTalon(RobotMap.FRONT_RIGHT_WHEEL),
     					new Encoder(new DigitalInput(2), 
-    								new DigitalInput(3))
+    								new DigitalInput(3),
+    								false,
+    								EncodingType.k4X)
     				);
     	
+    	//Creates the front left Swerve Module
     	flMod = new SwerveModule(
     					new VictorSP(RobotMap.FRONT_LEFT_SWIVEL),
     					new CANTalon(RobotMap.FRONT_LEFT_WHEEL),
     					new Encoder(new DigitalInput(0), 
-    								new DigitalInput(1))
+    								new DigitalInput(1),
+    								false,
+    								EncodingType.k4X)
     				);
     	
+    	//Creates the rear right Swerve Module
     	rrMod = new SwerveModule(
     					new VictorSP(RobotMap.REAR_RIGHT_SWIVEL),
     					new CANTalon(RobotMap.REAR_RIGHT_WHEEL),
     					new Encoder(new DigitalInput(6), 
-    								new DigitalInput(7))
+    								new DigitalInput(7),
+    								false,
+    								EncodingType.k4X)
     				);
     			
+    	//Creates the rear left Swerve Module
     	rlMod = new SwerveModule(
     					new VictorSP(RobotMap.REAR_LEFT_SWIVEL),
     					new CANTalon(RobotMap.REAR_LEFT_WHEEL),
     					new Encoder(new DigitalInput(4), 
-    								new DigitalInput(5))
+    								new DigitalInput(5),
+    								false,
+    								EncodingType.k4X)
     				); // ):
     	
     }
 
+    //Initiates SwerveDrive as the Default Command
     public void initDefaultCommand() {
         setDefaultCommand(new SwerveDrive());
     }
@@ -205,13 +251,15 @@ public class SwerveDriveBase extends Subsystem {
     }
     
     //Method for calculating and setting Speed and Angle of individual wheels given 3 movement inputs
-    public void swerveDrive(double fbMot, double rlMot, double rotMot) {
+    public void swerveDrive(double fbMot, double rlMot, double rotMot, boolean fieldOriented) {
     	//Swerve Math Taken from: https://www.chiefdelphi.com/media/papers/2426
     	
-    	double curAngle = getNavSensor().getAngle();
-    	double temp = fbMot*(cosDeg(curAngle)) + rlMot*(sinDeg(curAngle));
-    	rlMot = fbMot*(sinDeg(curAngle)) + -(rlMot*(cosDeg(curAngle)));
-    	fbMot = temp;
+    	if(fieldOriented) {
+	    	double curAngle = getGyroAngle(true);
+	    	double temp = fbMot*(cosDeg(curAngle)) + rlMot*(sinDeg(curAngle));
+	    	rlMot = fbMot*(sinDeg(curAngle)) + -(rlMot*(cosDeg(curAngle)));
+	    	fbMot = temp;
+    	}
     	
     	double L = 1.0;
     	double W = 1.0;
@@ -240,6 +288,8 @@ public class SwerveDriveBase extends Subsystem {
     	if(max < rrSpd) max = rrSpd;
     	//I'm so sorry Jake
     	
+    	//Father Jacobs forgives you
+    	
     	if(max > 1) {
     		frSpd /= max;
     		flSpd /= max;
@@ -263,6 +313,28 @@ public class SwerveDriveBase extends Subsystem {
     	}
     }
     
+    //Returns the Gyro Angle
+    public double getGyroAngle(boolean reversed) {
+    	if(reversed) {
+    		return (getNavSensor().getAngle()+180.0)%360;
+    	} else
+    		return getNavSensor().getAngle();
+    }
+    
+    //Sets all module's angles to 0
+    public void setZero() {
+    	frMod.lastAngle = 0;
+    	flMod.lastAngle = 0;
+    	rrMod.lastAngle = 0;
+    	rlMod.lastAngle = 0;
+    	
+    	frMod.setAngle(0);
+    	flMod.setAngle(0);
+    	rrMod.setAngle(0);
+    	rlMod.setAngle(0);
+    }
+    
+    //Sets every module on the robot to brake
     public void setRobotBrake(boolean bool) {
     	frMod.setBrake(bool);
     	flMod.setBrake(bool);

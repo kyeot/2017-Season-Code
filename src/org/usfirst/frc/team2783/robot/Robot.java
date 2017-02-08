@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -38,6 +39,9 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+		
+		CameraServer usbCameraServer = CameraServer.getInstance();
+		usbCameraServer.startAutomaticCapture("cam0", 0);
 	}
 
 	/**
