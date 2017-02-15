@@ -3,8 +3,10 @@ package org.usfirst.frc.team2783.robot;
 
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -22,6 +24,8 @@ public class Robot extends IterativeRobot {
 
 	public static final SwerveDriveBase swerveBase = new SwerveDriveBase();
 	public static OI oi;
+	
+	AnalogInput usSensor;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -38,6 +42,8 @@ public class Robot extends IterativeRobot {
 		
 		CameraServer usbCameraServer = CameraServer.getInstance();
 		usbCameraServer.startAutomaticCapture("cam0", 0);
+		
+		usSensor = new AnalogInput(0);
 	}
 
 	/**
@@ -105,6 +111,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		System.out.println(usSensor.getValue());
 		Scheduler.getInstance().run();
 	}
 
