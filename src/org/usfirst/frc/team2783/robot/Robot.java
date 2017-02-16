@@ -6,7 +6,7 @@ import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
 import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
 
-
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -34,6 +34,7 @@ public class Robot extends IterativeRobot {
 	public static Command autonomous;
 	public static NetworkTable smartDashTable;
 	
+	AnalogInput usSensor;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -51,6 +52,8 @@ public class Robot extends IterativeRobot {
 		usbCameraServer.startAutomaticCapture("cam0", 0);
 		
 		usbCameraServer.startAutomaticCapture("cam1", 1);
+		
+		usSensor = new AnalogInput(0);
 		
 		this.smartDashTable = NetworkTable.getTable("SmartDashboard");
 		
