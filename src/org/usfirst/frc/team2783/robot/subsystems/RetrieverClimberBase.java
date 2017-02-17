@@ -7,6 +7,7 @@ import org.usfirst.frc.team2783.robot.util.DiscreteToggle;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;

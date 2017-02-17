@@ -8,6 +8,7 @@ import org.usfirst.frc.team2783.robot.commands.ToggleRetriever;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
 import org.usfirst.frc.team2783.robot.commands.Agitator;
 import org.usfirst.frc.team2783.robot.commands.Climb;
+import org.usfirst.frc.team2783.robot.commands.GearAuto;
 import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
 
 /**
@@ -47,6 +48,7 @@ public class OI {
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
 	
+	Button gearAuto = new JoystickButton(manipulator, 2);
 	Button shooter = new JoystickButton(manipulator, 8);
 	Button gatherer = new JoystickButton(manipulator, 6);
 	Button climber = new JoystickButton(manipulator, 5);
@@ -63,6 +65,20 @@ public class OI {
 		
 		gatherer.whenPressed(new ToggleRetriever(RetrieverDirection.RET_IN));
 		
+		if(OI.manipulator.getRawAxis(0) >= 10){
+			gearAuto.whenPressed(new GearAuto(0));
+			
+    	}
+    	
+    	if(OI.manipulator.getRawAxis(0) <= -10){
+    		gearAuto.whenPressed(new GearAuto(1));
+    		   		
+    	}
+    	
+    	if(OI.manipulator.getRawAxis(1) >= 10){
+    		gearAuto.whenPressed(new GearAuto(2));
+    		    		
+    	}
 		
 	}
 	

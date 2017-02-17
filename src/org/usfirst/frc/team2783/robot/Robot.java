@@ -34,7 +34,7 @@ public class Robot extends IterativeRobot {
 	public static Command autonomous;
 	public static NetworkTable smartDashTable;
 	
-	AnalogInput usSensor;
+	public static AnalogInput usSensor;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -54,6 +54,7 @@ public class Robot extends IterativeRobot {
 		usbCameraServer.startAutomaticCapture("cam1", 1);
 		
 		usSensor = new AnalogInput(0);
+		
 		
 		this.smartDashTable = NetworkTable.getTable("SmartDashboard");
 		
