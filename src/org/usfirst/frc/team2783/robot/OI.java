@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2783.robot;
 
-import org.usfirst.frc.team2783.robot.commands.VisionTrigger;
+import org.usfirst.frc.team2783.robot.vision.AdjustRotationToTarget;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -12,7 +12,6 @@ import org.usfirst.frc.team2783.robot.commands.Agitator;
 import org.usfirst.frc.team2783.robot.commands.Climb;
 import org.usfirst.frc.team2783.robot.commands.GearAuto;
 import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
 /**
@@ -59,8 +58,9 @@ public class OI {
 	Button agitator = new JoystickButton(manipulator, 4);
 	Button visionButton = new JoystickButton(xBoxController, 1);
 	
+
 	public OI() {
-		visionButton.whileHeld(new VisionTrigger());
+		visionButton.whileHeld(new AdjustRotationToTarget());
 		shooter.toggleWhenPressed(new ShooterDrive());
 		
 		agitator.whenPressed(new Agitator());
@@ -85,6 +85,7 @@ public class OI {
     	}
 		
 	}
+
 	
 
 
