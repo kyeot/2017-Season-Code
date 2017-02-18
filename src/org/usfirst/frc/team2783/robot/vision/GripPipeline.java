@@ -249,11 +249,5 @@ public class GripPipeline implements VisionPipeline {
 	public double getArea() {
 		return area;
 	}
-	
-	public double 
-
-
-
-
 }
 

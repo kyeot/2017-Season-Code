@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2783.robot;
 
-import org.usfirst.frc.team2783.robot.commands.VisionTrigger;
+import org.usfirst.frc.team2783.robot.vision.AdjustRotationToTarget;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -43,7 +43,7 @@ public class OI {
 	public static Joystick joystick = new Joystick(RobotMap.JOYSTICK_ID);
 	
 	public OI(){
-		visionButton.whileHeld(new VisionTrigger());
+		visionButton.whileHeld(new AdjustRotationToTarget());
 
 
 	
