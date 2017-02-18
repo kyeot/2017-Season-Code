@@ -2,6 +2,7 @@ package org.usfirst.frc.team2783.robot.commands;
 
 import org.usfirst.frc.team2783.robot.OI;
 import org.usfirst.frc.team2783.robot.Robot;
+import org.usfirst.frc.team2783.robot.vision.AdjustRotationToTarget;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -12,17 +13,30 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class GearAuto extends Command {
 	
+	double position;
+	
     public GearAuto(double position) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.swerveBase);
     	
+    	
+    	this.position = position;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	AdjustRotationToTarget VisionAdjustRotation = new AdjustRotationToTarget();
     	double initGyro = Robot.swerveBase.getGyroAngle(false);
     	double initUltra = Robot.usSensor.getValue();
+    	boolean travelLeft = true;
+    	if(initGyro >= 0) {
+    			travelLeft = false;
+    		} else {
+    			travelLeft = true;
+    		}
+    	
+    	double initArclength = Math.abs(initGyro)*initUltra;
     	
     }
     

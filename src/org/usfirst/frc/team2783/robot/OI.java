@@ -69,17 +69,17 @@ public class OI {
 		
 		gatherer.whenPressed(new ToggleRetriever(RetrieverDirection.RET_IN));
 		
-		if(OI.manipulator.getRawAxis(0) >= 10){
+		if(OI.manipulator.getRawAxis(0) >= 1.0){
 			gearAuto.whenPressed(new GearAuto(0));
 			
     	}
     	
-    	if(OI.manipulator.getRawAxis(0) <= -10){
+    	if(OI.manipulator.getRawAxis(0) <= -1.0){
     		gearAuto.whenPressed(new GearAuto(1));
     		   		
     	}
     	
-    	if(OI.manipulator.getRawAxis(1) >= 10){
+    	if(OI.manipulator.getRawAxis(1) >= 1.0){
     		gearAuto.whenPressed(new GearAuto(2));
     		    		
     	}
