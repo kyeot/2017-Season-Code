@@ -5,13 +5,13 @@ import org.usfirst.frc.team2783.robot.commands.autonomous.modes.DriveTest;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
 import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
+import org.usfirst.frc.team2783.robot.vision.GripPipeline;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -32,9 +32,9 @@ public class Robot extends IterativeRobot {
 	public static final SwerveDriveBase swerveBase = new SwerveDriveBase();
 	public static OI oi;
 	public static Command autonomous;
-	public static NetworkTable smartDashTable;
-	
-	public static AnalogInput usSensor;
+	//public static NetworkTable smartDashTable;
+	//public static GripPipeline pipeline = new GripPipeline();
+	public static AnalogInput usSensor; 
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -46,20 +46,20 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
+		//SmartDashboard.putData("Auto mode", chooser);
 		
 		CameraServer usbCameraServer = CameraServer.getInstance();
-		usbCameraServer.startAutomaticCapture("cam0", 0);
+		//usbCameraServer.startAutomaticCapture("cam0", 0);
 		
-		usbCameraServer.startAutomaticCapture("cam1", 1);
+		//usbCameraServer.startAutomaticCapture("cam1", 1);
 		
 		usSensor = new AnalogInput(0);
 		
 		
-		this.smartDashTable = NetworkTable.getTable("SmartDashboard");
+		//this.smartDashTable = NetworkTable.getTable("SmartDashboard");
 		
 		String[] autonomousList = {"DriveTest"};
-        this.smartDashTable.putStringArray("Auto List", autonomousList);
+        //this.smartDashTable.putStringArray("Auto List", autonomousList);
         
 		
 		

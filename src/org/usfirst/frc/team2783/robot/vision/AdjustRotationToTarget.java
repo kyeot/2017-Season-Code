@@ -11,8 +11,9 @@ public class AdjustRotationToTarget extends PIDCommand {
 	final public static double kp = 0.1;
 	final public static double ki = 0.01;
 	final public static double kd = 0.0;
+
+	GripPipeline pipeline;
 	
-	private GripPipeline pipeline;
 	private Double centerX;
 	MovingAverage rotationTarget;
 	MovingAverage error;
@@ -23,9 +24,9 @@ public class AdjustRotationToTarget extends PIDCommand {
     	super(kp, ki, kd);
     	
     	requires(Robot.swerveBase);
-    	this.pipeline = new GripPipeline();
     	this.rotationTarget = new MovingAverage(3);
     	this.error = new MovingAverage(5);
+    	this.pipeline = new GripPipeline();
     	
     	setSetpoint(0.5);
     }
@@ -34,6 +35,7 @@ public class AdjustRotationToTarget extends PIDCommand {
     protected void initialize() {
     	rotationTarget.clearValues();
     	Robot.swerveBase.setZero();
+    	pipeline.startThread();
     	
     }
 
@@ -45,6 +47,7 @@ public class AdjustRotationToTarget extends PIDCommand {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+
         return Math.abs(error.addValue(getPIDController().getError())) < 0.20;
     }
 
@@ -61,13 +64,15 @@ public class AdjustRotationToTarget extends PIDCommand {
 	@Override
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub
-		return rotationTarget.getAverage() / pipeline.IMG_WIDTH;
+		//return rotationTarget.getAverage() / Robot.pipeline.IMG_WIDTH;
+		return 0;
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
-		if (Math.abs(output) > 0.4) {
+    	System.out.println(pipeline.getCenterX());
+		if (Math.abs(output) < 0.4) {
 			Robot.swerveBase.tankDrive(-output, output);
 		} else {
 			Robot.swerveBase.tankDrive(-0.65, 0.65);

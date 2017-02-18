@@ -27,12 +27,12 @@ import org.opencv.core.*;
 public class GripPipeline implements VisionPipeline {
 
 	//Outputs
-	private Mat cvGaussianblurOutput = new Mat();
 	private Mat cvErodeOutput = new Mat();
 	private Mat cvDilateOutput = new Mat();
 	private Mat hsvThresholdOutput = new Mat();
 	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
 	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
+	private Mat cvGaussianblurOutput = new Mat();
 	
 	public static final int IMG_WIDTH = 320;
 	public static final int IMG_HEIGHT = 240;
@@ -42,6 +42,7 @@ public class GripPipeline implements VisionPipeline {
 	private final Object imgLock = new Object();
 	private AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera.local");
 	private VisionThread visionThread;
+	private Rect r2;
 
 	static {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -230,6 +231,7 @@ public class GripPipeline implements VisionPipeline {
 	        if (!pipeline.findContoursOutput().isEmpty()) {
 	        Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));	        		
 	        synchronized (imgLock) {
+	        	System.out.println(centerX);
 	            centerX = r.x + (r.width / 2);
 	            area = r.area();	            
 	        }

@@ -1,17 +1,15 @@
 package org.usfirst.frc.team2783.robot;
 
-import org.usfirst.frc.team2783.robot.vision.AdjustRotationToTarget;
+import org.usfirst.frc.team2783.robot.commands.Agitator;
+import org.usfirst.frc.team2783.robot.commands.GearAuto;
+import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
+import org.usfirst.frc.team2783.robot.commands.ToggleRetriever;
+import org.usfirst.frc.team2783.robot.commands.VisionTrigger;
+import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-
-import org.usfirst.frc.team2783.robot.commands.ToggleRetriever;
-import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
-import org.usfirst.frc.team2783.robot.commands.Agitator;
-import org.usfirst.frc.team2783.robot.commands.Climb;
-import org.usfirst.frc.team2783.robot.commands.GearAuto;
-import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
 
 
 /**
@@ -60,7 +58,7 @@ public class OI {
 	
 
 	public OI() {
-		visionButton.toggleWhenPressed(new AdjustRotationToTarget());
+		visionButton.toggleWhenPressed(new VisionTrigger());
 		
 		shooter.toggleWhenPressed(new ShooterDrive());
 		
