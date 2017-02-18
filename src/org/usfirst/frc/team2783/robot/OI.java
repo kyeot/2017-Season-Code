@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2783.robot;
 
+import org.usfirst.frc.team2783.robot.commands.VisionTrigger;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -10,6 +12,8 @@ import org.usfirst.frc.team2783.robot.commands.Agitator;
 import org.usfirst.frc.team2783.robot.commands.Climb;
 import org.usfirst.frc.team2783.robot.commands.GearAuto;
 import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -53,10 +57,10 @@ public class OI {
 	Button gatherer = new JoystickButton(manipulator, 6);
 	Button climber = new JoystickButton(manipulator, 5);
 	Button agitator = new JoystickButton(manipulator, 4);
-	
+	Button visionButton = new JoystickButton(xBoxController, 1);
 	
 	public OI() {
-		
+		visionButton.whileHeld(new VisionTrigger());
 		shooter.toggleWhenPressed(new ShooterDrive());
 		
 		agitator.whenPressed(new Agitator());
@@ -82,4 +86,6 @@ public class OI {
 		
 	}
 	
+
+
 }
