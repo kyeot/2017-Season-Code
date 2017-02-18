@@ -60,14 +60,15 @@ public class OI {
 	
 
 	public OI() {
-		visionButton.whileHeld(new AdjustRotationToTarget());
+		visionButton.toggleWhenPressed(new AdjustRotationToTarget());
+		
 		shooter.toggleWhenPressed(new ShooterDrive());
 		
 		agitator.whenPressed(new Agitator());
 		
-		climber.whenPressed(new Climb(RetrieverDirection.RET_IN));
+		climber.whenPressed(new ToggleRetriever(RetrieverDirection.RET_OUT, 1));
 		
-		gatherer.whenPressed(new ToggleRetriever(RetrieverDirection.RET_IN));
+		gatherer.whenPressed(new ToggleRetriever(RetrieverDirection.RET_OUT, 0));
 		
 		if(OI.manipulator.getRawAxis(0) >= 10){
 			gearAuto.whenPressed(new GearAuto(0));

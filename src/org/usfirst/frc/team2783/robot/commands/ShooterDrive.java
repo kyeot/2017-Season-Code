@@ -15,16 +15,29 @@ public class ShooterDrive extends Command {
     	requires(Robot.shooterBase);
     	
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        // eg. requires(chassis);`
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooterBase.setShooterSpeedVbus(1);
+    	if(OI.manipulator.getRawButton(8)){
+    		Robot.shooterBase.setAgitatorSpeedVbus(0.75);
+    		
+    		Robot.shooterBase.setShooterSpeedVbus(1);
+    	}
+    
+    	else{
+    		Robot.shooterBase.setAgitatorSpeedVbus(0);
+    		
+    		Robot.shooterBase.setShooterSpeedVbus(0);
+    		
+    	}
    
     }
 
