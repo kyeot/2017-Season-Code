@@ -321,6 +321,10 @@ public class SwerveDriveBase extends Subsystem {
     		return getNavSensor().getAngle();
     }
     
+    public void resetGyro(double angle) {
+    	
+    }
+    
     //Sets all module's angles to 0
     public void setZero() {
     	frMod.lastAngle = 0;
