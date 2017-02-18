@@ -14,31 +14,19 @@ public class ToggleRetriever extends Command {
 	
 	private RetrieverDirection direction;
 	
-	double gear;
-	
-    public ToggleRetriever(RetrieverDirection direction, double gear) {
+    public ToggleRetriever(RetrieverDirection direction) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.retriever);
     	
-    	this.gear = gear;
     	this.direction = direction;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(gear == 0){//////////////
-    		Robot.retriever.shiftGear(0);
+    	Robot.retriever.shiftGear(0);
     	
-    		Robot.retriever.toggleRetriever(direction);
-    	}
-    	
-    	if(gear == 1){
-    		Robot.retriever.shiftGear(180);
-        	
-        	Robot.retriever.toggleRetriever(direction);
-    		
-    	}
+    	Robot.retriever.toggleRetriever(direction);
     }
 
     // Called repeatedly when this Command is scheduled to run

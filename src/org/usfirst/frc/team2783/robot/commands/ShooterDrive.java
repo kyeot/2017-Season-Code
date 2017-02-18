@@ -24,19 +24,7 @@ public class ShooterDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(OI.manipulator.getRawButton(8)){
-    		Robot.shooterBase.setAgitatorSpeedVbus(0.75);
-    		
-    		Robot.shooterBase.setShooterSpeedVbus(1);
-    	}
-    
-    	else{
-    		Robot.shooterBase.setAgitatorSpeedVbus(0);
-    		
-    		Robot.shooterBase.setShooterSpeedVbus(0);
-    		
-    	}
-    	
+    	Robot.shooterBase.setShooterSpeedVbus(1);
    
     }
 
