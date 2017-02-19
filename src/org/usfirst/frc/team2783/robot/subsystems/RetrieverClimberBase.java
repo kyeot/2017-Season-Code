@@ -20,6 +20,8 @@ public class RetrieverClimberBase extends Subsystem {
 	
 	private VictorSP gathererMotor = new VictorSP(RobotMap.GATHERER_WHEEL_ID);
 	
+	private Servo gearPlace = new Servo(RobotMap.GEAR_PLACE_ID);
+	
 	private Servo gearShifter = new Servo(RobotMap.GEAR_SHIFTER_ID);
 
 	private DiscreteToggle retrieverInToggle;
@@ -42,6 +44,11 @@ public class RetrieverClimberBase extends Subsystem {
 		gathererMotor.set(vbusOutput);
 		
 		System.out.println("kill yourself");
+		
+	}
+	
+	public void gearPlace(double Angle){
+		gearPlace.setAngle(Angle);
 		
 	}
 	

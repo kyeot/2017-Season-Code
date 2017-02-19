@@ -53,7 +53,8 @@ public class OI {
 	Button shooter = new JoystickButton(manipulator, 8);
 	Button gatherer = new JoystickButton(manipulator, 6);
 	Button climber = new JoystickButton(manipulator, 5);
-	Button agitator = new JoystickButton(manipulator, 4);
+	Button agitator = new JoystickButton(manipulator, 7);
+	Button gearPlace = new JoystickButton(manipulator, 4);
 	Button visionButton = new JoystickButton(xBoxController, 1);
 	
 
@@ -63,6 +64,8 @@ public class OI {
 		shooter.toggleWhenPressed(new ShooterDrive());
 		
 		agitator.whenPressed(new Agitator());
+		
+		gearPlace.whenPressed(new GearPlace());
 		
 		climber.whenPressed(new ToggleRetriever(RetrieverDirection.RET_OUT, 1));
 		
