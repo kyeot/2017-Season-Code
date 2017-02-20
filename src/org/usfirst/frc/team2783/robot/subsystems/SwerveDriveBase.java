@@ -189,7 +189,7 @@ public class SwerveDriveBase extends Subsystem {
     	
     	
     	//Creates the front right Swerve Module
-    	frMod = new SwerveModule(
+    	flMod = new SwerveModule(
     					new VictorSP(RobotMap.FRONT_RIGHT_SWIVEL),
     					new CANTalon(RobotMap.FRONT_RIGHT_WHEEL),
     					new Encoder(new DigitalInput(2), 
@@ -199,7 +199,7 @@ public class SwerveDriveBase extends Subsystem {
     				);
     	
     	//Creates the front left Swerve Module
-    	flMod = new SwerveModule(
+    	rlMod = new SwerveModule(
     					new VictorSP(RobotMap.FRONT_LEFT_SWIVEL),
     					new CANTalon(RobotMap.FRONT_LEFT_WHEEL),
     					new Encoder(new DigitalInput(0), 
@@ -209,7 +209,7 @@ public class SwerveDriveBase extends Subsystem {
     				);
     	
     	//Creates the rear right Swerve Module
-    	rrMod = new SwerveModule(
+    	frMod = new SwerveModule(
     					new VictorSP(RobotMap.REAR_RIGHT_SWIVEL),
     					new CANTalon(RobotMap.REAR_RIGHT_WHEEL),
     					new Encoder(new DigitalInput(6), 
@@ -219,7 +219,7 @@ public class SwerveDriveBase extends Subsystem {
     				);
     			
     	//Creates the rear left Swerve Module
-    	rlMod = new SwerveModule(
+    	rrMod = new SwerveModule(
     					new VictorSP(RobotMap.REAR_LEFT_SWIVEL),
     					new CANTalon(RobotMap.REAR_LEFT_WHEEL),
     					new Encoder(new DigitalInput(4), 
@@ -270,17 +270,17 @@ public class SwerveDriveBase extends Subsystem {
     	double C = fbMot - rotMot*(W/R);
     	double D = fbMot + rotMot*(W/R);
     	
-    	double frSpd = Math.sqrt((B*B) + (D*D));
-    	double flSpd = Math.sqrt((B*B) + (C*C));
-    	double rlSpd = Math.sqrt((A*A) + (C*C));
-    	double rrSpd = Math.sqrt((A*A) + (D*D));
+    	double frSpd = Math.sqrt((B*B) + (C*C));
+    	double flSpd = Math.sqrt((B*B) + (D*D));
+    	double rlSpd = Math.sqrt((A*A) + (D*D));
+    	double rrSpd = Math.sqrt((A*A) + (C*C));
     	
     	double t = 180/Math.PI;
     	
-    	double frAng = Math.atan2(B, D)*t;
-    	double flAng = Math.atan2(B, C)*t;
-    	double rlAng = Math.atan2(A, C)*t;
-    	double rrAng = Math.atan2(A, D)*t;
+    	double frAng = Math.atan2(B, C)*t;
+    	double flAng = Math.atan2(B, D)*t;
+    	double rlAng = Math.atan2(A, D)*t;
+    	double rrAng = Math.atan2(A, C)*t;
     	 
     	double max = frSpd;
     	if(max < flSpd) max = flSpd;
