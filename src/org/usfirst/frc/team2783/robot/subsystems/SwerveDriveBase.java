@@ -53,7 +53,9 @@ public class SwerveDriveBase extends Subsystem {
 	//Class used for making and controlling Swerve Modules
 	public class SwerveModule {
 		  
-		CANTalon driveMot;
+
+
+		driveMot;
 		VictorSP swivelMot;
 		Encoder enc;
 		
@@ -190,7 +192,7 @@ public class SwerveDriveBase extends Subsystem {
     	
     	
     	//Creates the front right Swerve Module
-    	frMod = new SwerveModule(
+    	flMod = new SwerveModule(
     					new VictorSP(RobotMap.FRONT_RIGHT_SWIVEL),
     					new CANTalon(RobotMap.FRONT_RIGHT_WHEEL),
     					new Encoder(new DigitalInput(2), 
@@ -200,7 +202,7 @@ public class SwerveDriveBase extends Subsystem {
     				);
     	
     	//Creates the front left Swerve Module
-    	flMod = new SwerveModule(
+    	rlMod = new SwerveModule(
     					new VictorSP(RobotMap.FRONT_LEFT_SWIVEL),
     					new CANTalon(RobotMap.FRONT_LEFT_WHEEL),
     					new Encoder(new DigitalInput(0), 
@@ -210,7 +212,7 @@ public class SwerveDriveBase extends Subsystem {
     				);
     	
     	//Creates the rear right Swerve Module
-    	rrMod = new SwerveModule(
+    	frMod = new SwerveModule(
     					new VictorSP(RobotMap.REAR_RIGHT_SWIVEL),
     					new CANTalon(RobotMap.REAR_RIGHT_WHEEL),
     					new Encoder(new DigitalInput(6), 
@@ -220,7 +222,7 @@ public class SwerveDriveBase extends Subsystem {
     				);
     			
     	//Creates the rear left Swerve Module
-    	rlMod = new SwerveModule(
+    	rrMod = new SwerveModule(
     					new VictorSP(RobotMap.REAR_LEFT_SWIVEL),
     					new CANTalon(RobotMap.REAR_LEFT_WHEEL),
     					new Encoder(new DigitalInput(4), 
