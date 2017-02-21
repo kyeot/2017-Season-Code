@@ -31,28 +31,12 @@ public class ShooterDrive extends Command {
     	if(OI.manipulator.getRawButton(8)){
     		Robot.shooterBase.setShooterSpeedVbus(1);
     		
-    		try {
-    			TimeUnit.SECONDS.sleep(1);
-    			} 
-        	
-        	catch (InterruptedException e) {
-    			e.printStackTrace();
-    		}
-    		
     		Robot.shooterBase.setAgitatorSpeedVbus(0.75);
     		
     	}
     
     	else{
     		Robot.shooterBase.setAgitatorSpeedVbus(0);
-    		
-    		try {
-    			TimeUnit.SECONDS.sleep(1);
-    		} 
-        	
-        	catch (InterruptedException e) {
-    			e.printStackTrace();
-    		}
     		
     		Robot.shooterBase.setShooterSpeedVbus(0);
     		
