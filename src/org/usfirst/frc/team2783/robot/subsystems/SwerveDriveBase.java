@@ -27,6 +27,7 @@ public class SwerveDriveBase extends Subsystem {
 	public SwerveModule rlMod;
 	
 	private AHRS navSensor;
+	private double angleOffset = 0;
 	
 	//IDs kp ki and kd
 	private final double kp = 0.022; //0.025
@@ -318,9 +319,14 @@ public class SwerveDriveBase extends Subsystem {
     //Returns the Gyro Angle
     public double getGyroAngle(boolean reversed) {
     	if(reversed) {
-    		return (getNavSensor().getAngle()+180.0)%360;
+    		return ((getNavSensor().getAngle()+180.0)%360) - angleOffset;
     	} else
-    		return getNavSensor().getAngle();
+    		return (getNavSensor().getAngle()) - angleOffset;
+    }
+    
+    public void resetGyroNorth(double angle, double north) {
+    	getNavSensor().reset();
+    	angleOffset = angle - north;
     }
     
     //Sets all module's angles to 0

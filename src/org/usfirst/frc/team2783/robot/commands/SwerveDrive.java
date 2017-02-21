@@ -52,7 +52,7 @@ public class SwerveDrive extends Command {
     	
     	//If Y is pressed resets the field orientation
     	if(OI.xBoxController.getRawButton(4)) {
-    		Robot.swerveBase.getNavSensor().reset();
+    		Robot.swerveBase.resetGyroNorth(0, 0);
     	}
     	
     	if(OI.xBoxController.getRawButton(6)) {
