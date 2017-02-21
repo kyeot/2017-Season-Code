@@ -270,17 +270,17 @@ public class SwerveDriveBase extends Subsystem {
     	double C = fbMot - rotMot*(W/R);
     	double D = fbMot + rotMot*(W/R);
     	
-    	double frSpd = Math.sqrt((B*B) + (C*C));
-    	double flSpd = Math.sqrt((B*B) + (D*D));
-    	double rlSpd = Math.sqrt((A*A) + (D*D));
-    	double rrSpd = Math.sqrt((A*A) + (C*C));
+    	double frSpd = Math.sqrt((B*B) + (D*D));
+    	double flSpd = Math.sqrt((B*B) + (C*C));
+    	double rlSpd = Math.sqrt((A*A) + (C*C));
+    	double rrSpd = Math.sqrt((A*A) + (D*D));
     	
     	double t = 180/Math.PI;
     	
-    	double frAng = Math.atan2(B, C)*t;
-    	double flAng = Math.atan2(B, D)*t;
-    	double rlAng = Math.atan2(A, D)*t;
-    	double rrAng = Math.atan2(A, C)*t;
+    	double frAng = Math.atan2(B, D)*t;
+    	double flAng = Math.atan2(B, C)*t;
+    	double rlAng = Math.atan2(A, C)*t;
+    	double rrAng = Math.atan2(A, D)*t;
     	 
     	double max = frSpd;
     	if(max < flSpd) max = flSpd;
