@@ -305,6 +305,14 @@ public class SwerveDriveBase extends Subsystem {
     	rlMod.setModule(rlAng, rlSpd);
     }
     
+    public void polarSwerveDrive(double angle, double speed, double rotation, boolean fieldOriented) {
+    	swerveDrive(
+    			cosDeg(angle)*speed,
+    			sinDeg(angle)*speed,
+    			rotation,
+    			fieldOriented);
+    }
+    
     //Returns navX sensor ?
     public AHRS getNavSensor() {
     	if (navSensor != null) {
