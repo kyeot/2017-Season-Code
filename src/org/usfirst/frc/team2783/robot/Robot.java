@@ -3,6 +3,7 @@ package org.usfirst.frc.team2783.robot;
 
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.DriveTest;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.GetGearAndShoot;
+import org.usfirst.frc.team2783.robot.commands.autonomous.modes.TalonTest;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
 import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
@@ -35,7 +36,8 @@ public class Robot extends IterativeRobot {
 	public static Command autonomous;
 	//public static NetworkTable smartDashTable;
 	//public static GripPipeline pipeline = new GripPipeline();
-	public static AnalogInput usSensor; 
+	public static AnalogInput usSensor;
+	public static AnalogInput usSensor2;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
@@ -57,11 +59,12 @@ public class Robot extends IterativeRobot {
 		usbCameraServer.startAutomaticCapture("cam2", 2);
 		
 		usSensor = new AnalogInput(0);
+		usSensor2 = new AnalogInput(1);
 		
 		
 		//this.smartDashTable = NetworkTable.getTable("SmartDashboard");
 		
-		String[] autonomousList = {"DriveTest"};
+		String[] autonomousList = {"TalonTest"};
         //this.smartDashTable.putStringArray("Auto List", autonomousList);
         
 		
@@ -100,10 +103,12 @@ public class Robot extends IterativeRobot {
     	//Gets the autonomous selector value from the dashboard
     	String autoSelected = SmartDashboard.getString("Auto Selector", "None");
     	
+    	autonomous = new TalonTest();
+    	
     	//Switches the autonomous mode based on the value from the SmartDashboard
-		switch(autoSelected) {
-			case "DriveTest":
-				autonomous = new DriveTest();
+		/*switch(autoSelected) {
+			case "TalonTest":
+				autonomous = new TalonTest();
 				break;
 			case "GetGearAndShoot":
 				autonomous = new GetGearAndShoot();
@@ -116,7 +121,7 @@ public class Robot extends IterativeRobot {
     	if(autonomous != null) {
     		autonomous.start();
     	}
-    	
+    	*/
 	}
 
 	/**
