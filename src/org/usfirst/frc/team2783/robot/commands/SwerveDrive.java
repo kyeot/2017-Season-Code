@@ -23,9 +23,9 @@ public class SwerveDrive extends Command {
     protected void execute() {
     	
     	//Sets input for swerveDrive method as input from controller stick axes. Note: FBValue is negative as required by doc linked to in swerveDrive method
-    	Double fbValue = OI.xBoxController.getRawAxis(1);
-    	Double rlValue = -OI.xBoxController.getRawAxis(0);
-    	Double rotValue = -OI.xBoxController.getRawAxis(4);
+    	Double fbValue = OI.xBoxController.getRawAxis(1)/2;
+    	Double rlValue = -(OI.xBoxController.getRawAxis(0))/2;
+    	Double rotValue = OI.xBoxController.getRawAxis(4)/2;
     	
     	//Makes it so if the left stick is barely moved at all it doesn't move at all
     	if ((fbValue > -.2 && fbValue < .2) && (rlValue > -.2 && rlValue < .2)){
@@ -40,9 +40,9 @@ public class SwerveDrive extends Command {
     	
     	//While the left bumper is held goes half speed
     	if(OI.xBoxController.getRawButton(5)) {
-    		fbValue *= 0.5;
-    		rlValue *= 0.5;
-    		rotValue *= 0.5;
+    		fbValue *= 2;
+    		rlValue *= 2;
+    		rotValue *= 2;
     	}
     	
     	//If the X button is pressed resets the Swerve Modules
