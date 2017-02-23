@@ -52,9 +52,6 @@ public class SwerveDriveBase extends Subsystem {
 	
 	//Class used for making and controlling Swerve Modules
 	public class SwerveModule {
-		  
-
-
 		CANTalon driveMot;
 		VictorSP swivelMot;
 		Encoder enc;
@@ -305,6 +302,14 @@ public class SwerveDriveBase extends Subsystem {
     	flMod.setModule(flAng, flSpd);
     	rrMod.setModule(rrAng, rrSpd);
     	rlMod.setModule(rlAng, rlSpd);
+    }
+    
+    public void polarSwerveDrive(double angle, double speed, double rotation, boolean fieldOriented) {
+    	swerveDrive(
+    			cosDeg(angle)*speed,
+    			sinDeg(angle)*speed,
+    			rotation,
+    			fieldOriented);
     }
     
     //Returns navX sensor ?
