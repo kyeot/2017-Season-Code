@@ -2,6 +2,7 @@ package org.usfirst.frc.team2783.robot;
 
 import org.usfirst.frc.team2783.robot.commands.GearAuto;
 import org.usfirst.frc.team2783.robot.commands.GearPlace;
+import org.usfirst.frc.team2783.robot.commands.RetrieveGear;
 import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
 import org.usfirst.frc.team2783.robot.commands.ToggleRetriever;
 import org.usfirst.frc.team2783.robot.commands.VisionTrigger;
@@ -54,13 +55,16 @@ public class OI {
 	Button gatherer = new JoystickButton(manipulator, 6);
 	Button climber = new JoystickButton(manipulator, 5);
 	Button gearPlace = new JoystickButton(manipulator, 4);
+	Button retrieveGear = new JoystickButton(manipulator, 7);
 	Button visionButton = new JoystickButton(xBoxController, 1);
 	
 
 	public OI() {
 		visionButton.toggleWhenPressed(new VisionTrigger());
 		
-		shooter.toggleWhenPressed(new ShooterDrive());
+		retrieveGear.whenPressed(new RetrieveGear());
+		
+		shooter.whenPressed(new ShooterDrive());
 		
 		gearPlace.whenPressed(new GearPlace());
 		
