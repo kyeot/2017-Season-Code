@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2783.robot.commands.autonomous;
 
 import org.usfirst.frc.team2783.robot.Robot;
-import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase.SwerveModule;
 
 import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.command.Command;
@@ -11,19 +10,19 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class AutoDrive extends Command {
 
-	private double fbMot;
-	private double lrMot;
+	private double angle;
+	private double speed;
 	private double rotMot;
 	private boolean fieldOriented;
 	private long commandStartedAt;
 	private double runTime;
 	
-    public AutoDrive(double fbMot, double lrMot, double rotMot, boolean fieldOriented, double runTime) {
+    public AutoDrive(double angle, double speed, double rotMot, boolean fieldOriented, double runTime) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.swerveBase);
-    	this.fbMot = fbMot;
-    	this.lrMot = lrMot;
+    	this.angle = angle;
+    	this.speed = speed;
     	this.rotMot = rotMot;
     	this.fieldOriented = fieldOriented;
     	
@@ -39,7 +38,7 @@ public class AutoDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.swerveBase.swerveDrive(fbMot, lrMot, rotMot, fieldOriented);
+    	Robot.swerveBase.polarSwerveDrive(angle, speed, rotMot, fieldOriented);
     	
     	
     }

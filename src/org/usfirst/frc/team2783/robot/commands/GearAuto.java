@@ -40,7 +40,7 @@ public class GearAuto extends Command {
     	AdjustRotationToTarget VisionAdjustRotation = new AdjustRotationToTarget();
     	VisionAdjustRotation.start();
     	double initGyro = Robot.swerveBase.getGyroAngle(false);
-    	double initUltra1 = Robot.usSensor.getValue();
+    	double initUltra1 = Robot.usSensor1.getValue();
     	double initUltra2 = Robot.usSensor2.getValue();
     	initUltra = (initUltra1 + initUltra2) / 2;
     	if(position == 0){
