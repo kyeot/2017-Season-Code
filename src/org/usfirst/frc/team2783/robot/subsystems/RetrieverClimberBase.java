@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class RetrieverClimberBase extends Subsystem {
 	
-	private VictorSP gathererMotor = new VictorSP(RobotMap.GATHERER_WHEEL_ID);
+	private CANTalon gathererMotor = new CANTalon(RobotMap.GATHERER_WHEEL_ID);
 	
 	private Servo gearPlace = new Servo(RobotMap.GEAR_PLACE_ID);
 	

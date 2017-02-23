@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2783.robot;
 
-import org.usfirst.frc.team2783.robot.commands.Agitator;
 import org.usfirst.frc.team2783.robot.commands.GearAuto;
 import org.usfirst.frc.team2783.robot.commands.GearPlace;
 import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
@@ -54,7 +53,6 @@ public class OI {
 	Button shooter = new JoystickButton(manipulator, 8);
 	Button gatherer = new JoystickButton(manipulator, 6);
 	Button climber = new JoystickButton(manipulator, 5);
-	Button agitator = new JoystickButton(manipulator, 7);
 	Button gearPlace = new JoystickButton(manipulator, 4);
 	Button visionButton = new JoystickButton(xBoxController, 1);
 	
@@ -63,8 +61,6 @@ public class OI {
 		visionButton.toggleWhenPressed(new VisionTrigger());
 		
 		shooter.toggleWhenPressed(new ShooterDrive());
-		
-		agitator.whenPressed(new Agitator());
 		
 		gearPlace.whenPressed(new GearPlace());
 		

@@ -55,7 +55,7 @@ public class SwerveDriveBase extends Subsystem {
 		  
 
 
-		driveMot;
+		CANTalon driveMot;
 		VictorSP swivelMot;
 		Encoder enc;
 		
