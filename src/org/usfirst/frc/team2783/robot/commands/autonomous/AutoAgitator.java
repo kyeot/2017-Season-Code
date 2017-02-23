@@ -10,21 +10,21 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AutoShoot extends Command {
+public class AutoAgitator extends Command {
 
-	private double shooterSpeed;
 	private double agitatorSpeed;
 	private long commandStartedAt;
+	private double runTime;
 	
-    public AutoShoot(double shooterSpeed, double agitatorSpeed) {
+    public AutoAgitator(double agitatorSpeed, double runTime) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooterBase);
     	
-    	this.shooterSpeed = shooterSpeed;
     	this.agitatorSpeed = agitatorSpeed;
     	
     	//Run Time is in Seconds
+    	this.runTime = runTime;  	
     	
     }
 
@@ -35,15 +35,14 @@ public class AutoShoot extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooterBase.setShooterSpeedVbus(shooterSpeed);
     	Robot.shooterBase.setAgitatorSpeedVbus(agitatorSpeed);
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return false;
     	//Run command for 6 seconds
+        return Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt);
     }
 
     // Called once after isFinished returns true

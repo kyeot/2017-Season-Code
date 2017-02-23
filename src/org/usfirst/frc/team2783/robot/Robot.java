@@ -36,7 +36,7 @@ public class Robot extends IterativeRobot {
 	public static Command autonomous;
 	//public static NetworkTable smartDashTable;
 	//public static GripPipeline pipeline = new GripPipeline();
-	public static AnalogInput usSensor;
+	public static AnalogInput usSensor1;
 	public static AnalogInput usSensor2;
 
 	Command autonomousCommand;
