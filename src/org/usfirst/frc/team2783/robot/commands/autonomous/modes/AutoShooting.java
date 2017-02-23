@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2783.robot.commands.autonomous.modes;
 
+import org.usfirst.frc.team2783.robot.commands.autonomous.AutoAgitator;
 import org.usfirst.frc.team2783.robot.commands.autonomous.AutoShoot;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -11,11 +12,9 @@ public class AutoShooting extends CommandGroup {
 
     public AutoShooting() {
     	
-    	addSequential(new AutoShoot(1, 0, 1));
+    	addSequential(new AutoAgitator(1, 1));
     	
-    	addSequential(new AutoShoot(1, 1, 8));
-    	
-    	addSequential(new AutoShoot(1, 0, 1));
+    	addSequential(new AutoShoot(1, 1));
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());
