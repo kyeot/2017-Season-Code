@@ -1,9 +1,7 @@
 package org.usfirst.frc.team2783.robot.commands;
 
-import org.usfirst.frc.team2783.robot.OI;
 import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
-import org.usfirst.frc.team2783.robot.util.DiscreteToggle;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -29,15 +27,13 @@ public class ToggleRetriever extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	
-    	if(gear == 0){
+    	if(gear == 0) {
     		Robot.retriever.shiftGear(0);
-    	
     		Robot.retriever.toggleRetriever(direction);
     	}
     	
-    	if(gear == 1){
+    	if(gear == 1) {
     		Robot.retriever.shiftGear(180);
-    		
     		Robot.retriever.toggleRetriever(direction);
     	}
     	

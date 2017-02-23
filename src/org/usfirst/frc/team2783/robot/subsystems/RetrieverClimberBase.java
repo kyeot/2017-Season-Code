@@ -18,14 +18,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class RetrieverClimberBase extends Subsystem {
 	
-	private CANTalon gathererMotor = new CANTalon(RobotMap.GATHERER_WHEEL_ID);
-	
-	private Servo gearPlace = new Servo(RobotMap.GEAR_PLACE_ID);
-	
-	private Servo gearShifter = new Servo(RobotMap.GEAR_SHIFTER_ID);
+	private CANTalon gathererMotor;
+	private Servo gearShifter;
 
 	private DiscreteToggle retrieverInToggle;
-
 	private DiscreteToggle retrieverOutToggle;
 	
 	public enum RetrieverDirection{
@@ -38,18 +34,12 @@ public class RetrieverClimberBase extends Subsystem {
 		this.retrieverInToggle = new DiscreteToggle();
 		this.retrieverOutToggle = new DiscreteToggle();
 		
+		gathererMotor = new CANTalon(RobotMap.GATHERER_WHEEL_ID);
+		gearShifter = new Servo(RobotMap.GEAR_SHIFTER_ID);
 	}
 
 	public void setGathererSpeedVbus(double vbusOutput) {
 		gathererMotor.set(vbusOutput);
-		
-		System.out.println("kill yourself");
-		
-	}
-	
-	public void gearPlace(double Angle){
-		gearPlace.setAngle(Angle);
-		
 	}
 	
 	public void toggleRetriever(RetrieverDirection direction) {
@@ -63,23 +53,17 @@ public class RetrieverClimberBase extends Subsystem {
 	}
 	
 	public void updateRetriever() {
-    	
-    	if(this.retrieverInToggle.getValue()) {
+    	if(retrieverInToggle.getValue()) {
     		gathererMotor.set(1);
-        	SmartDashboard.putNumber("Ball Retriever Speed", 1);
-    	} else if(this.retrieverOutToggle.getValue()) {
-    		gathererMotor.set(-1);
-        	SmartDashboard.putNumber("Ball Retriever Speed", -1);    		
+    	} else if(retrieverOutToggle.getValue()) {
+    		gathererMotor.set(-1);		
     	} else {
     		gathererMotor.set(0);
     	}
-    	}
+    }
 	
-	public void shiftGear(double Angle){
-		gearShifter.setAngle(Angle);
-		
-		System.out.println("kill yourself 2");
-		
+	public void shiftGear(double angle){
+		gearShifter.setAngle(angle);
 	}
 
     // Put methods for controlling this subsystem

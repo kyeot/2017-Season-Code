@@ -6,7 +6,6 @@ import org.usfirst.frc.team2783.robot.commands.autonomous.modes.GetGearAndShoot;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
 import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
-import org.usfirst.frc.team2783.robot.vision.GripPipeline;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
@@ -14,7 +13,6 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -27,14 +25,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	//public static final SwerveDriveBase swerveBase = new SwerveDriveBase();
 	public static final ShooterBase shooterBase = new ShooterBase();
 	public static final RetrieverClimberBase retriever = new RetrieverClimberBase();
 	public static final SwerveDriveBase swerveBase = new SwerveDriveBase();
 	public static OI oi;
 	public static Command autonomous;
-	//public static NetworkTable smartDashTable;
-	//public static GripPipeline pipeline = new GripPipeline();
 	public static AnalogInput usSensor; 
 
 	Command autonomousCommand;
@@ -51,9 +46,7 @@ public class Robot extends IterativeRobot {
 		
 		CameraServer usbCameraServer = CameraServer.getInstance();
 		usbCameraServer.startAutomaticCapture("cam0", 0);
-		
 		usbCameraServer.startAutomaticCapture("cam1", 1);
-		
 		usbCameraServer.startAutomaticCapture("cam2", 2);
 		
 		usSensor = new AnalogInput(0);

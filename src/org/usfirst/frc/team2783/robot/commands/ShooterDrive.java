@@ -1,10 +1,7 @@
 package org.usfirst.frc.team2783.robot.commands;
 
-import java.util.concurrent.TimeUnit;
-
 import org.usfirst.frc.team2783.robot.OI;
 import org.usfirst.frc.team2783.robot.Robot;
-import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -28,18 +25,12 @@ public class ShooterDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(OI.manipulator.getRawButton(8)){
+    	if(OI.manipulator.getRawButton(8)) {
     		Robot.shooterBase.setShooterSpeedVbus(1);
-    		
     		Robot.shooterBase.setAgitatorSpeedVbus(0.75);
-    		
-    	}
-    
-    	else{
+    	} else {
     		Robot.shooterBase.setAgitatorSpeedVbus(0);
-    		
     		Robot.shooterBase.setShooterSpeedVbus(0);
-    		
     	}
    
     }

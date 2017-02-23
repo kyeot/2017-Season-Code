@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2783.robot.commands.autonomous.modes;
 
+import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.commands.autonomous.AutoDrive;
 import org.usfirst.frc.team2783.robot.commands.autonomous.AutoShoot;
 
@@ -11,6 +12,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class GetGearAndShoot extends CommandGroup {
 
     public GetGearAndShoot() {
+    	requires(Robot.swerveBase);
+    	requires(Robot.shooterBase);
     	
     	addSequential(new AutoDrive(1, 0, 0.125, true, 2));
     	addSequential(new AutoDrive(0.5, 0, 0, true, 1));

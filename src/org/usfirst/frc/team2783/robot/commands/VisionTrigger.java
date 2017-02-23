@@ -9,11 +9,12 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class VisionTrigger extends Command {
 
-	GripPipeline pipeline = new GripPipeline();
+	GripPipeline pipeline;
 	
     public VisionTrigger() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+    	pipeline = new GripPipeline();
     }
 
     // Called just before this Command runs the first time
