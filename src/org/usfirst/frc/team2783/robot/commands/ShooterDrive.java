@@ -37,12 +37,18 @@ public class ShooterDrive extends Command {
 //    		new AutoShooting();
 //    	
 //    	}
-    		
+//    	
+//    	else{
+//    		Robot.shooterBase.setAgitatorSpeedVbus(0);
+//    		
+//    		Robot.shooterBase.setShooterSpeedVbus(0);
+//    		
+//    	}
     	
     	if(OI.manipulator.getRawButton(8)){
     		Robot.shooterBase.setShooterSpeedVbus(1);
     		
-    		Robot.shooterBase.setAgitatorSpeedVbus(0.75);
+    		Robot.shooterBase.setAgitatorSpeedVbus(1);
     		
     	}
     
@@ -53,7 +59,7 @@ public class ShooterDrive extends Command {
     		Robot.shooterBase.setShooterSpeedVbus(0);
     		
     	}
-  
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
