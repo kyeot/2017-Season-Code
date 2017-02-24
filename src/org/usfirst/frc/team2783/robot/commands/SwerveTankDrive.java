@@ -24,8 +24,8 @@ public class SwerveTankDrive extends Command {
     
     	//Gets the raw axis of both sticks
     	Robot.swerveBase.tankDrive(
-    			OI.xBoxController.getRawAxis(2),
-    			OI.xBoxController.getRawAxis(3)
+    			OI.driver.getRawAxis(2),
+    			OI.driver.getRawAxis(3)
     		);
     	
     }

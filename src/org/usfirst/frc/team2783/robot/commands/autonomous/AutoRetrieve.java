@@ -2,7 +2,6 @@ package org.usfirst.frc.team2783.robot.commands.autonomous;
 
 import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
-import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase.SwerveModule;
 
 import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.command.Command;

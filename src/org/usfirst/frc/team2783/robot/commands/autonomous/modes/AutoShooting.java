@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2783.robot.commands.autonomous.modes;
 
-import org.usfirst.frc.team2783.robot.commands.autonomous.AutoAgitator;
-import org.usfirst.frc.team2783.robot.commands.autonomous.AutoDrive;
+import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.commands.autonomous.AutoShoot;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -12,6 +11,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class AutoShooting extends CommandGroup {
 
     public AutoShooting() {
+    	requires(Robot.swerveBase);
+    	requires(Robot.shooterBase);
     	
     	addSequential(new AutoShoot(1, 0, 1));
     	

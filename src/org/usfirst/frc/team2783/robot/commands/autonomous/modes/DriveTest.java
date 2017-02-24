@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2783.robot.commands.autonomous.modes;
 
+import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.commands.autonomous.AutoDrive;
 import org.usfirst.frc.team2783.robot.commands.autonomous.AutoRetrieve;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
@@ -12,6 +13,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveTest extends CommandGroup {
 
     public DriveTest() {
+    	requires(Robot.swerveBase);
+    	requires(Robot.retriever);
     	
     	addSequential(new AutoDrive(0.75, 0, 0, true, 1));
     	addParallel(new AutoRetrieve(RetrieverDirection.RET_IN, 1));
