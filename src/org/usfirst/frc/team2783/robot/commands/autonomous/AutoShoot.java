@@ -14,12 +14,17 @@ public class AutoShoot extends Command {
 
 	private double shooterSpeed;
 	private double agitatorSpeed;
+	
 	private long commandStartedAt;
 	
-    public AutoShoot(double shooterSpeed, double agitatorSpeed) {
+	private double runTime;
+	
+    public AutoShoot(double shooterSpeed, double agitatorSpeed, double runTime) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooterBase);
+    	
+    	this.runTime = runTime;
     	
     	this.shooterSpeed = shooterSpeed;
     	this.agitatorSpeed = agitatorSpeed;
@@ -30,7 +35,6 @@ public class AutoShoot extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	commandStartedAt = Utility.getFPGATime();
        }
 
     // Called repeatedly when this Command is scheduled to run
@@ -42,13 +46,12 @@ public class AutoShoot extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return false;
+    	return Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt);
     	//Run command for 6 seconds
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	commandStartedAt = 0;
     	Robot.shooterBase.setShooterSpeedVbus(0);
     	
     }

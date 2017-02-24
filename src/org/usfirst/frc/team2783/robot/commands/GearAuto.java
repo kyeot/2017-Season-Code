@@ -28,7 +28,7 @@ public class GearAuto extends Command {
     protected void initialize() {
     	AdjustRotationToTarget VisionAdjustRotation = new AdjustRotationToTarget();
     	double initGyro = Robot.swerveBase.getGyroAngle(false);
-    	double initUltra = Robot.usSensor.getValue();
+    	double initUltra = Robot.usSensor1.getValue();
     	boolean travelLeft = true;
     	if(initGyro >= 0) {
     			travelLeft = false;

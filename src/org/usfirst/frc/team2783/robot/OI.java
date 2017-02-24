@@ -64,7 +64,7 @@ public class OI {
 		
 		retrieveGear.whenPressed(new RetrieveGear());
 		
-		shooter.whenPressed(new ShooterDrive());
+		shooter.toggleWhenPressed(new ShooterDrive());
 		
 		gearPlace.whenPressed(new GearPlace());
 		

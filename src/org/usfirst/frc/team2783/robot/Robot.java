@@ -2,7 +2,6 @@
 package org.usfirst.frc.team2783.robot;
 
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.DriveTest;
-import org.usfirst.frc.team2783.robot.commands.autonomous.modes.GetGearAndShoot;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
 import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
@@ -57,7 +56,9 @@ public class Robot extends IterativeRobot {
 		
 		usbCameraServer.startAutomaticCapture("cam2", 2);
 		
-		usSensor = new AnalogInput(0);
+		usSensor1 = new AnalogInput(0);
+		
+		usSensor2 = new AnalogInput(1);
 		
 		
 		//this.smartDashTable = NetworkTable.getTable("SmartDashboard");
@@ -106,8 +107,6 @@ public class Robot extends IterativeRobot {
 			case "DriveTest":
 				autonomous = new DriveTest();
 				break;
-			case "GetGearAndShoot":
-				autonomous = new GetGearAndShoot();
 			case "None":
 			default:
 				autonomous = null;
