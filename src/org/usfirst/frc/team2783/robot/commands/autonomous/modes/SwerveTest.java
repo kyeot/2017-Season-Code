@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2783.robot.commands.autonomous.modes;
 
 import org.usfirst.frc.team2783.robot.Robot;
-import org.usfirst.frc.team2783.robot.commands.autonomous.AutoGyroDrive;
+import org.usfirst.frc.team2783.robot.commands.GyroSwerveDrive;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -15,7 +15,7 @@ public class SwerveTest extends CommandGroup {
         // eg. requires(chassis);
     	requires (Robot.swerveBase);
     	
-    	addSequential(new AutoGyroDrive(90, 0.5, true, 5));
+    	addSequential(new GyroSwerveDrive(90, 0.5, true, 5));
     	
     }
 }

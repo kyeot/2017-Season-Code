@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2783.robot.commands.autonomous;
+package org.usfirst.frc.team2783.robot.commands;
 
 import org.usfirst.frc.team2783.robot.Robot;
 
@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 /**
  *
  */
-public class AutoGyroDrive extends PIDCommand {
+public class GyroSwerveDrive extends PIDCommand {
 
 	final private static double p = 0.01;
 	final private static double i = 0.0;
@@ -20,16 +20,32 @@ public class AutoGyroDrive extends PIDCommand {
 	private double runTime;
 	
 	private long commandStartedAt;
+	private boolean timed = false; 
 	
 	private double pidOutput;
 	
-    public AutoGyroDrive(double angle, double speed, boolean fieldOriented, double runTime) {
+    public GyroSwerveDrive(double angle, double speed, boolean fieldOriented, double runTime) {
     	super(p, i, d);
     	
     	this.angle = angle;
     	this.speed = speed;
     	this.fieldOriented = fieldOriented;
     	this.runTime = runTime;
+    	
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	requires(Robot.swerveBase);
+    }
+    
+    public GyroSwerveDrive(double angle, double speed, boolean fieldOriented) {
+    	super(p, i, d);
+    	
+    	this.angle = angle;
+    	this.speed = speed;
+    	this.fieldOriented = fieldOriented;
+    	this.runTime = runTime;
+    	
+    	timed = false;
     	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -50,7 +66,12 @@ public class AutoGyroDrive extends PIDCommand {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt);
+    	if(timed) {
+    		return Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt);
+    	} else {
+    		return false;
+    	}
+       
     }
 
     // Called once after isFinished returns true
