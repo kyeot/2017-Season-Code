@@ -11,17 +11,16 @@ import edu.wpi.first.wpilibj.command.Command;
 public class GearAuto extends Command {
 	
 	double position;
-	double initUltra;
-	boolean travelLeft;
-	double initArclength;
-	double verticalTargetDisplacement;
-	double horizontalTargetDisplacement;
-	double curArclength;
-	double horizontalSpeed;
-	double verticalSpeed;
-	double horizontalControllerAxis;
-	double verticalControllerAxis;
-	double angleChangeRate;
+	double curAngle;
+	double ultraSonic;
+	double oldAngle;
+	double newAngle;
+	double verticalDistanceFromTarget;
+	double horizontalDistanceFromTarget;
+	AnalogInput usSensor1;
+	AnalogInput usSensor2;
+	
+	
 	
     public GearAuto(double position) {
         // Use requires() here to declare subsystem dependencies
@@ -34,59 +33,59 @@ public class GearAuto extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	AdjustRotationToTarget VisionAdjustRotation = new AdjustRotationToTarget();
+    	usSensor1 = Robot.usSensor1;
+    	usSensor2 = Robot.usSensor2;
+    	ultraSonic = (usSensor1.getValue() + usSensor2.getValue())/2;
+    	
+    	
+     	AdjustRotationToTarget VisionAdjustRotation = new AdjustRotationToTarget();
     	VisionAdjustRotation.start();
-    	double initGyro = Robot.swerveBase.getGyroAngle(false);
-    	boolean travelLeft = true;
-    	if(initGyro >= 0) {
-    	double initUltra1 = Robot.usSensor1.getValue();
-    	double initUltra2 = Robot.usSensor2.getValue();
-    	initUltra = (initUltra1 + initUltra2) / 2;
+    	
+    	curAngle = Robot.swerveBase.getGyroAngle(false);
+    	
     	if(position == 0){
-    		Robot.swerveBase.resetGyroNorth(initGyro, 210);
-    	} else if(position == 1){
-    		Robot.swerveBase.resetGyroNorth(initGyro, 330);
-    	} else if(position == 2){
-    		Robot.swerveBase.resetGyroNorth(initGyro, 270);
+    		Robot.swerveBase.resetGyroNorth(curAngle, 300);
+    		
     	}
-    	initGyro = Robot.swerveBase.getGyroAngle(false);
-    	if(initGyro >= 90) {
-    			travelLeft = false;
-    		} else {
-    			travelLeft = true;
-    		}
     	
-    	initArclength = Math.abs(initGyro)*initUltra;
-    	
+    	else if(position == 1){
+    		Robot.swerveBase.resetGyroNorth(curAngle, 60);
+    		
     	}
+    	
+    	else if(position == 2){
+    		Robot.swerveBase.resetGyroNorth(curAngle, 0);
+    		
+    	}
+    	
+    	double angle = Robot.swerveBase.getGyroAngle(false);
+    	
+    	if(angle > 180){
+    		angle = angle - 360;
+    		
+    	}
+    	
+    	verticalDistanceFromTarget = Math.abs(Robot.swerveBase.sinDeg((angle)*ultraSonic));
+    	
+    	horizontalDistanceFromTarget = Math.abs(ultraSonic*Robot.swerveBase.cosDeg(angle));
+    	
+    	double oldAngle = angle;
+    	
+    	Robot.swerveBase.
     	
     }
     
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	verticalTargetDisplacement = -1 * (initUltra * Math.sin(Robot.swerveBase.getGyroAngle(false)));
-    	horizontalTargetDisplacement = initUltra * Math.cos(Robot.swerveBase.getGyroAngle(false));
-    	horizontalSpeed = Math.sqrt(Math.abs(((48 * Math.PI) * (48 * Math.PI) * ((initUltra * initUltra) - (horizontalTargetDisplacement * horizontalTargetDisplacement))) / (initUltra * initUltra)));
-    	verticalSpeed = (horizontalTargetDisplacement * horizontalSpeed) / Math.sqrt(Math.abs((initUltra * initUltra) - (horizontalTargetDisplacement * horizontalTargetDisplacement)));
-    	curArclength = initUltra * Robot.swerveBase.getGyroAngle(false);
-    	if(travelLeft = true){
-    		horizontalControllerAxis = (-curArclength * horizontalSpeed) / (48 * Math.PI * initArclength);
-    	} else {
-    		horizontalControllerAxis = (curArclength * horizontalSpeed) / (48 * Math.PI * initArclength);
-    	}
-    	verticalControllerAxis = (-curArclength * verticalSpeed) / (48 * Math.PI * initArclength);
-    	angleChangeRate = curArclength / initArclength;
-    	Robot.swerveBase.swerveDrive(verticalControllerAxis, horizontalControllerAxis, angleChangeRate, true);
+    	
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() { 
-        if(horizontalTargetDisplacement != 0){
-        	return false;
-        } else {
-        	return true;
-        }
+    	return false;
+    	
     }
 
     // Called once after isFinished returns true
