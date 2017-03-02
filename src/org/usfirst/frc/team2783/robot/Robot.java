@@ -140,7 +140,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		System.out.println("lmao");
 		Scheduler.getInstance().run();
 	}
 

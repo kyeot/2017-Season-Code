@@ -11,6 +11,7 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
 import edu.wpi.cscore.AxisCamera;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.vision.VisionThread;
@@ -40,7 +41,7 @@ public class GripPipeline implements VisionPipeline {
 	private double area = 0.0;
 	private double theta;
 	private final Object imgLock = new Object();
-	private AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera.local");
+	private UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(2);
 	private VisionThread visionThread;
 	private Rect r2;
 
