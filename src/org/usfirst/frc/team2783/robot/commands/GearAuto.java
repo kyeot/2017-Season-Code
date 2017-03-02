@@ -61,7 +61,7 @@ public class GearAuto extends Command {
     	double angle = Robot.swerveBase.getGyroAngle(false);
     	
     	if(angle > 180){
-    		angle = angle - 360;
+    		angle = (angle - 360);
     		
     	}
     	
@@ -69,9 +69,7 @@ public class GearAuto extends Command {
     	
     	horizontalDistanceFromTarget = Math.abs(ultraSonic*Robot.swerveBase.cosDeg(angle));
     	
-    	double oldAngle = angle;
     	
-    	Robot.swerveBase.
     	
     }
     
