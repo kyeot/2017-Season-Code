@@ -20,8 +20,8 @@ public class RetrieveGear extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	sensor1 = new AnalogInput(0);
-    	sensor2 = new AnalogInput(1);
+    	sensor1 = Robot.usSensor1;
+    	sensor2 = Robot.usSensor2;
     	
     }
 

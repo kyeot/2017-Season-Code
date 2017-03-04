@@ -3,6 +3,7 @@ package org.usfirst.frc.team2783.robot.commands;
 import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.vision.AdjustRotationToTarget;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
