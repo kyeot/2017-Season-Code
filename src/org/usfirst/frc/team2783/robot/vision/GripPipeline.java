@@ -41,7 +41,6 @@ public class GripPipeline implements VisionPipeline {
 	private double area = 0.0;
 	private double theta;
 	private final Object imgLock = new Object();
-	private UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(2);
 	private VisionThread visionThread;
 	private Rect r2;
 
@@ -79,9 +78,9 @@ public class GripPipeline implements VisionPipeline {
 
 		// Step HSV_Threshold0:
 		Mat hsvThresholdInput = cvDilateOutput;
-		double[] hsvThresholdHue = {0.0, 180.0};
-		double[] hsvThresholdSaturation = {82.55395683453236, 255.0};
-		double[] hsvThresholdValue = {199.50539568345323, 255.0};
+		double[] hsvThresholdHue = {50.17985611510791, 93.99317406143345};
+		double[] hsvThresholdSaturation = {151.34892086330936, 255.0};
+		double[] hsvThresholdValue = {85, 205};
 		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
 		// Step Find_Contours0:
@@ -91,7 +90,7 @@ public class GripPipeline implements VisionPipeline {
 
 		// Step Filter_Contours0:
 		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-		double filterContoursMinArea = 0;
+		double filterContoursMinArea = 50;
 		double filterContoursMinPerimeter = 0;
 		double filterContoursMinWidth = 0;
 		double filterContoursMaxWidth = 1000;
@@ -101,7 +100,7 @@ public class GripPipeline implements VisionPipeline {
 		double filterContoursMaxVertices = 1000000;
 		double filterContoursMinVertices = 0;
 		double filterContoursMinRatio = 0.0;
-		double filterContoursMaxRatio = 0.5;
+		double filterContoursMaxRatio = 4.0;
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
 
 	}
@@ -227,16 +226,7 @@ public class GripPipeline implements VisionPipeline {
 	}
 
 	public void startThread(){
-		camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-		visionThread = new VisionThread(this.camera, this, pipeline -> {
-	        if (!pipeline.findContoursOutput().isEmpty()) {	       
-	        	Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-	        	synchronized (imgLock) {
-	        		centerX = r.x + (r.width / 2);
-	        		area = r.area();	 
-	        }
-	    }
-	});
+		
 		visionThread.start();
 	}
 	
