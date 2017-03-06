@@ -42,7 +42,7 @@ public class MovingAverage {
 			return sum / storedValues.size();
 		} else {
 			// Return null if there are no entries in storedValues
-			return null;
+			return 0.0;
 		}
 	}
 	
