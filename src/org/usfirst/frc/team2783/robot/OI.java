@@ -7,6 +7,7 @@ import org.usfirst.frc.team2783.robot.commands.ToggleRetriever;
 import org.usfirst.frc.team2783.robot.commands.VisionTrigger;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
 import org.usfirst.frc.team2783.robot.triggers.Dpad;
+import org.usfirst.frc.team2783.robot.vision.AdjustRotationToTarget;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -36,11 +37,11 @@ public class OI {
 	Dpad gyroDriveEast = new Dpad(driver, 90);
 	Dpad gyroDriveWest = new Dpad(driver, 270);
 	
+	VisionTrigger visionTrigger;
 
 	public OI() {
-		visionButton.toggleWhenPressed(new VisionTrigger());
-		
-		retrieveGear.whenPressed(new RetrieveGear());
+		visionButton.whileActive(new AdjustRotationToTarget());
+		retrieveGear.toggleWhenPressed(new RetrieveGear());
 		
 		shooter.toggleWhenPressed(new ShooterDrive());
 		
