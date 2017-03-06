@@ -23,6 +23,7 @@ public class GyroSwerveDrive extends PIDCommand {
 	private boolean timed = false; 
 	
 	private double pidOutput;
+	private double angleOffset = 0;
 	
     public GyroSwerveDrive(double angle, double speed, boolean fieldOriented, double runTime) {
     	super(p, i, d);
@@ -31,6 +32,8 @@ public class GyroSwerveDrive extends PIDCommand {
     	this.speed = speed;
     	this.fieldOriented = fieldOriented;
     	this.runTime = runTime;
+    	
+    	timed = true;
     	
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -55,6 +58,8 @@ public class GyroSwerveDrive extends PIDCommand {
     // Called just before this Command runs the first time
     protected void initialize() {
     	commandStartedAt = Utility.getFPGATime();
+    	
+    	angleOffset = angle - Robot.swerveBase.getGyroAngle(false);
     	
     	setSetpoint(angle);
     }
@@ -86,7 +91,7 @@ public class GyroSwerveDrive extends PIDCommand {
 	@Override
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub
-		return Robot.swerveBase.getGyroAngle(true);
+		return Robot.swerveBase.getGyroAngle(false) + angleOffset;
 	}
 
 	@Override
