@@ -1,7 +1,8 @@
 
 package org.usfirst.frc.team2783.robot;
 
-import org.usfirst.frc.team2783.robot.commands.autonomous.modes.DriveTest;
+import org.usfirst.frc.team2783.robot.commands.autonomous.modes.Gear;
+import org.usfirst.frc.team2783.robot.commands.autonomous.modes.Shoot;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
 import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
@@ -12,6 +13,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -37,6 +39,8 @@ public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
+	
+	public static NetworkTable smartDashTable;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -53,14 +57,13 @@ public class Robot extends IterativeRobot {
 		usbCameraServer.startAutomaticCapture("cam2", 2);
 		
 		usSensor1 = new AnalogInput(0);
-		
 		usSensor2 = new AnalogInput(1);
 		
 		
-		//this.smartDashTable = NetworkTable.getTable("SmartDashboard");
+		this.smartDashTable = NetworkTable.getTable("SmartDashboard");
 		
-		String[] autonomousList = {"TalonTest"};
-        //this.smartDashTable.putStringArray("Auto List", autonomousList);
+		String[] autonomousList = {"Gear", "Shooot"};
+        this.smartDashTable.putStringArray("Auto List", autonomousList);
         
 		
 		
@@ -98,12 +101,15 @@ public class Robot extends IterativeRobot {
     	//Gets the autonomous selector value from the dashboard
     	String autoSelected = SmartDashboard.getString("Auto Selector", "None");
     	
-    	autonomous = new DriveTest();
+    	autonomous = new Shoot();
     	
     	//Switches the autonomous mode based on the value from the SmartDashboard
-		/*switch(autoSelected) {
-			case "TalonTest":
-				autonomous = new TalonTest();
+		switch(autoSelected) {
+			case "Gear":
+				autonomous = new Gear();
+				break;
+			case "Shoot":
+				autonomous = new Shoot();
 				break;
 			case "None":
 			default:
@@ -114,7 +120,7 @@ public class Robot extends IterativeRobot {
     	if(autonomous != null) {
     		autonomous.start();
     	}
-    	*/
+    	
 	}
 
 	/**
