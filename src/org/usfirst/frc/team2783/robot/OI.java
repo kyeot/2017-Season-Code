@@ -48,10 +48,10 @@ public class OI {
 		climber.whenPressed(new ToggleRetriever(RetrieverDirection.RET_OUT, 1));
 		gatherer.whenPressed(new ToggleRetriever(RetrieverDirection.RET_OUT, 0));
 		
-		gyroDriveNorth.whileActive(new GyroSwerveDrive(0.0, 0.5, true));
-		gyroDriveSouth.whileActive(new GyroSwerveDrive(180.0, 0.5, true));
-		gyroDriveEast.whileActive(new GyroSwerveDrive(90.0, 0.5, true));
-		gyroDriveWest.whileActive(new GyroSwerveDrive(270.0, 0.5, true));
+		gyroDriveNorth.whileActive(new GyroSwerveDrive(0.0, 0.5, false));
+		gyroDriveSouth.whileActive(new GyroSwerveDrive(180.0, 0.5, false));
+		gyroDriveEast.whileActive(new GyroSwerveDrive(90.0, 0.5, false));
+		gyroDriveWest.whileActive(new GyroSwerveDrive(270.0, 0.5, false));
 	}
 
 	

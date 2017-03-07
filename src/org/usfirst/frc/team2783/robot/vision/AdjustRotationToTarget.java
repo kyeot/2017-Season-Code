@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
 
 public class AdjustRotationToTarget extends PIDCommand {
 
-	final public static double kp = 0.45;
+	final public static double kp = 1;
 	final public static double ki = 0;
 	final public static double kd = 0.0;
 
@@ -55,11 +55,12 @@ public class AdjustRotationToTarget extends PIDCommand {
     	camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
     	
 		visionThread = new VisionThread(this.camera, new GripPipeline(), pipeline -> {
-	        if (pipeline.filterContoursOutput().size() == 2) {	   
+			//System.out.println(pipeline.filterContoursOutput().size());
+	        if (pipeline.filterContoursOutput().size() == 2) {	
 	        	synchronized (imgLock) {
 	        	Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
 	        	Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
-	        		centerX = ((r.x + (r.width/2)) + (r2.x + (r2.width/2)));
+	        		centerX = ((r.x + (r.width))/2 + (r2.x + (r2.width))/2);
 	        	}	        	
 	    }
 	});
@@ -89,7 +90,6 @@ public class AdjustRotationToTarget extends PIDCommand {
 
     // Called once after isFinished returns true
     protected void end() {
-    	System.out.println("finished");
     	Robot.swerveBase.setZero();
     }
 
@@ -101,14 +101,15 @@ public class AdjustRotationToTarget extends PIDCommand {
 	@Override
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub
-		System.out.println(centerX);
-			return centerX/IMG_WIDTH;
+		//System.out.println(centerX/IMG_WIDTH);
+		return centerX/IMG_WIDTH;
 		
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
+		System.out.println(output);
 		Robot.swerveBase.swerveDrive(0, 0, -output, false);
 	}
 }
