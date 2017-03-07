@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class ShootFromStart extends CommandGroup {
+public class Shoot extends CommandGroup {
 
-    public ShootFromStart() {
+    public Shoot() {
     	
     	requires(Robot.shooterBase);
     	

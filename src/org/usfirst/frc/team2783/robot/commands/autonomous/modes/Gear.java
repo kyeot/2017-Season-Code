@@ -8,12 +8,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class AutoGear extends CommandGroup {
+public class Gear extends CommandGroup {
 
-    public AutoGear() {
+    public Gear() {
     	requires(Robot.swerveBase);
     	
-    	new GyroSwerveDrive(180.0, 0.25, true, 3.0);
+    	System.out.println("fdsjak lhajdskl");
+    	
+    	addSequential(new GyroSwerveDrive(180.0, 0.25, true, 5));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
