@@ -15,7 +15,7 @@ public class Gear extends CommandGroup {
     	
     	System.out.println("fdsjak lhajdskl");
     	
-    	addSequential(new GyroSwerveDrive(180.0, 0.25, true, 5));
+    	addSequential(new GyroSwerveDrive(180, 0.25, true, 5));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
