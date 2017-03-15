@@ -2,7 +2,9 @@
 package org.usfirst.frc.team2783.robot;
 
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.Gear;
-import org.usfirst.frc.team2783.robot.commands.autonomous.modes.Shoot;
+import org.usfirst.frc.team2783.robot.commands.autonomous.modes.GetGearFromRight;
+import org.usfirst.frc.team2783.robot.commands.autonomous.modes.ShootFromBlue;
+import org.usfirst.frc.team2783.robot.commands.autonomous.modes.ShootFromRed;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
 import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
@@ -62,7 +64,7 @@ public class Robot extends IterativeRobot {
 		
 		this.smartDashTable = NetworkTable.getTable("SmartDashboard");
 		
-		String[] autonomousList = {"Gear", "Shooot"};
+		String[] autonomousList = {"Gear", "GetGearFromRight", "BlueShoot", "RedShoot"};
         this.smartDashTable.putStringArray("Auto List", autonomousList);
         
 		
@@ -101,15 +103,24 @@ public class Robot extends IterativeRobot {
     	//Gets the autonomous selector value from the dashboard
     	String autoSelected = SmartDashboard.getString("Auto Selector", "None");
     	
-    	autonomous = new Shoot();
+    	System.out.println("i want to die");
+    	
+    	autonomous = new GetGearFromRight();
     	
     	//Switches the autonomous mode based on the value from the SmartDashboard
 		switch(autoSelected) {
 			case "Gear":
 				autonomous = new Gear();
 				break;
-			case "Shoot":
-				autonomous = new Shoot();
+			case "RedShoot":
+				autonomous = new ShootFromRed();
+				break;
+			case "BlueShoot":
+				autonomous = new ShootFromBlue();
+				break;
+			case "GetGearFromRight":
+				System.out.println("i want to die");
+				autonomous = new GetGearFromRight();
 				break;
 			case "None":
 			default:
