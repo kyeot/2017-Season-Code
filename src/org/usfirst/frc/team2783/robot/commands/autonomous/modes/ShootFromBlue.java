@@ -2,7 +2,6 @@ package org.usfirst.frc.team2783.robot.commands.autonomous.modes;
 
 import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.commands.GyroSwerveDrive;
-import org.usfirst.frc.team2783.robot.commands.autonomous.AutoDrive;
 import org.usfirst.frc.team2783.robot.commands.autonomous.AutoShoot;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -10,15 +9,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class Shoot extends CommandGroup {
+public class ShootFromBlue extends CommandGroup {
 
-    public Shoot() {
+    public ShootFromBlue() {
     	
     	requires(Robot.shooterBase);
     	
-    	addSequential(new AutoShoot(0.77278320176183, 0.95, 13));
-    	addSequential(new GyroSwerveDrive(180, 0.5, true, 0.5));
-    	addSequential(new AutoDrive(180, 0.5, 0.25, true, 1));
+    	addSequential(new AutoShoot(0.773, 0.95, 13));
+    	addSequential(new GyroSwerveDrive(180, 0.5, true, 2));
+
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
