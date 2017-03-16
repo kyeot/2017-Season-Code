@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2783.robot.commands;
 
+import org.usfirst.frc.team2783.robot.OI;
 import org.usfirst.frc.team2783.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -22,7 +23,7 @@ public class Climb extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.retriever.setGathererSpeedVbus(Robot.oi.manipulator.getRawAxis(3));
+    	Robot.retriever.setGathererSpeedVbus(-OI.manipulator.getRawAxis(3));
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -1,9 +1,9 @@
 package org.usfirst.frc.team2783.robot.triggers;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.Trigger;
 
-public class AxisButton extends Button {
+public class AxisButton extends Trigger {
 	
 	private Joystick joystick;
 	private int axis;
@@ -15,7 +15,7 @@ public class AxisButton extends Button {
 	
 	@Override
 	public boolean get() {
-		return Math.abs(joystick.getRawAxis(axis)) > 0.2 ? true : false;
+		return Math.abs(joystick.getRawAxis(axis)) > 0.2;
 	}
 	
 	

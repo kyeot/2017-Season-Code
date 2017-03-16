@@ -14,6 +14,7 @@ import org.usfirst.frc.team2783.robot.vision.AdjustRotationToTarget;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.Trigger;
 
 
 /**
@@ -32,7 +33,7 @@ public class OI {
 	Button gearPlace = new JoystickButton(manipulator, 4);
 	Button retrieveGear = new JoystickButton(manipulator, 7);
 	
-	Button climber = new AxisButton(manipulator, 3);
+	AxisButton climber = new AxisButton(manipulator, 3);
 	
 	Button visionButton = new JoystickButton(driver, 1);
 	
@@ -52,7 +53,7 @@ public class OI {
 		
 		shooter.toggleWhenPressed(new ShooterDrive());
 		
-		climber.whenActive(new Climb());
+		climber.whileActive(new Climb());
 		
 		gatherer.whenPressed(new ToggleRetriever(RetrieverDirection.RET_OUT, 0));
 		
