@@ -12,7 +12,7 @@ public class AdjustRotationToTarget extends PIDCommand {
 	public static double ki = 0.0296;
 	public static double kd = 0.00025;
 	
-	private boolean buttonLastPressed = false;
+	private MovingAverage error;
 
 	public static final int IMG_WIDTH = 320;
 	public static final int IMG_HEIGHT = 240;
@@ -26,7 +26,7 @@ public class AdjustRotationToTarget extends PIDCommand {
     	
     	requires(Robot.swerveBase);
     	
-    	getPIDController().setContinuous(true);
+    	error = new MovingAverage(10000);
     	
     	setSetpoint(0.5);
     }
@@ -53,8 +53,9 @@ public class AdjustRotationToTarget extends PIDCommand {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
 
-    	return false;
-        //return Math.abs(error.addValue(getPIDController().getError())) < 0.10;
+    	//return false;
+    	System.out.println(error.getAverage());
+        return Math.abs(error.addValue(getPIDController().getError())) < 0.01 && Math.abs(getPIDController().getError()) < 0.01;
     }
 
     // Called once after isFinished returns true
