@@ -15,10 +15,10 @@ public class GetGearFromRight extends CommandGroup {
     public GetGearFromRight() {
     	requires(Robot.swerveBase);
     	
-    	//addSequential(new GyroSwerveDrive(180, 0.3, true, 3));
-    	//addSequential(new AutoDrive(0, 0, -0.25, true, 0.75));
+    	addSequential(new GyroSwerveDrive(180, 0.37, true, 2.5));
+    	addSequential(new AutoDrive(0, 0, -0.25, true, 1.5));
     	addSequential(new AdjustRotationToTarget());
-    	//addSequential(new GyroSwerveDrive(90, 0.25, false, 4));
+    	addSequential(new GyroSwerveDrive(270, 0.3, false, 4));
     	
     	
         // Add Commands here:
