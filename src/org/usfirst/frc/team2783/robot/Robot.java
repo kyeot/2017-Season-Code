@@ -1,6 +1,8 @@
 
 package org.usfirst.frc.team2783.robot;
 
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.Gear;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.GetGearFromRight;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.ShootFromBlue;
@@ -8,7 +10,9 @@ import org.usfirst.frc.team2783.robot.commands.autonomous.modes.ShootFromRed;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
 import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
+import org.usfirst.frc.team2783.robot.vision.GripPipeline;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -18,6 +22,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -42,6 +47,13 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	
+	public static final int IMG_WIDTH = 320;
+	public static final int IMG_HEIGHT = 240;
+	public UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
+	private VisionThread visionThread;
+	public static double centerX = 0.0;
+	public final static Object imgLock = new Object();
+	
 	public static NetworkTable smartDashTable;
 
 	/**
@@ -55,19 +67,34 @@ public class Robot extends IterativeRobot {
 		
 		CameraServer usbCameraServer = CameraServer.getInstance();
 		usbCameraServer.startAutomaticCapture("cam0", 0);
-		usbCameraServer.startAutomaticCapture("cam1", 1);
-		usbCameraServer.startAutomaticCapture("cam2", 2);
+		//usbCameraServer.startAutomaticCapture("cam1", 1);
+		//usbCameraServer.startAutomaticCapture("cam2", 2);
 		
 		usSensor1 = new AnalogInput(0);
 		usSensor2 = new AnalogInput(1);
-		
 		
 		this.smartDashTable = NetworkTable.getTable("SmartDashboard");
 		
 		String[] autonomousList = {"Gear", "GetGearFromRight", "BlueShoot", "RedShoot"};
         this.smartDashTable.putStringArray("Auto List", autonomousList);
         
-		
+        camera.setExposureManual(20);
+    	camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+    	
+    	System.out.println("die");
+        
+        visionThread = new VisionThread(this.camera, new GripPipeline(), pipeline -> {
+			System.out.println(pipeline.filterContoursOutput().size());
+	        if (pipeline.filterContoursOutput().size() == 2) {	
+	        	synchronized (imgLock) {
+	        		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+	        		Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
+	        		centerX = ((r.x + (r.width))/2 + (r2.x + (r2.width))/2);
+	        		//System.out.println(centerX);
+	        	}	        	
+	        }
+		});
+		visionThread.start();
 		
 	}
 
@@ -103,8 +130,6 @@ public class Robot extends IterativeRobot {
     	//Gets the autonomous selector value from the dashboard
     	String autoSelected = SmartDashboard.getString("Auto Selector", "None");
     	
-    	System.out.println("i want to die");
-    	
     	autonomous = new GetGearFromRight();
     	
     	//Switches the autonomous mode based on the value from the SmartDashboard
@@ -119,7 +144,6 @@ public class Robot extends IterativeRobot {
 				autonomous = new ShootFromBlue();
 				break;
 			case "GetGearFromRight":
-				System.out.println("i want to die");
 				autonomous = new GetGearFromRight();
 				break;
 			case "None":
@@ -150,6 +174,22 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		
+//		camera.setExposureManual(3);
+//    	camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+//		
+//		visionThread = new VisionThread(this.camera, new GripPipeline(), pipeline -> {
+//			//System.out.println(pipeline.filterContoursOutput().size());
+//	        if (pipeline.filterContoursOutput().size() == 2) {	
+//	        	synchronized (imgLock) {
+//	        		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+//	        		Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
+//	        		centerX = ((r.x + (r.width))/2 + (r2.x + (r2.width))/2);
+//	        		//System.out.println(centerX);
+//	        	}	        	
+//	        }
+//		});
+//		visionThread.start();
 	}
 
 	/**
