@@ -55,6 +55,7 @@ public class Robot extends IterativeRobot {
 	public final static Object imgLock = new Object();
 	
 	public static NetworkTable smartDashTable;
+	public static NetworkTable visionControl;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -74,6 +75,7 @@ public class Robot extends IterativeRobot {
 		usSensor2 = new AnalogInput(1);
 		
 		this.smartDashTable = NetworkTable.getTable("SmartDashboard");
+		//this.visionControl = NetworkTable.getTable("Usage");
 		
 		String[] autonomousList = {"Gear", "GetGearFromRight", "BlueShoot", "RedShoot"};
         this.smartDashTable.putStringArray("Auto List", autonomousList);

@@ -8,12 +8,17 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 
 public class AdjustRotationToTarget extends PIDCommand {
 
-	public static double kp = 0.666;
-	public static double ki = 0.0296;
-	public static double kd = 0.00025;
+	public static double kp = 0.5;
+	public static double ki = 0.01;
+	public static double kd = 0.0;
+
+//	public static double kp = Robot.visionControl.getNumber("pVal", 0.5);
+//	public static double ki = Robot.visionControl.getNumber("iVal", 0.01);
+//	public static double kd = Robot.visionControl.getNumber("dVal", 0.0);
 	
 	private MovingAverage error;
-
+	private MovingAverage rotationTarget;	
+	
 	public static final int IMG_WIDTH = 320;
 	public static final int IMG_HEIGHT = 240;
 	
@@ -26,14 +31,14 @@ public class AdjustRotationToTarget extends PIDCommand {
     	
     	requires(Robot.swerveBase);
     	
-    	error = new MovingAverage(10000);
-    	
-    	setSetpoint(0.5);
+    	this.error = new MovingAverage(3);
+    	this.rotationTarget = new MovingAverage(5);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	//rotationTarget.clearValues();
+    	this.error.clearValues();
+    	this.rotationTarget.clearValues();
     	Robot.swerveBase.setZero();
     	
     	setSetpoint(0.5);
@@ -46,7 +51,11 @@ public class AdjustRotationToTarget extends PIDCommand {
     		this.centerX = Robot.centerX;
     	}
     	
-    	System.out.println("p: " + kp + "; i: " + ki + "; d: " + kd + "; input: " + centerX/IMG_WIDTH); 
+    	this.error.addValue(getPIDController().getError());
+    	this.rotationTarget.addValue(this.centerX);
+    	
+    	System.out.println("p: " + kp + "; i: " + ki + "; d: " + kd + "; input: " + 
+    					   rotationTarget.getAverage() + "; error: " + error.getAverage()); 
     	
     }
 
@@ -55,7 +64,7 @@ public class AdjustRotationToTarget extends PIDCommand {
 
     	//return false;
     	System.out.println(error.getAverage());
-        return Math.abs(error.addValue(getPIDController().getError())) < 0.01 && Math.abs(getPIDController().getError()) < 0.01;
+        return Math.abs(error.getAverage()) < 0.05 && Math.abs(getPIDController().getError()) < 0.05;
     }
 
     // Called once after isFinished returns true
@@ -71,7 +80,7 @@ public class AdjustRotationToTarget extends PIDCommand {
 	@Override
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub
-		return centerX/IMG_WIDTH;
+		return rotationTarget.getAverage()/IMG_WIDTH;
 		
 	}
 
