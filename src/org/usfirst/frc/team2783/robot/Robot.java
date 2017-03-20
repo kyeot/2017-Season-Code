@@ -86,7 +86,7 @@ public class Robot extends IterativeRobot {
     	System.out.println("die");
         
         visionThread = new VisionThread(this.camera, new GripPipeline(), pipeline -> {
-			System.out.println(pipeline.filterContoursOutput().size());
+		
 	        if (pipeline.filterContoursOutput().size() == 2) {	
 	        	synchronized (imgLock) {
 	        		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));

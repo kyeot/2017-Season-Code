@@ -2,9 +2,10 @@ package org.usfirst.frc.team2783.robot;
 
 import org.usfirst.frc.team2783.robot.commands.Climb;
 import org.usfirst.frc.team2783.robot.commands.GyroSwerveDrive;
-import org.usfirst.frc.team2783.robot.commands.RetrieveGear;
+
 import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
 import org.usfirst.frc.team2783.robot.commands.ToggleRetriever;
+import org.usfirst.frc.team2783.robot.commands.UltraSonicShooting;
 import org.usfirst.frc.team2783.robot.commands.VisionTrigger;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
 import org.usfirst.frc.team2783.robot.triggers.AxisButton;
@@ -30,8 +31,7 @@ public class OI {
 	Button gearAuto = new JoystickButton(manipulator, 2);
 	Button shooter = new JoystickButton(manipulator, 8);
 	Button gatherer = new JoystickButton(manipulator, 6);
-	Button gearPlace = new JoystickButton(manipulator, 4);
-	Button retrieveGear = new JoystickButton(manipulator, 7);
+	Button ultraSonicShoot = new JoystickButton(manipulator, 4);
 	
 	AxisButton climber = new AxisButton(manipulator, 3);
 	
@@ -49,13 +49,14 @@ public class OI {
 
 	public OI() {
 		visionButton.toggleWhenPressed(new AdjustRotationToTarget());
-		retrieveGear.toggleWhenPressed(new RetrieveGear());
 		
 		shooter.toggleWhenPressed(new ShooterDrive());
 		
 		climber.whileActive(new Climb());
 		
 		gatherer.whenPressed(new ToggleRetriever(RetrieverDirection.RET_OUT, 0));
+		
+		ultraSonicShoot.toggleWhenPressed(new UltraSonicShooting());
 		
 		gyroDriveNorth.whileActive(new GyroSwerveDrive(0.0, 0.3, false));
 		gyroDriveSouth.whileActive(new GyroSwerveDrive(180.0, 0.3, false));
