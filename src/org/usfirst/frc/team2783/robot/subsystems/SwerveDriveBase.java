@@ -326,8 +326,9 @@ public class SwerveDriveBase extends Subsystem {
     public double getGyroAngle(boolean reversed) {
     	if(reversed) {
     		return ((getNavSensor().getAngle()+180.0)%360) - angleOffset;
-    	} else
-    		return (getNavSensor().getAngle()) - angleOffset;
+    	} else {
+    		return getNavSensor().getAngle()%360 - angleOffset;
+    	}
     }
     
     public void resetGyroNorth(double angle, double north) {
