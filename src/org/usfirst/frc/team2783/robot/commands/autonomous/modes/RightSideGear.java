@@ -10,15 +10,15 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class GetGearFromLeft extends CommandGroup {
+public class RightSideGear extends CommandGroup {
 
-    public GetGearFromLeft() {
+    public RightSideGear() {
     	requires(Robot.swerveBase);
     	
-    	addSequential(new GyroSwerveDrive(180, 0.45, true, 3));
-    	addSequential(new AutoDrive(0, 0, 0.25, true, 1.5));
+    	addSequential(new GyroSwerveDrive(180, 0.42, true, 3));
+    	addSequential(new AutoDrive(0, 0, -0.25, true, 1.5));
     	addSequential(new AdjustRotationToTarget());
-    	addSequential(new GyroSwerveDrive(90, 0.3, false, 4));
+    	addSequential(new GyroSwerveDrive(270, 0.3, false, 4));
     	
     	
         // Add Commands here:

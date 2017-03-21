@@ -4,7 +4,8 @@ package org.usfirst.frc.team2783.robot;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.Gear;
-import org.usfirst.frc.team2783.robot.commands.autonomous.modes.GetGearFromRight;
+import org.usfirst.frc.team2783.robot.commands.autonomous.modes.LeftSideGear;
+import org.usfirst.frc.team2783.robot.commands.autonomous.modes.RightSideGear;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.ShootFromBlue;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.ShootFromRed;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
@@ -77,7 +78,7 @@ public class Robot extends IterativeRobot {
 		this.smartDashTable = NetworkTable.getTable("SmartDashboard");
 		//this.visionControl = NetworkTable.getTable("Usage");
 		
-		String[] autonomousList = {"Gear", "GetGearFromRight", "BlueShoot", "RedShoot"};
+		String[] autonomousList = {"Gear", "RightSideGear", "LeftSideGear", "BlueShoot", "RedShoot"};
         this.smartDashTable.putStringArray("Auto List", autonomousList);
         
         camera.setExposureManual(20);
@@ -132,7 +133,7 @@ public class Robot extends IterativeRobot {
     	//Gets the autonomous selector value from the dashboard
     	String autoSelected = SmartDashboard.getString("Auto Selector", "None");
     	
-    	autonomous = new GetGearFromRight();
+    	autonomous = new RightSideGear();
     	
     	//Switches the autonomous mode based on the value from the SmartDashboard
 		switch(autoSelected) {
@@ -145,8 +146,11 @@ public class Robot extends IterativeRobot {
 			case "BlueShoot":
 				autonomous = new ShootFromBlue();
 				break;
-			case "GetGearFromRight":
-				autonomous = new GetGearFromRight();
+			case "RightSideGear":
+				autonomous = new RightSideGear();
+				break;
+			case "LeftSideGear":
+				autonomous = new LeftSideGear();
 				break;
 			case "None":
 			default:
