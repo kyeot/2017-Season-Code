@@ -5,6 +5,8 @@ import org.usfirst.frc.team2783.robot.commands.GyroSwerveDrive;
 import org.usfirst.frc.team2783.robot.commands.autonomous.AutoDrive;
 import org.usfirst.frc.team2783.robot.vision.AdjustRotationToTarget;
 
+import com.sun.javafx.scene.traversal.Direction;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -17,7 +19,7 @@ public class LeftSideGear extends CommandGroup {
     	
     	addSequential(new GyroSwerveDrive(180, 0.42, true, 3));
     	addSequential(new AutoDrive(0, 0, 0.25, true, 1.5));
-    	addSequential(new AdjustRotationToTarget());
+    	addSequential(new AdjustRotationToTarget(AdjustRotationToTarget.Direction.LOOK_RIGHT));
     	addSequential(new GyroSwerveDrive(90, 0.3, false, 4));
     	
     	
