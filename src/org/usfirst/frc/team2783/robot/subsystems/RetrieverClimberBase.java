@@ -4,6 +4,8 @@ import org.usfirst.frc.team2783.robot.RobotMap;
 import org.usfirst.frc.team2783.robot.commands.UpdateRetriever;
 import org.usfirst.frc.team2783.robot.util.DiscreteToggle;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -13,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class RetrieverClimberBase extends Subsystem {
 	
-	private VictorSP gathererMotor;
+	private CANTalon gathererMotor;
 	private Servo gearShifter;
 
 	private DiscreteToggle retrieverInToggle;
@@ -29,7 +31,7 @@ public class RetrieverClimberBase extends Subsystem {
 		this.retrieverInToggle = new DiscreteToggle();
 		this.retrieverOutToggle = new DiscreteToggle();
 		
-		gathererMotor = new VictorSP(RobotMap.GATHERER_WHEEL_ID);
+		gathererMotor = new CANTalon(RobotMap.GATHERER_WHEEL_ID);
 		gearShifter = new Servo(RobotMap.GEAR_SHIFTER_ID);
 	}
 

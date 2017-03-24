@@ -17,10 +17,11 @@ public class LeftSideGear extends CommandGroup {
     public LeftSideGear() {
     	requires(Robot.swerveBase);
     	
-    	addSequential(new GyroSwerveDrive(180, 0.42, true, 3));
-    	addSequential(new AutoDrive(0, 0, 0.25, true, 1.5));
+    	addSequential(new GyroSwerveDrive(180, 0.4, true, 2.2));
+//    	addSequential(new AutoDrive(0, 0, 0.25, true, 2));
     	addSequential(new AdjustRotationToTarget(AdjustRotationToTarget.Direction.LOOK_RIGHT));
-    	addSequential(new GyroSwerveDrive(90, 0.3, false, 4));
+    	addSequential(new GyroSwerveDrive(0, 0, true, 2));
+    	addSequential(new GyroSwerveDrive(270, 0.3, false, 4));
     	
     	
         // Add Commands here:

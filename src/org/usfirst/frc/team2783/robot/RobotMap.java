@@ -11,18 +11,24 @@ public class RobotMap {
 	final public static int XBOX_CONTROLLER_ID = 0;
 	final public static int MANIPULATOR_CONTROLLER_ID = 1;
 	
-	final public static int GEAR_SHIFTER_ID = 7;
+	final public static int GEAR_SHIFTER_ID = 6;
+
+//	final public static int GEAR_SHIFTER_ID = 7;
 	
-	final public static int GATHERER_WHEEL_ID = 5;
-	final public static int SHOOTER_WHEEL_1_ID = 6;
-	final public static int SHOOTER_WHEEL_2_ID = 8;
-	final public static int AGITATOR_MOTOR_ID = 4;
+	final public static int GATHERER_WHEEL_ID = 3;
+	final public static int SHOOTER_WHEEL_1_ID = 4;
+	
+//	final public static int SHOOTER_WHEEL_1_ID = 6;
+	
+	final public static int AGITATOR_MOTOR_ID = 5;
 	
 	
-	final public static int FRONT_LEFT_WHEEL = 2;
-	final public static int FRONT_RIGHT_WHEEL = 0;
-	final public static int REAR_LEFT_WHEEL = 3;
-	final public static int REAR_RIGHT_WHEEL = 1;
+//	final public static int AGITATOR_MOTOR_ID = 4;
+	
+	final public static int FRONT_LEFT_WHEEL = 5;
+	final public static int FRONT_RIGHT_WHEEL = 1;
+	final public static int REAR_LEFT_WHEEL = 4;
+	final public static int REAR_RIGHT_WHEEL = 2;
 	
 	final public static int FRONT_LEFT_SWIVEL = 2;
 	final public static int FRONT_RIGHT_SWIVEL = 0;

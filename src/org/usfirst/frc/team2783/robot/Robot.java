@@ -81,21 +81,46 @@ public class Robot extends IterativeRobot {
 		String[] autonomousList = {"Gear", "RightSideGear", "LeftSideGear", "BlueShoot", "RedShoot"};
         this.smartDashTable.putStringArray("Auto List", autonomousList);
         
-        camera.setExposureManual(20);
+        camera.setExposureManual(10);
     	camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-    	
-    	System.out.println("die");
         
         visionThread = new VisionThread(this.camera, new GripPipeline(), pipeline -> {
 		
-	        if (pipeline.filterContoursOutput().size() == 2) {	
-	        	synchronized (imgLock) {
+        	switch (pipeline.filterContoursOutput().size()){
+        		
+        	case 1:
+        		synchronized (imgLock) {
+	        		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+	        		centerX = r.x + (r.width/2);
+	        		//System.out.println(centerX);
+	        	}
+        		
+        		System.out.println(centerX);
+        		
+        		break;
+        	
+        	case 2:
+        		synchronized (imgLock) {
 	        		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
 	        		Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
-	        		centerX = ((r.x + (r.width))/2 + (r2.x + (r2.width))/2);
-	        		//System.out.println(centerX);
-	        	}	        	
-	        }
+	        		centerX = ((r.x + (r.width/2)) + (r2.x + (r2.width/2)))/2;
+	        		System.out.println(centerX);
+	        	}	  
+        		break;
+        		
+        	default:
+        		System.out.println(pipeline.filterContoursOutput().size() + " contours found; outside of accepted range of 1-2");
+        		break;
+        	}
+        	
+//	        if (pipeline.filterContoursOutput().size() == 2) {	
+//	        	synchronized (imgLock) {
+//	        		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+//	        		Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
+//	        		centerX = ((r.x + (r.width))/2 + (r2.x + (r2.width))/2);
+//	        		//System.out.println(centerX);
+//	        	}	        	
+//	        }
 		});
 		visionThread.start();
 		
