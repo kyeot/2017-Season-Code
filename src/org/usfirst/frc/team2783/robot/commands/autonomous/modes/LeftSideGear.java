@@ -2,10 +2,7 @@ package org.usfirst.frc.team2783.robot.commands.autonomous.modes;
 
 import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.commands.GyroSwerveDrive;
-import org.usfirst.frc.team2783.robot.commands.autonomous.AutoDrive;
 import org.usfirst.frc.team2783.robot.vision.AdjustRotationToTarget;
-
-import com.sun.javafx.scene.traversal.Direction;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
