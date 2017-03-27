@@ -58,6 +58,7 @@ public class AdjustRotationToTarget extends PIDCommand {
     // Called just before this Command runs the first time
     protected void initialize() {
     	this.error.clearValues();
+    	
     	this.rotationTarget.clearValues();
     	Robot.swerveBase.setZero();
     	
@@ -106,6 +107,11 @@ public class AdjustRotationToTarget extends PIDCommand {
 
 	@Override
 	protected void usePIDOutput(double output) {
+
+
+			
+		
+		
 		// TODO Auto-generated method stub
 		Robot.swerveBase.swerveDrive(0, 0, direction.getModifier()*output, false);
 	}

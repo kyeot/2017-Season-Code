@@ -67,8 +67,8 @@ public class Robot extends IterativeRobot {
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", chooser);
 		
-		CameraServer usbCameraServer = CameraServer.getInstance();
-		usbCameraServer.startAutomaticCapture("cam0", 0);
+//		CameraServer usbCameraServer = CameraServer.getInstance();
+//		usbCameraServer.startAutomaticCapture("cam0", 0);
 		//usbCameraServer.startAutomaticCapture("cam1", 1);
 		//usbCameraServer.startAutomaticCapture("cam2", 2);
 		
@@ -109,6 +109,7 @@ public class Robot extends IterativeRobot {
         		break;
         		
         	default:
+        		centerX = IMG_WIDTH/2.2;
         		System.out.println(pipeline.filterContoursOutput().size() + " contours found; outside of accepted range of 1-2");
         		break;
         	}

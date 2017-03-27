@@ -42,7 +42,6 @@ public class OI {
 	public static Dpad pValueUp = new Dpad(pidTuner, 0);
 	public static Dpad pValueDown = new Dpad(pidTuner, 180);
 	
-	VisionTrigger visionTrigger;
 
 	public OI() {
 		visionButton.toggleWhenPressed(new AdjustRotationToTarget(AdjustRotationToTarget.Direction.LOOK_LEFT));
