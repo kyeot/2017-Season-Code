@@ -13,8 +13,6 @@ public class Gear extends CommandGroup {
     public Gear() {
     	requires(Robot.swerveBase);
     	
-    	System.out.println("fdsjak lhajdskl");
-    	
     	addSequential(new GyroSwerveDrive(180, 0.25, true, 5));
         // Add Commands here:
         // e.g. addSequential(new Command1());

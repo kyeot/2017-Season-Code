@@ -14,7 +14,7 @@ public class RightSideGear extends CommandGroup {
     public RightSideGear() {
     	requires(Robot.swerveBase);
     	
-    	addSequential(new GyroSwerveDrive(180, 0.4, true, 2.2));
+    	addSequential(new GyroSwerveDrive(180, 0.4, true, 2.1));
 //    	addSequential(new AutoDrive(0, 0, -0.25, true, 1.5));
     	addSequential(new AdjustRotationToTarget(AdjustRotationToTarget.Direction.LOOK_LEFT));
     	addSequential(new GyroSwerveDrive(270, 0.3, false, 4));
