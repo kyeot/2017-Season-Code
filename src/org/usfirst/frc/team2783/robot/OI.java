@@ -48,7 +48,7 @@ public class OI {
 	VisionTrigger visionTrigger;
 
 	public OI() {
-		visionButton.toggleWhenPressed(new AdjustRotationToTarget());
+		visionButton.toggleWhenPressed(new AdjustRotationToTarget(AdjustRotationToTarget.Direction.LOOK_LEFT));
 		
 		shooter.toggleWhenPressed(new ShooterDrive());
 		

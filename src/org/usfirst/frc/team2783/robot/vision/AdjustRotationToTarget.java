@@ -7,6 +7,22 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
 
 
 public class AdjustRotationToTarget extends PIDCommand {
+	
+	public enum Direction {
+		LOOK_RIGHT(1),
+		LOOK_LEFT(-1);
+		
+		int modifier;
+		
+		Direction(int modifier) {
+			this.modifier = modifier;
+		}
+		
+		public int getModifier() {
+			return modifier;
+		}
+		
+	}
 
 	public static double kp = 0.5;
 	public static double ki = 0.01;
@@ -24,7 +40,9 @@ public class AdjustRotationToTarget extends PIDCommand {
 	
 	private double centerX = 0.0;
 	
-    public AdjustRotationToTarget() {
+	private Direction direction;
+	
+    public AdjustRotationToTarget(Direction direction) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	super(kp, ki, kd);
@@ -87,7 +105,7 @@ public class AdjustRotationToTarget extends PIDCommand {
 	@Override
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
-		Robot.swerveBase.swerveDrive(0, 0, -output, false);
+		Robot.swerveBase.swerveDrive(0, 0, direction.getModifier()*output, false);
 	}
 }
 
