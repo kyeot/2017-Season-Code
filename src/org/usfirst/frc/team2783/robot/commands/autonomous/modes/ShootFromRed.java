@@ -17,7 +17,7 @@ public class ShootFromRed extends CommandGroup {
     	requires(Robot.shooterBase);
     	
     	addSequential(new AutoShoot(0.79000000000000002783, 0.95, 11));
-    	addSequential(new GyroSwerveDrive(180, 0.5, true, 3));
+    	addSequential(new GyroSwerveDrive(180, 0.5, true, 3, false));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

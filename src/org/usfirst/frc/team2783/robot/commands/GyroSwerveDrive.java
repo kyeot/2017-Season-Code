@@ -10,27 +10,32 @@ import edu.wpi.first.wpilibj.command.PIDCommand;
  */
 public class GyroSwerveDrive extends PIDCommand {
 
-	final private static double p = 0.01;
-	final private static double i = 0.0;
-	final private static double d = 0.0;
+	final private static double p = 0.02; //0.01
+	final private static double i = 0.0; //0.0
+	final private static double d = 0.0; //0.0
 	
 	private double angle;
 	private double speed;
+	
 	private boolean fieldOriented;
+	private boolean usStop = false;
+	
 	private double runTime;
 	
 	private long commandStartedAt;
 	private boolean timed = false; 
 	
+	
 	private double pidOutput;
 	private double angleOffset = 0;
 	
-    public GyroSwerveDrive(double angle, double speed, boolean fieldOriented, double runTime) {
+    public GyroSwerveDrive(double angle, double speed, boolean fieldOriented, double runTime, boolean usStop) {
     	super(p, i, d);
     	
     	this.angle = angle;
     	this.speed = speed;
     	this.fieldOriented = fieldOriented;
+    	this.usStop = usStop;
     	this.runTime = runTime;
     	
     	timed = true;
@@ -71,12 +76,11 @@ public class GyroSwerveDrive extends PIDCommand {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(timed) {
-    		return Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt);
-    	} else {
-    		return false;
-    	}
-       
+    	System.out.println(Robot.usSensor1.getValue());
+    	return timed && 
+    				((Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt)) || 
+    				((Robot.usSensor1.getValue() < 375) && usStop));
+   
     }
 
     // Called once after isFinished returns true

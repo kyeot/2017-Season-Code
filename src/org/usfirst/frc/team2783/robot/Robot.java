@@ -83,8 +83,6 @@ public class Robot extends IterativeRobot {
         
         camera.setExposureManual(20);
     	camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-    	
-    	System.out.println("die");
         
         visionThread = new VisionThread(this.camera, new GripPipeline(), pipeline -> {
 		
