@@ -2,7 +2,7 @@ package org.usfirst.frc.team2783.robot.commands.autonomous.modes;
 
 import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.commands.GyroSwerveDrive;
-
+import org.usfirst.frc.team2783.robot.commands.autonomous.AutoActiveGear;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -14,7 +14,10 @@ public class Gear extends CommandGroup {
     public Gear() {
     	requires(Robot.swerveBase);
     	
-    	addSequential(new GyroSwerveDrive(270, 0.25, false, 15, true));
+    	addSequential(new GyroSwerveDrive(180, 0.25, false, 15, true));
+    	addSequential(new AutoActiveGear());
+    	addSequential(new GyroSwerveDrive(0, 0.25, false, 1, false));
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

@@ -14,7 +14,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class RetrieverClimberBase extends Subsystem {
 	
 	private VictorSP gathererMotor;
+	private VictorSP gearRoller;
 	private Servo gearShifter;
+	private Servo gearHolder;
 
 	private DiscreteToggle retrieverInToggle;
 	private DiscreteToggle retrieverOutToggle;
@@ -29,6 +31,8 @@ public class RetrieverClimberBase extends Subsystem {
 		this.retrieverInToggle = new DiscreteToggle();
 		this.retrieverOutToggle = new DiscreteToggle();
 		
+		gearRoller = new VictorSP(RobotMap.GEAR_LIFTER_ROLLER_ID);
+		gearHolder = new Servo(RobotMap.GEAR_HOLDER_ID);
 		gathererMotor = new VictorSP(RobotMap.GATHERER_WHEEL_ID);
 		gearShifter = new Servo(RobotMap.GEAR_SHIFTER_ID);
 	}
@@ -60,6 +64,19 @@ public class RetrieverClimberBase extends Subsystem {
 	public void shiftGear(double angle){
 		gearShifter.setAngle(angle);
 	}
+	
+	public void liftGear(double angle){
+		gearHolder.setAngle(angle);
+	}
+	
+	public double getLiftGear(){
+		return gearHolder.getAngle();
+	}
+	
+	public void rollRoller(double speed){
+		gearRoller.set(speed);
+	}
+	
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

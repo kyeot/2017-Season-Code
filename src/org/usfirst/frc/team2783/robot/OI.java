@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2783.robot;
 
 import org.usfirst.frc.team2783.robot.commands.Climb;
+import org.usfirst.frc.team2783.robot.commands.GearHolder;
+import org.usfirst.frc.team2783.robot.commands.GearRoller;
 import org.usfirst.frc.team2783.robot.commands.GyroSwerveDrive;
 
 import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
@@ -35,7 +37,12 @@ public class OI {
 	
 	AxisButton climber = new AxisButton(manipulator, 3);
 	
+	AxisButton gearLift = new AxisButton(manipulator, 5);
+	
 	Button visionButton = new JoystickButton(driver, 1);
+	
+	Dpad gearLiftUp = new Dpad(manipulator, 0);
+	Dpad gearLiftDown = new Dpad(manipulator, 180);
 	
 	Dpad gyroDriveNorth = new Dpad(driver, 0);
 	Dpad gyroDriveSouth = new Dpad(driver, 180);
@@ -50,6 +57,8 @@ public class OI {
 	public OI() {
 		visionButton.toggleWhenPressed(new AdjustRotationToTarget(AdjustRotationToTarget.Direction.LOOK_LEFT));
 		
+		gearLift.whileActive(new GearRoller());
+		
 		shooter.toggleWhenPressed(new ShooterDrive());
 		
 		climber.whileActive(new Climb());
@@ -57,6 +66,9 @@ public class OI {
 		gatherer.whenPressed(new ToggleRetriever(RetrieverDirection.RET_OUT, 0));
 		
 		ultraSonicShoot.toggleWhenPressed(new UltraSonicShooting());
+		
+		gearLiftUp.whenActive(new GearHolder(0));
+		gearLiftDown.whenActive(new GearHolder(1));
 		
 		gyroDriveNorth.whileActive(new GyroSwerveDrive(0.0, 0.3, false));
 		gyroDriveSouth.whileActive(new GyroSwerveDrive(180.0, 0.3, false));
