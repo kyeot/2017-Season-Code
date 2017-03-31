@@ -21,6 +21,12 @@ public class RetrieverClimberBase extends Subsystem {
 	private DiscreteToggle retrieverInToggle;
 	private DiscreteToggle retrieverOutToggle;
 	
+	public enum GearHolderLift{
+		GEAR_UP,
+		GEAR_DOWN;
+		
+	}
+	
 	public enum RetrieverDirection{
 		RET_IN,
 		RET_OUT;
@@ -65,8 +71,13 @@ public class RetrieverClimberBase extends Subsystem {
 		gearShifter.setAngle(angle);
 	}
 	
-	public void liftGear(double angle){
-		gearHolder.setAngle(angle);
+	public void liftGear(GearHolderLift direction){
+		if(direction == GearHolderLift.GEAR_UP){
+			gearHolder.setAngle(0);
+		}
+		else if(direction == GearHolderLift.GEAR_DOWN){
+			gearHolder.setAngle(90);
+		}
 	}
 	
 	public double getLiftGear(){

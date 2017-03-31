@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2783.robot.commands;
 
 import org.usfirst.frc.team2783.robot.Robot;
+import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.GearHolderLift;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,9 +10,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class GearHolder extends Command {
 
-	int direction;
+	private GearHolderLift direction;
 	
-    public GearHolder(int direction) {
+    public GearHolder(GearHolderLift direction) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	
@@ -27,15 +28,7 @@ public class GearHolder extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(direction == 0){
-    		Robot.retriever.liftGear(0);
-    		
-    	}
-    	
-    	else if(direction == 1){
-    		Robot.retriever.liftGear(90);
-    		
-    	}
+    	Robot.retriever.liftGear(direction);
     	
     }
 

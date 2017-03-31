@@ -9,6 +9,7 @@ import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
 import org.usfirst.frc.team2783.robot.commands.ToggleRetriever;
 import org.usfirst.frc.team2783.robot.commands.UltraSonicShooting;
 import org.usfirst.frc.team2783.robot.commands.VisionTrigger;
+import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.GearHolderLift;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
 import org.usfirst.frc.team2783.robot.triggers.AxisButton;
 import org.usfirst.frc.team2783.robot.triggers.Dpad;
@@ -67,8 +68,8 @@ public class OI {
 		
 		ultraSonicShoot.toggleWhenPressed(new UltraSonicShooting());
 		
-		gearLiftUp.whenActive(new GearHolder(0));
-		gearLiftDown.whenActive(new GearHolder(1));
+		gearLiftUp.whenActive(new GearHolder(GearHolderLift.GEAR_UP));
+		gearLiftDown.whenActive(new GearHolder(GearHolderLift.GEAR_DOWN));
 		
 		gyroDriveNorth.whileActive(new GyroSwerveDrive(0.0, 0.3, false));
 		gyroDriveSouth.whileActive(new GyroSwerveDrive(180.0, 0.3, false));
