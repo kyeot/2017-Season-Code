@@ -26,7 +26,7 @@ public class GearRoller extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.retriever.liftGear(OI.manipulator.getRawAxis(5));
+    	Robot.retriever.rollRoller(OI.manipulator.getRawAxis(5));
     	
     }
 
