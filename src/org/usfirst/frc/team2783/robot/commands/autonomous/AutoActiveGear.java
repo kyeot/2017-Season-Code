@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2783.robot.commands.autonomous;
 
 import org.usfirst.frc.team2783.robot.Robot;
+import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.GearHolderLift;
 
 import edu.wpi.first.wpilibj.Utility;
 import edu.wpi.first.wpilibj.command.Command;
@@ -12,10 +13,16 @@ public class AutoActiveGear extends Command {
 	
 	boolean end = false;
 	
-    public AutoActiveGear() {
+	double angle;
+	
+	private GearHolderLift direction;
+	
+    public AutoActiveGear(GearHolderLift direction, double angle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	
+    	this.angle = angle;
+    	this.direction = direction;
     	requires(Robot.retriever);    	
 
     	
@@ -29,11 +36,7 @@ public class AutoActiveGear extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.retriever.liftGear(90);
-    	
-    	if(Robot.retriever.getLiftGear() == 90){
-        	end = true;
-    	}
+    	Robot.retriever.liftGear(direction, angle);
     	
     }
 

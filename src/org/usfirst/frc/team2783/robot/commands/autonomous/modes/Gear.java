@@ -3,6 +3,7 @@ package org.usfirst.frc.team2783.robot.commands.autonomous.modes;
 import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.commands.GyroSwerveDrive;
 import org.usfirst.frc.team2783.robot.commands.autonomous.AutoActiveGear;
+import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.GearHolderLift;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -15,7 +16,7 @@ public class Gear extends CommandGroup {
     	requires(Robot.swerveBase);
     	
     	addSequential(new GyroSwerveDrive(180, 0.25, false, 15, true));
-    	addSequential(new AutoActiveGear());
+    	addSequential(new AutoActiveGear(GearHolderLift.GEAR_DOWN, 270));
     	addSequential(new GyroSwerveDrive(0, 0.25, false, 1, false));
     	
         // Add Commands here:

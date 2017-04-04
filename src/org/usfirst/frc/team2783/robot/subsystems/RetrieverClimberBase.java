@@ -4,6 +4,10 @@ import org.usfirst.frc.team2783.robot.RobotMap;
 import org.usfirst.frc.team2783.robot.commands.UpdateRetriever;
 import org.usfirst.frc.team2783.robot.util.DiscreteToggle;
 
+import com.ctre.CANTalon;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -16,7 +20,8 @@ public class RetrieverClimberBase extends Subsystem {
 	private VictorSP gathererMotor;
 	private VictorSP gearRoller;
 	private Servo gearShifter;
-	private Servo gearHolder;
+	private CANTalon gearHolder;
+	public static Encoder gearHolderEnc = new Encoder(new DigitalInput(8), new DigitalInput(9));
 
 	private DiscreteToggle retrieverInToggle;
 	private DiscreteToggle retrieverOutToggle;
@@ -38,7 +43,7 @@ public class RetrieverClimberBase extends Subsystem {
 		this.retrieverOutToggle = new DiscreteToggle();
 		
 		gearRoller = new VictorSP(RobotMap.GEAR_LIFTER_ROLLER_ID);
-		gearHolder = new Servo(RobotMap.GEAR_HOLDER_ID);
+		gearHolder = new CANTalon(RobotMap.GEAR_HOLDER_ID);
 		gathererMotor = new VictorSP(RobotMap.GATHERER_WHEEL_ID);
 		gearShifter = new Servo(RobotMap.GEAR_SHIFTER_ID);
 	}
@@ -71,17 +76,52 @@ public class RetrieverClimberBase extends Subsystem {
 		gearShifter.setAngle(angle);
 	}
 	
-	public void liftGear(GearHolderLift direction){
-		if(direction == GearHolderLift.GEAR_UP){
-			gearHolder.setAngle(0);
+	public double getGearAngle() {
+		if (gearHolderEnc != null) {
+			return (gearHolderEnc.getDistance());
 		}
-		else if(direction == GearHolderLift.GEAR_DOWN){
-			gearHolder.setAngle(90);
+		
+		else {
+			return -1.0;
 		}
 	}
 	
-	public double getLiftGear(){
-		return gearHolder.getAngle();
+	public void liftGear(GearHolderLift direction, double angle){
+		
+		double curAngle = getGearAngle();
+		
+		if(direction == GearHolderLift.GEAR_UP){
+			if(curAngle >= 3 && curAngle <= 330){
+				gearHolder.set(0);
+				gearHolder.enableBrakeMode(true);
+			}
+			
+			else{
+			while(curAngle > (angle + 1) && curAngle < (angle - 1)){
+				gearHolder.enableBrakeMode(false);
+				gearHolder.set(0.5);
+			}
+			gearHolder.set(0);
+			gearHolder.enableBrakeMode(true);
+			}
+		}
+		
+		else if(direction == GearHolderLift.GEAR_DOWN){
+			if(curAngle <= 240){
+				gearHolder.set(0);
+				gearHolder.enableBrakeMode(true);
+			}
+			
+			else{
+			while(curAngle > (angle + 1) && curAngle < (angle - 1)){
+				gearHolder.enableBrakeMode(false);
+				gearHolder.set(-0.5);
+			}
+			gearHolder.set(0);
+			gearHolder.enableBrakeMode(true);
+			}
+			
+		}
 	}
 	
 	public void rollRoller(double speed){
