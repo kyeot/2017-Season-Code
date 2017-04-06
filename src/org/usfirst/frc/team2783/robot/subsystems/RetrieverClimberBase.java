@@ -124,8 +124,8 @@ public class RetrieverClimberBase extends Subsystem {
 		}
 	}
 	
-	public void rollRoller(double speed){
-		gearRoller.set(speed);
+	public void rollRoller(double vbusOutput){
+		gearRoller.set(vbusOutput);
 	}
 	
 

@@ -34,7 +34,8 @@ public class OI {
 	Button gearAuto = new JoystickButton(manipulator, 2);
 	Button shooter = new JoystickButton(manipulator, 8);
 	Button gatherer = new JoystickButton(manipulator, 6);
-	Button ultraSonicShoot = new JoystickButton(manipulator, 4);
+	Button gearUp = new JoystickButton(manipulator, 4);
+	Button gearDown = new JoystickButton(manipulator, 1);
 	
 	AxisButton climber = new AxisButton(manipulator, 3);
 	
@@ -59,6 +60,7 @@ public class OI {
 		visionButton.toggleWhenPressed(new AdjustRotationToTarget(AdjustRotationToTarget.Direction.LOOK_LEFT));
 		
 		gearLift.whileActive(new GearRoller());
+		gearLift.whenInactive(new GearRoller());
 		
 		shooter.toggleWhenPressed(new ShooterDrive());
 		
@@ -66,10 +68,8 @@ public class OI {
 		
 		gatherer.whenPressed(new ToggleRetriever(RetrieverDirection.RET_OUT, 0));
 		
-		ultraSonicShoot.toggleWhenPressed(new UltraSonicShooting());
-		
-		gearLiftUp.whenActive(new GearHolder(GearHolderLift.GEAR_UP));
-		gearLiftDown.whenActive(new GearHolder(GearHolderLift.GEAR_DOWN));
+		gearUp.whileActive(new GearHolder(GearHolderLift.GEAR_UP));
+		gearDown.whileActive(new GearHolder(GearHolderLift.GEAR_DOWN));
 		
 		gyroDriveNorth.whileActive(new GyroSwerveDrive(0.0, 0.3, false));
 		gyroDriveSouth.whileActive(new GyroSwerveDrive(180.0, 0.3, false));

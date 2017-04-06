@@ -16,11 +16,11 @@ public class ShooterBase extends Subsystem {
 	
 	public ShooterBase() {
 		shooterMotor1 = new VictorSP(RobotMap.SHOOTER_WHEEL_1_ID);
-		agitatorMotor = new VictorSP(RobotMap.AGITATOR_MOTOR_ID);
+//		agitatorMotor = new VictorSP(RobotMap.AGITATOR_MOTOR_ID);
 	}
 	
 	public void setAgitatorSpeedVbus(double vbusOutput){
-		agitatorMotor.set(vbusOutput);
+//		agitatorMotor.set(vbusOutput);
 	}
 	
 	public void setShooterSpeedVbus(double vbusOutput){

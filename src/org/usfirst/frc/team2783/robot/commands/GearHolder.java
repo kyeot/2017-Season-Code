@@ -27,10 +27,12 @@ public class GearHolder extends Command {
     protected void initialize() {
     	if(direction == GearHolderLift.GEAR_DOWN){
     		double angle = 270;
+    		System.out.println("up");
     	}
     	
     	else if(direction == GearHolderLift.GEAR_UP){
     		double angle = 0;
+    		System.out.println("down");
     	}
     	
     }

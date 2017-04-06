@@ -19,7 +19,7 @@ public class RobotMap {
 	final public static int GEAR_LIFTER_ROLLER_ID = 4;
 	
 	final public static int FRONT_LEFT_WHEEL = 2;
-	final public static int FRONT_RIGHT_WHEEL = 0;
+	final public static int FRONT_RIGHT_WHEEL = 4;
 	final public static int REAR_LEFT_WHEEL = 3;
 	final public static int REAR_RIGHT_WHEEL = 1;
 	
@@ -28,7 +28,7 @@ public class RobotMap {
 	final public static int REAR_LEFT_SWIVEL = 3;
 	final public static int REAR_RIGHT_SWIVEL = 1;
 	
-//	final public static int GEAR_HOLDER_ID = 8;
+	final public static int GEAR_HOLDER_ID = 0;
 	
 	
 }
