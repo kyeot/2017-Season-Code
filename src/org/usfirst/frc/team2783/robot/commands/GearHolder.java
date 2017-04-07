@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2783.robot.commands;
 
+import org.usfirst.frc.team2783.robot.OI;
 import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.GearHolderLift;
 
@@ -10,36 +11,57 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class GearHolder extends Command {
 
-	double angle;
-	private GearHolderLift direction;
+	private int direction;
 	
-    public GearHolder(GearHolderLift direction) {
+    public GearHolder(int direction) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	
-    	direction = this.direction;
+    	this.direction = direction;
     	
     	requires(Robot.retriever);
-    	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(direction == GearHolderLift.GEAR_DOWN){
-    		double angle = 270;
-    		System.out.println("up");
+    	double rollValue = OI.manipulator.getRawAxis(5);
+    	System.out.println(rollValue);
+    	if(rollValue > -.2 && rollValue < .2){
+    		Robot.retriever.moveGearHolder(0);
+    		System.out.println("hey carl");
     	}
     	
-    	else if(direction == GearHolderLift.GEAR_UP){
-    		double angle = 0;
-    		System.out.println("down");
+    	else{
+    		Robot.retriever.moveGearHolder(0.2);
     	}
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.retriever.liftGear(direction, angle);
+    	
+    	if(direction == 0){
+    		if(Robot.retriever.getGearAngle() == 0){
+    			Robot.retriever.rollRoller(0);
+    		}
+    	}
+    	
+    	else if(direction == 1){
+    		if(Robot.retriever.getGearAngle() == 270){
+    			Robot.retriever.rollRoller(0);
+    		}
+    	}
+    	
+    	double rollValue = OI.manipulator.getRawAxis(5);
+    	
+    	System.out.println(rollValue);
+    	if(rollValue > -.2 && rollValue < .2){
+    		Robot.retriever.moveGearHolder(0);
+    		System.out.println("hey carl");
+    	}
+    	
+    	else{
+    		Robot.retriever.moveGearHolder(0.2);
+    	}
     	
     }
 
@@ -50,6 +72,7 @@ public class GearHolder extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.retriever.rollRoller(0);
     }
 
     // Called when another command which requires one or more of the same

@@ -26,6 +26,8 @@ public class RetrieverClimberBase extends Subsystem {
 	private DiscreteToggle retrieverInToggle;
 	private DiscreteToggle retrieverOutToggle;
 	
+	double angle;
+	
 	public enum GearHolderLift{
 		GEAR_UP,
 		GEAR_DOWN;
@@ -86,42 +88,48 @@ public class RetrieverClimberBase extends Subsystem {
 		}
 	}
 	
-	public void liftGear(GearHolderLift direction, double angle){
-		
-		double curAngle = getGearAngle();
-		
-		if(direction == GearHolderLift.GEAR_UP){
-			if(curAngle >= 3 && curAngle <= 330){
-				gearHolder.set(0);
-				gearHolder.enableBrakeMode(true);
-			}
-			
-			else{
-			while(curAngle > (angle + 1) && curAngle < (angle - 1)){
-				gearHolder.enableBrakeMode(false);
-				gearHolder.set(0.5);
-			}
-			gearHolder.set(0);
-			gearHolder.enableBrakeMode(true);
-			}
-		}
-		
-		else if(direction == GearHolderLift.GEAR_DOWN){
-			if(curAngle <= 240){
-				gearHolder.set(0);
-				gearHolder.enableBrakeMode(true);
-			}
-			
-			else{
-			while(curAngle > (angle + 1) && curAngle < (angle - 1)){
-				gearHolder.enableBrakeMode(false);
-				gearHolder.set(-0.5);
-			}
-			gearHolder.set(0);
-			gearHolder.enableBrakeMode(true);
-			}
-			
-		}
+//	public void liftGear(int direction){
+//		
+//		double curAngle = getGearAngle();
+//		
+//		if(direction == 1){
+//			
+//			if(curAngle >= 3 && curAngle <= 330){
+//				gearHolder.set(0);
+//				gearHolder.enableBrakeMode(true);
+//			}
+//			
+//			else{
+//			while(curAngle > (angle + 1) && curAngle < (angle - 1)){
+//				gearHolder.enableBrakeMode(false);
+//				gearHolder.set(0.5);
+//			}
+//			gearHolder.set(0);
+//			gearHolder.enableBrakeMode(true);
+//			}
+//		}
+//		
+//		else if(direction == 0){
+//			
+//			if(curAngle <= 240){
+//				gearHolder.set(0);
+//				gearHolder.enableBrakeMode(true);
+//			}
+//			
+//			else{
+//			while(curAngle > (angle + 1) && curAngle < (angle - 1)){
+//				gearHolder.enableBrakeMode(false);
+//				gearHolder.set(-0.5);
+//			}
+//			gearHolder.set(0);
+//			gearHolder.enableBrakeMode(true);
+//			}
+//			
+//		}
+//	}
+	
+	public void moveGearHolder(double vbusOutput){
+		gearHolder.set(vbusOutput);
 	}
 	
 	public void rollRoller(double vbusOutput){

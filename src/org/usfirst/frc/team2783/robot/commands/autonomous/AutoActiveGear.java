@@ -13,15 +13,12 @@ public class AutoActiveGear extends Command {
 	
 	boolean end = false;
 	
-	double angle;
+	private int direction;
 	
-	private GearHolderLift direction;
-	
-    public AutoActiveGear(GearHolderLift direction, double angle) {
+    public AutoActiveGear(int direction) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	
-    	this.angle = angle;
     	this.direction = direction;
     	requires(Robot.retriever);    	
 
@@ -36,7 +33,6 @@ public class AutoActiveGear extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.retriever.liftGear(direction, angle);
     	
     }
 

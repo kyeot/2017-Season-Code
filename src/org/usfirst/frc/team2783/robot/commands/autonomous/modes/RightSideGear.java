@@ -21,7 +21,7 @@ public class RightSideGear extends CommandGroup {
     	addSequential(new AutoDrive(0, 0, -0.25, true, 1.5));
     	addSequential(new AdjustRotationToTarget(AdjustRotationToTarget.Direction.LOOK_RIGHT));
     	addSequential(new GyroSwerveDrive(180, 0.3, false, 4, true));
-    	addSequential(new AutoActiveGear(GearHolderLift.GEAR_DOWN, 270));
+    	addSequential(new AutoActiveGear(0));
     	addSequential(new GyroSwerveDrive(0, 0.25, false, 1, false));
     	
     	

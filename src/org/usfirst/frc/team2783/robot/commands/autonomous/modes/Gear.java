@@ -16,7 +16,7 @@ public class Gear extends CommandGroup {
     	requires(Robot.swerveBase);
     	
     	addSequential(new GyroSwerveDrive(180, 0.25, false, 15, true));
-    	addSequential(new AutoActiveGear(GearHolderLift.GEAR_DOWN, 270));
+    	addSequential(new AutoActiveGear(0));
     	addSequential(new GyroSwerveDrive(0, 0.25, false, 1, false));
     	
         // Add Commands here:

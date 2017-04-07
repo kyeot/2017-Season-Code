@@ -68,8 +68,8 @@ public class OI {
 		
 		gatherer.whenPressed(new ToggleRetriever(RetrieverDirection.RET_OUT, 0));
 		
-		gearUp.whileActive(new GearHolder(GearHolderLift.GEAR_UP));
-		gearDown.whileActive(new GearHolder(GearHolderLift.GEAR_DOWN));
+		gearUp.whileActive(new GearHolder(0));
+		gearDown.whileActive(new GearHolder(1));
 		
 		gyroDriveNorth.whileActive(new GyroSwerveDrive(0.0, 0.3, false));
 		gyroDriveSouth.whileActive(new GyroSwerveDrive(180.0, 0.3, false));
