@@ -11,56 +11,41 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class GearHolder extends Command {
 
-	private int direction;
-	
-    public GearHolder(int direction) {
+    public GearHolder() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	
-    	this.direction = direction;
     	
     	requires(Robot.retriever);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	double rollValue = OI.manipulator.getRawAxis(5);
-    	System.out.println(rollValue);
-    	if(rollValue > -.2 && rollValue < .2){
+    	double liftValue = OI.manipulator.getRawAxis(1);
+
+    	if(liftValue > -.2 && liftValue < .2){
     		Robot.retriever.moveGearHolder(0);
-    		System.out.println("hey carl");
     	}
     	
     	else{
-    		Robot.retriever.moveGearHolder(0.2);
+    		Robot.retriever.moveGearHolder(liftValue);
     	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	if(direction == 0){
-    		if(Robot.retriever.getGearAngle() == 0){
-    			Robot.retriever.rollRoller(0);
-    		}
-    	}
+    	double liftValue = OI.manipulator.getRawAxis(1);
     	
-    	else if(direction == 1){
-    		if(Robot.retriever.getGearAngle() == 270){
-    			Robot.retriever.rollRoller(0);
-    		}
-    	}
+    	Robot.retriever.gearHolderEnc.getRaw();
     	
-    	double rollValue = OI.manipulator.getRawAxis(5);
+    	System.out.println(Robot.retriever.gearHolderEnc.get());
     	
-    	System.out.println(rollValue);
-    	if(rollValue > -.2 && rollValue < .2){
+    	if(liftValue > -.2 && liftValue < .2){
     		Robot.retriever.moveGearHolder(0);
-    		System.out.println("hey carl");
     	}
     	
     	else{
-    		Robot.retriever.moveGearHolder(0.2);
+    		Robot.retriever.moveGearHolder(liftValue);
     	}
     	
     }
