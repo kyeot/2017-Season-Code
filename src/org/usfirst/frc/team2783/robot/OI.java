@@ -34,12 +34,12 @@ public class OI {
 	Button gearAuto = new JoystickButton(manipulator, 2);
 	Button shooter = new JoystickButton(manipulator, 8);
 	Button gatherer = new JoystickButton(manipulator, 6);
-	Button gearUp = new JoystickButton(manipulator, 4);
-	Button gearDown = new JoystickButton(manipulator, 1);
 	
 	AxisButton climber = new AxisButton(manipulator, 3);
 	
 	AxisButton gearLift = new AxisButton(manipulator, 5);
+	
+	AxisButton gearHolder = new AxisButton(manipulator, 1);
 	
 	Button visionButton = new JoystickButton(driver, 1);
 	
@@ -68,8 +68,8 @@ public class OI {
 		
 		gatherer.whenPressed(new ToggleRetriever(RetrieverDirection.RET_OUT, 0));
 		
-		gearUp.whileActive(new GearHolder(0));
-		gearDown.whileActive(new GearHolder(1));
+		gearHolder.whileActive(new GearHolder());
+		gearHolder.whenInactive(new GearHolder());
 		
 		gyroDriveNorth.whileActive(new GyroSwerveDrive(0.0, 0.3, false));
 		gyroDriveSouth.whileActive(new GyroSwerveDrive(180.0, 0.3, false));
