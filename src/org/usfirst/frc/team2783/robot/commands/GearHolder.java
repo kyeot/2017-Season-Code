@@ -14,14 +14,13 @@ public class GearHolder extends Command {
     public GearHolder() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	
-    	
     	requires(Robot.retriever);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	double liftValue = OI.manipulator.getRawAxis(1);
+    	
     	if(liftValue > -.2 && liftValue < .2){
     		Robot.retriever.moveGearHolder(0);
     	}
