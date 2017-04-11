@@ -4,12 +4,10 @@ import org.usfirst.frc.team2783.robot.commands.Climb;
 import org.usfirst.frc.team2783.robot.commands.GearHolder;
 import org.usfirst.frc.team2783.robot.commands.GearRoller;
 import org.usfirst.frc.team2783.robot.commands.GyroSwerveDrive;
-
+import org.usfirst.frc.team2783.robot.commands.MoveGear;
 import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
 import org.usfirst.frc.team2783.robot.commands.ToggleRetriever;
-import org.usfirst.frc.team2783.robot.commands.UltraSonicShooting;
 import org.usfirst.frc.team2783.robot.commands.VisionTrigger;
-import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.GearHolderLift;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
 import org.usfirst.frc.team2783.robot.triggers.AxisButton;
 import org.usfirst.frc.team2783.robot.triggers.Dpad;
@@ -18,7 +16,6 @@ import org.usfirst.frc.team2783.robot.vision.AdjustRotationToTarget;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.buttons.Trigger;
 
 
 /**
@@ -36,9 +33,7 @@ public class OI {
 	Button gatherer = new JoystickButton(manipulator, 6);
 	
 	AxisButton climber = new AxisButton(manipulator, 3);
-	
 	AxisButton gearLift = new AxisButton(manipulator, 5);
-	
 	AxisButton gearHolder = new AxisButton(manipulator, 1);
 	
 	Button visionButton = new JoystickButton(driver, 1);
@@ -50,9 +45,6 @@ public class OI {
 	Dpad gyroDriveSouth = new Dpad(driver, 180);
 	Dpad gyroDriveEast = new Dpad(driver, 90);
 	Dpad gyroDriveWest = new Dpad(driver, 270);
-	
-	public static Dpad pValueUp = new Dpad(pidTuner, 0);
-	public static Dpad pValueDown = new Dpad(pidTuner, 180);
 	
 	VisionTrigger visionTrigger;
 
@@ -70,6 +62,8 @@ public class OI {
 		
 		gearHolder.whileActive(new GearHolder());
 		gearHolder.whenInactive(new GearHolder());
+		
+		Robot.limitSwitches[0].whenActive(new MoveGear());
 		
 		gyroDriveNorth.whileActive(new GyroSwerveDrive(0.0, 0.3, false));
 		gyroDriveSouth.whileActive(new GyroSwerveDrive(180.0, 0.3, false));

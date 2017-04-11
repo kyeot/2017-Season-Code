@@ -22,10 +22,8 @@ public class GearRoller extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	double rollValue = OI.manipulator.getRawAxis(5);
-    	System.out.println(rollValue);
     	if(rollValue > -.2 && rollValue < .2){
     		Robot.retriever.rollRoller(0);
-    		System.out.println("hey carl");
     	}
     	
     	else{
@@ -37,10 +35,8 @@ public class GearRoller extends Command {
     protected void execute() {
     	
     	double rollValue = OI.manipulator.getRawAxis(5);
-    	System.out.println(rollValue);
     	if(rollValue > -.2 && rollValue < .2){
     		Robot.retriever.rollRoller(0);
-    		System.out.println("hey carl");
     	}
     	
     	else{

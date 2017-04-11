@@ -11,6 +11,7 @@ import org.usfirst.frc.team2783.robot.commands.autonomous.modes.ShootFromRed;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
 import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
+import org.usfirst.frc.team2783.robot.triggers.LimitSwitch;
 import org.usfirst.frc.team2783.robot.vision.GripPipeline;
 
 import edu.wpi.cscore.UsbCamera;
@@ -57,13 +58,18 @@ public class Robot extends IterativeRobot {
 	
 	public static NetworkTable smartDashTable;
 	public static NetworkTable visionControl;
+	
+	public LimitSwitch gearChecker;
+	public LimitSwitch holderPos;
+	public static LimitSwitch[] limitSwitches;
+										
 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		oi = new OI();
+		
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", chooser);
 		
@@ -71,6 +77,12 @@ public class Robot extends IterativeRobot {
 		usbCameraServer.startAutomaticCapture("cam0", 0);
 		//usbCameraServer.startAutomaticCapture("cam1", 1);
 		//usbCameraServer.startAutomaticCapture("cam2", 2);
+		
+		gearChecker = new LimitSwitch(8);
+		holderPos = new LimitSwitch(9);
+		limitSwitches = new LimitSwitch[]{gearChecker, holderPos};
+		
+		oi = new OI();
 		
 		usSensor1 = new AnalogInput(0);
 		usSensor2 = new AnalogInput(1);
@@ -202,6 +214,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		System.out.println(limitSwitches[1].get());
+			
 	}
 
 	/**

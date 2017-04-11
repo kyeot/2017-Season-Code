@@ -2,8 +2,10 @@ package org.usfirst.frc.team2783.robot.commands;
 
 import org.usfirst.frc.team2783.robot.OI;
 import org.usfirst.frc.team2783.robot.Robot;
-import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.GearHolderLift;
+import org.usfirst.frc.team2783.robot.commands.autonomous.AutoActiveGear;
+import org.usfirst.frc.team2783.robot.triggers.LimitSwitch;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -29,17 +31,16 @@ public class GearHolder extends Command {
     		Robot.retriever.moveGearHolder(liftValue);
     	}
     	
-    	if(Robot.retriever.gearHolderEnc.getRaw() >= 2 && Robot.retriever.gearHolderEnc.getRaw() <= 250 || Robot.retriever.gearHolderEnc.getRaw() <= 269 && Robot.retriever.gearHolderEnc.getRaw() >= 4){
-    		Robot.retriever.moveGearHolder(0);
-    	}
+//    	if(){
+//    		Robot.retriever.moveGearHolder(0);
+//    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	System.out.println(Robot.limitSwitches[0].get());
     	
     	double liftValue = OI.manipulator.getRawAxis(1);
-
-    	System.out.println(Robot.retriever.gearHolderEnc.getRaw());
     	
     	if(liftValue > -.2 && liftValue < .2){
     		Robot.retriever.moveGearHolder(0);
@@ -47,11 +48,12 @@ public class GearHolder extends Command {
     	
     	else{
     		Robot.retriever.moveGearHolder(liftValue);
+    		
     	}
     	
-//    	if(){
-//    		Robot.retriever.moveGearHolder(0);
-//    	}
+    	if(Robot.limitSwitches[0].get()){
+    		new AutoActiveGear(1, 0.25);
+    	}
 
     	
     }
