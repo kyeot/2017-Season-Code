@@ -63,8 +63,6 @@ public class OI {
 		gearHolder.whileActive(new GearHolder());
 		gearHolder.whenInactive(new GearHolder());
 		
-		Robot.limitSwitches[0].whenActive(new MoveGear());
-		
 		gyroDriveNorth.whileActive(new GyroSwerveDrive(0.0, 0.3, false));
 		gyroDriveSouth.whileActive(new GyroSwerveDrive(180.0, 0.3, false));
 		gyroDriveEast.whileActive(new GyroSwerveDrive(90.0, 0.3, false));

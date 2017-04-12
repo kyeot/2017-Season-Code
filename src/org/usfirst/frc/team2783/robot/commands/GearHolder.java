@@ -38,8 +38,6 @@ public class GearHolder extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println(Robot.limitSwitches[0].get());
-    	
     	double liftValue = OI.manipulator.getRawAxis(1);
     	
     	if(liftValue > -.2 && liftValue < .2){

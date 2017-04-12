@@ -3,6 +3,8 @@ package org.usfirst.frc.team2783.robot;
 
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team2783.robot.commands.MoveGear;
+import org.usfirst.frc.team2783.robot.commands.autonomous.AutoDrive;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.Gear;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.LeftSideGear;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.RightSideGear;
@@ -214,7 +216,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		System.out.println(limitSwitches[1].get());
+		
+		Robot.limitSwitches[0].whenActive(new MoveGear());
+
+    	System.out.println("Limit 8: " + Robot.limitSwitches[0].get());
+    	System.out.println("Limit 9: " + Robot.limitSwitches[1].get());
 			
 	}
 
