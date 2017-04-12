@@ -49,6 +49,8 @@ public class AdjustRotationToTarget extends PIDCommand {
     	
     	requires(Robot.swerveBase);
     	
+    	this.direction = direction;
+    	
     	this.error = new MovingAverage(3);
     	this.rotationTarget = new MovingAverage(5);
     }
@@ -56,6 +58,7 @@ public class AdjustRotationToTarget extends PIDCommand {
     // Called just before this Command runs the first time
     protected void initialize() {
     	this.error.clearValues();
+    	
     	this.rotationTarget.clearValues();
     	Robot.swerveBase.setZero();
     	
@@ -73,7 +76,7 @@ public class AdjustRotationToTarget extends PIDCommand {
     	this.rotationTarget.addValue(this.centerX);
     	
     	System.out.println("p: " + kp + "; i: " + ki + "; d: " + kd + "; input: " + 
-    					   rotationTarget.getAverage() + "; error: " + error.getAverage()); 
+    					   IMG_WIDTH/centerX + "; error: " + error.getAverage()); 
     	
     }
 
@@ -82,7 +85,7 @@ public class AdjustRotationToTarget extends PIDCommand {
 
     	//return false;
     	System.out.println(error.getAverage());
-        return Math.abs(error.getAverage()) < 0.05 && Math.abs(getPIDController().getError()) < 0.05;
+        return Math.abs(error.getAverage()) < 0.03 && Math.abs(getPIDController().getError()) < 0.03;
     }
 
     // Called once after isFinished returns true
@@ -104,6 +107,11 @@ public class AdjustRotationToTarget extends PIDCommand {
 
 	@Override
 	protected void usePIDOutput(double output) {
+
+
+			
+		
+		
 		// TODO Auto-generated method stub
 		Robot.swerveBase.swerveDrive(0, 0, direction.getModifier()*output, false);
 	}

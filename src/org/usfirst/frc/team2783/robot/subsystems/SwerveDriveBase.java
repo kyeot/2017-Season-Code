@@ -311,6 +311,7 @@ public class SwerveDriveBase extends Subsystem {
     			sinDeg(angle)*speed,
     			rotation,
     			fieldOriented);
+    	
     }
     
     //Returns navX sensor ?

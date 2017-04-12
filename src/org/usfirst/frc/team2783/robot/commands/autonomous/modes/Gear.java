@@ -17,8 +17,7 @@ public class Gear extends CommandGroup {
     	
     	addSequential(new GyroSwerveDrive(180, 0.25, false, 15, true));
     	addSequential(new AutoActiveGear(0));
-    	addSequential(new GyroSwerveDrive(0, 0.25, false, 1, false));
-    	
+    	addSequential(new GyroSwerveDrive(180, 0.25, false, 5, true));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

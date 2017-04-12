@@ -2,12 +2,13 @@ package org.usfirst.frc.team2783.robot.commands.autonomous.modes;
 
 import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.commands.GyroSwerveDrive;
+<<<<<<< HEAD
 import org.usfirst.frc.team2783.robot.commands.autonomous.AutoActiveGear;
 import org.usfirst.frc.team2783.robot.commands.autonomous.AutoDrive;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.GearHolderLift;
+=======
+>>>>>>> refs/remotes/origin/rocket-city-regional
 import org.usfirst.frc.team2783.robot.vision.AdjustRotationToTarget;
-
-import com.sun.javafx.scene.traversal.Direction;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -19,7 +20,7 @@ public class LeftSideGear extends CommandGroup {
     public LeftSideGear() {
     	requires(Robot.swerveBase);
     	
-    	addSequential(new GyroSwerveDrive(180, 0.42, true, 3, false));
+    	addSequential(new GyroSwerveDrive(180, 0.4, true, 3, false));
     	addSequential(new AdjustRotationToTarget(AdjustRotationToTarget.Direction.LOOK_LEFT));
     	addSequential(new GyroSwerveDrive(270, 0.3, false, 4, true));
     	
