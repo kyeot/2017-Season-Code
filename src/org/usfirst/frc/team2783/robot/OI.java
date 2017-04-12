@@ -4,12 +4,9 @@ import org.usfirst.frc.team2783.robot.commands.Climb;
 import org.usfirst.frc.team2783.robot.commands.GearHolder;
 import org.usfirst.frc.team2783.robot.commands.GearRoller;
 import org.usfirst.frc.team2783.robot.commands.GyroSwerveDrive;
-
 import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
 import org.usfirst.frc.team2783.robot.commands.ToggleRetriever;
-import org.usfirst.frc.team2783.robot.commands.UltraSonicShooting;
 import org.usfirst.frc.team2783.robot.commands.VisionTrigger;
-import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.GearHolderLift;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
 import org.usfirst.frc.team2783.robot.triggers.AxisButton;
 import org.usfirst.frc.team2783.robot.triggers.Dpad;
@@ -18,7 +15,6 @@ import org.usfirst.frc.team2783.robot.vision.AdjustRotationToTarget;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.buttons.Trigger;
 
 
 /**
