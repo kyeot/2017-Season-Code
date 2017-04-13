@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2783.robot.vision;
 
 import org.usfirst.frc.team2783.robot.Robot;
-import org.usfirst.frc.team2783.tools.MovingAverage;
+import org.usfirst.frc.team2783.robot.util.MovingAverage;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
 
