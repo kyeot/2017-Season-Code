@@ -79,7 +79,7 @@ public class GyroSwerveDrive extends PIDCommand {
     	System.out.println(Robot.usSensor1.getValue());
     	return timed && 
     				((Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt)) || 
-    				((Robot.usSensor1.getValue() < 375) && usStop));
+    				((Robot.usSensor1.getValue() < 325) && usStop));
    
     }
 
