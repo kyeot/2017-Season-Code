@@ -4,12 +4,12 @@ package org.usfirst.frc.team2783.robot;
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team2783.robot.commands.MoveGear;
-import org.usfirst.frc.team2783.robot.commands.autonomous.AutoDrive;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.Gear;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.LeftSideGear;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.RightSideGear;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.ShootFromBlue;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.ShootFromRed;
+import org.usfirst.frc.team2783.robot.leds.LedStrip;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
 import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
@@ -64,6 +64,8 @@ public class Robot extends IterativeRobot {
 	public LimitSwitch gearChecker;
 	public LimitSwitch holderPos;
 	public static LimitSwitch[] limitSwitches;
+	
+	public LedStrip ledStrip;
 										
 
 	/**
@@ -94,6 +96,8 @@ public class Robot extends IterativeRobot {
 		
 		String[] autonomousList = {"Gear", "RightSideGear", "LeftSideGear", "BlueShoot", "RedShoot"};
         this.smartDashTable.putStringArray("Auto List", autonomousList);
+        
+        ledStrip = new LedStrip();
         
         camera.setExposureManual(10);
     	camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
@@ -250,6 +254,11 @@ public class Robot extends IterativeRobot {
     	System.out.println("Limit 8: " + Robot.limitSwitches[0].get());
     	System.out.println("Limit 9: " + Robot.limitSwitches[1].get());
 			
+    	if(OI.manipulator.getRawButton(1)) {
+    		ledStrip.solid(LedStrip.Color.BLUE);
+    	} else {
+    		ledStrip.solid(LedStrip.Color.RED);
+    	}
 	}
 
 	/**

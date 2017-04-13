@@ -29,7 +29,7 @@ public class LedStrip {
 	
 	public void solid(Color color) {
 		toSend = new byte[1];
-		toSend[1] = color.getByte();
+		toSend[0] = color.getByte();
 		i2cSend(toSend, 1);
 	}
 	
