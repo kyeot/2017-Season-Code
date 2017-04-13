@@ -1,7 +1,9 @@
 package org.usfirst.frc.team2783.robot.subsystems;
 
+import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.RobotMap;
 import org.usfirst.frc.team2783.robot.commands.UpdateRetriever;
+import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase.SwerveModule;
 import org.usfirst.frc.team2783.robot.util.DiscreteToggle;
 
 import com.ctre.CANTalon;
@@ -10,6 +12,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -17,12 +20,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class RetrieverClimberBase extends Subsystem {
 	
+	private int ENCODER_TICKS_FOR_ADJUSTER_TRAVEL = 1;
 	private VictorSP gathererMotor;
 	private VictorSP gearRoller;
 	private Servo gearShifter;
 	private CANTalon gearHolder;
-	public static Encoder gearHolderEnc = new Encoder(new DigitalInput(8), new DigitalInput(9));
+//	public static Encoder gearHolderEnc = new Encoder(new DigitalInput(8), new DigitalInput(9), false, EncodingType.k4X);
 
+	//public DigitalInput gearEnter = new DigitalInput(8);
+	
 	private DiscreteToggle retrieverInToggle;
 	private DiscreteToggle retrieverOutToggle;
 	
@@ -43,6 +49,8 @@ public class RetrieverClimberBase extends Subsystem {
 	public RetrieverClimberBase(){
 		this.retrieverInToggle = new DiscreteToggle();
 		this.retrieverOutToggle = new DiscreteToggle();
+		
+		
 		
 		gearRoller = new VictorSP(RobotMap.GEAR_LIFTER_ROLLER_ID);
 		gearHolder = new CANTalon(RobotMap.GEAR_HOLDER_ID);
@@ -78,16 +86,7 @@ public class RetrieverClimberBase extends Subsystem {
 		gearShifter.setAngle(angle);
 	}
 	
-	public double getGearAngle() {
-		if (gearHolderEnc != null) {
-			return (gearHolderEnc.getDistance());
-		}
 		
-		else {
-			return -1.0;
-		}
-	}
-	
 	
 	public void moveGearHolder(double vbusOutput){
 		gearHolder.set(vbusOutput);

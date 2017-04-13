@@ -4,8 +4,15 @@ import org.usfirst.frc.team2783.robot.commands.Climb;
 import org.usfirst.frc.team2783.robot.commands.GearHolder;
 import org.usfirst.frc.team2783.robot.commands.GearRoller;
 import org.usfirst.frc.team2783.robot.commands.GyroSwerveDrive;
+<<<<<<< HEAD
 import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
 import org.usfirst.frc.team2783.robot.commands.ToggleRetriever;
+=======
+import org.usfirst.frc.team2783.robot.commands.MoveGear;
+import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
+import org.usfirst.frc.team2783.robot.commands.ToggleRetriever;
+import org.usfirst.frc.team2783.robot.commands.VisionTrigger;
+>>>>>>> origin/gear-lifter
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
 import org.usfirst.frc.team2783.robot.triggers.AxisButton;
 import org.usfirst.frc.team2783.robot.triggers.Dpad;
@@ -31,9 +38,7 @@ public class OI {
 	Button gatherer = new JoystickButton(manipulator, 6);
 	
 	AxisButton climber = new AxisButton(manipulator, 3);
-	
 	AxisButton gearLift = new AxisButton(manipulator, 5);
-	
 	AxisButton gearHolder = new AxisButton(manipulator, 1);
 	
 	Button visionButton = new JoystickButton(driver, 1);
@@ -46,8 +51,12 @@ public class OI {
 	Dpad gyroDriveEast = new Dpad(driver, 90);
 	Dpad gyroDriveWest = new Dpad(driver, 270);
 	
+<<<<<<< HEAD
 	public static Dpad pValueUp = new Dpad(pidTuner, 0);
 	public static Dpad pValueDown = new Dpad(pidTuner, 180);
+=======
+	VisionTrigger visionTrigger;
+>>>>>>> origin/gear-lifter
 
 	public OI() {
 		visionButton.toggleWhenPressed(new AdjustRotationToTarget(AdjustRotationToTarget.Direction.LOOK_LEFT));
