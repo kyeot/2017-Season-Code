@@ -15,7 +15,7 @@ public class GearRoller extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	
-    	requires(Robot.retriever);
+    	requires(Robot.rollerBase);
     	
     }
 
@@ -26,11 +26,11 @@ public class GearRoller extends Command {
     	double rollValue = -OI.manipulator.getRawAxis(5);
     	
     	if(rollValue > -.2 && rollValue < .2){
-    		Robot.retriever.rollRoller(0);
+    		Robot.rollerBase.rollRoller(0);
     	}
     	
     	else{
-    		Robot.retriever.rollRoller(rollValue);
+    		Robot.rollerBase.rollRoller(rollValue);
     	}
     }
 
@@ -39,11 +39,11 @@ public class GearRoller extends Command {
     	
     	double rollValue = -OI.manipulator.getRawAxis(5);
     	if(rollValue > -.2 && rollValue < .2){
-    		Robot.retriever.rollRoller(0);
+    		Robot.rollerBase.rollRoller(0);
     	}
     	
     	else{
-    		Robot.retriever.rollRoller(rollValue);
+    		Robot.rollerBase.rollRoller(rollValue);
     	}
     	
     }
@@ -55,7 +55,7 @@ public class GearRoller extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.retriever.rollRoller(0);
+    	Robot.rollerBase.rollRoller(0);
     }
 
     // Called when another command which requires one or more of the same

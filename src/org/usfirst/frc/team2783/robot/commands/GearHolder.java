@@ -28,7 +28,7 @@ public class GearHolder extends Command {
     	}
     	
     	else{
-    		Robot.retriever.moveGearHolder(liftValue);
+    		Robot.retriever.moveGearHolder(-liftValue);
     	}
     	
 //    	if(){
@@ -46,7 +46,7 @@ public class GearHolder extends Command {
     	}
     	
     	else{
-    		Robot.retriever.moveGearHolder(liftValue);
+    		Robot.retriever.moveGearHolder(-liftValue);
     		
     	}
     	
@@ -64,7 +64,7 @@ public class GearHolder extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.retriever.rollRoller(0);
+    	Robot.rollerBase.rollRoller(0);
     }
 
     // Called when another command which requires one or more of the same

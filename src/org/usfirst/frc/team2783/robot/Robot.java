@@ -10,6 +10,7 @@ import org.usfirst.frc.team2783.robot.commands.autonomous.modes.RightSideGear;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.ShootFromBlue;
 import org.usfirst.frc.team2783.robot.commands.autonomous.modes.ShootFromRed;
 import org.usfirst.frc.team2783.robot.leds.LedStrip;
+import org.usfirst.frc.team2783.robot.subsystems.GearRollerBase;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
 import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
@@ -40,6 +41,7 @@ public class Robot extends IterativeRobot {
 	public static final ShooterBase shooterBase = new ShooterBase();
 	public static final RetrieverClimberBase retriever = new RetrieverClimberBase();
 	public static final SwerveDriveBase swerveBase = new SwerveDriveBase();
+	public static final GearRollerBase rollerBase = new GearRollerBase();
 	public static OI oi;
 	public static Command autonomous;
 	//public static NetworkTable smartDashTable;

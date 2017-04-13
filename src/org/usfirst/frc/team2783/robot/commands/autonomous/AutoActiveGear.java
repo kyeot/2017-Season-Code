@@ -61,7 +61,7 @@ public class AutoActiveGear extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.retriever.rollRoller(0);
+    	Robot.rollerBase.rollRoller(0);
     	commandStartedAt = 0;
     }
 

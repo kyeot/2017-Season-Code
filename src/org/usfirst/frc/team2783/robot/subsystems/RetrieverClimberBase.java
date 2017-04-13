@@ -22,7 +22,6 @@ public class RetrieverClimberBase extends Subsystem {
 	
 	private int ENCODER_TICKS_FOR_ADJUSTER_TRAVEL = 1;
 	private VictorSP gathererMotor;
-	private VictorSP gearRoller;
 	private Servo gearShifter;
 	private CANTalon gearHolder;
 //	public static Encoder gearHolderEnc = new Encoder(new DigitalInput(8), new DigitalInput(9), false, EncodingType.k4X);
@@ -52,7 +51,7 @@ public class RetrieverClimberBase extends Subsystem {
 		
 		
 		
-		gearRoller = new VictorSP(RobotMap.GEAR_LIFTER_ROLLER_ID);
+		
 		gearHolder = new CANTalon(RobotMap.GEAR_HOLDER_ID);
 		gathererMotor = new VictorSP(RobotMap.GATHERER_WHEEL_ID);
 		gearShifter = new Servo(RobotMap.GEAR_SHIFTER_ID);
@@ -92,9 +91,7 @@ public class RetrieverClimberBase extends Subsystem {
 		gearHolder.set(vbusOutput);
 	}
 	
-	public void rollRoller(double vbusOutput){
-		gearRoller.set(vbusOutput);
-	}
+	
 	
 
     // Put methods for controlling this subsystem
