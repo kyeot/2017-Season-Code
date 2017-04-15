@@ -21,7 +21,7 @@ public class GearHolder extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	double liftValue = -OI.manipulator.getRawAxis(1);
+    	double liftValue = OI.manipulator.getRawAxis(1);
     	
     	if(liftValue > -.2 && liftValue < .2){
     		Robot.retriever.moveGearHolder(0);
@@ -39,7 +39,7 @@ public class GearHolder extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	double liftValue = -OI.manipulator.getRawAxis(1);
+    	double liftValue = OI.manipulator.getRawAxis(1);
     	
     	if(liftValue > -.2 && liftValue < .2){
     		Robot.retriever.moveGearHolder(0);

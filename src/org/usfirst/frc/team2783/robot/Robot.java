@@ -159,6 +159,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		ledStrip.ledMode(LedStrip.LedPattern.SOLID_PURPLE);
 		Scheduler.getInstance().run();
 	}
 
@@ -215,6 +216,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		ledStrip.ledMode(LedStrip.LedPattern.SOLID_ORANGE);
 		Scheduler.getInstance().run();
 	}
 
@@ -256,10 +258,10 @@ public class Robot extends IterativeRobot {
     	System.out.println("Limit 8: " + Robot.limitSwitches[0].get());
     	System.out.println("Limit 9: " + Robot.limitSwitches[1].get());
 			
-    	if(OI.manipulator.getRawButton(1)) {
-    		ledStrip.solid(LedStrip.Color.BLUE);
+    	if(limitSwitches[0].get()) {
+    		ledStrip.ledMode(LedStrip.LedPattern.SOLID_YELLOW);
     	} else {
-    		ledStrip.solid(LedStrip.Color.RED);
+    		ledStrip.ledMode(LedStrip.LedPattern.SOLID_RED);
     	}
 	}
 

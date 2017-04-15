@@ -88,6 +88,7 @@ public class RetrieverClimberBase extends Subsystem {
 		
 	
 	public void moveGearHolder(double vbusOutput){
+		System.out.println(vbusOutput);
 		gearHolder.set(vbusOutput);
 	}
 	

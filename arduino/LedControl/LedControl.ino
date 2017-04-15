@@ -5,7 +5,7 @@
 #endif
 
 #define PIN            6
-#define NUMPIXELS      120
+#define NUMPIXELS      60
 
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
@@ -22,6 +22,7 @@ int c = 0;
 
 void setup() {
   // put your setup code here, to run once:
+  
   #if defined (__AVR_ATtiny85__)
     if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
   #endif
@@ -38,11 +39,17 @@ void loop() {
   // put your main code here, to run repeatedly:
   if(c != 0) {
     if(c == 1) {
-      updateLeds(255, 0, 0);
+      updateLeds(255*0.5, 0, 0);
     } else if(c == 2) {
-      updateLeds(0, 255, 0);
+      updateLeds(0, 255*0.5, 0);
     } else if(c == 3) {
-      updateLeds(0, 0, 255);
+      updateLeds(0, 0, 255*0.5);
+    } else if(c == 4) {
+      updateLeds(255*0.5, 255*0.5, 0);
+    } else if(c == 5) {
+      updateLeds(255*0.5, 69*0.5, 0);
+    } else if(c == 6) {
+      updateLeds(255, 0, 255);
     }
   } else {
     updateLeds(0, 0, 0);
