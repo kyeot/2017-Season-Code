@@ -97,7 +97,7 @@ public class SwerveDrive extends Command {
     		rotValue = 0.0;
     	}
     	
-    	//While the left bumper is held goes half speed
+    	//While the left bumper is held go full speed
     	if(controlType.getDoubleSpeedButton()) {
     		fbValue *= 2;
     		rlValue *= 2;
