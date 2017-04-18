@@ -4,6 +4,7 @@ import org.usfirst.frc.team2783.robot.commands.Climb;
 import org.usfirst.frc.team2783.robot.commands.GearHolder;
 import org.usfirst.frc.team2783.robot.commands.GearRoller;
 import org.usfirst.frc.team2783.robot.commands.GyroSwerveDrive;
+import org.usfirst.frc.team2783.robot.commands.MoveGear;
 import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
 import org.usfirst.frc.team2783.robot.commands.ToggleRetriever;
 import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
@@ -52,12 +53,15 @@ public class OI {
 		
 		shooter.toggleWhenPressed(new ShooterDrive());
 		
+		
 		climber.whileActive(new Climb());
 		
 		gatherer.whenPressed(new ToggleRetriever(RetrieverDirection.RET_OUT, 0));
 		
 		gearHolder.whileActive(new GearHolder());
 		gearHolder.whenInactive(new GearHolder());
+		
+		Robot.limitSwitches[0].whenActive(new MoveGear());
 		
 		gyroDriveNorth.whileActive(new GyroSwerveDrive(0.0, 0.3, false));
 		gyroDriveSouth.whileActive(new GyroSwerveDrive(180.0, 0.3, false));

@@ -252,8 +252,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		
-		Robot.limitSwitches[0].whenActive(new MoveGear());
 
     	System.out.println("Limit 8: " + Robot.limitSwitches[0].get());
     	System.out.println("Limit 9: " + Robot.limitSwitches[1].get());
