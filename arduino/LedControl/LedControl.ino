@@ -20,9 +20,10 @@ int b = 0;
 
 int c[2];
 
+double brightness = 0.5;
+
 void setup() {
   // put your setup code here, to run once:
-  
   #if defined (__AVR_ATtiny85__)
     if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
   #endif
@@ -65,10 +66,29 @@ void onReceive(int howMany) {
   }
 }
 
-void updateLeds(int r, int g, int b) {
-  for(int i=0;i<NUMPIXELS;i++){
-         pixels.setPixelColor(i, pixels.Color(r, g, b));
+void updateLeds(int r, int g, int b, boolean fadeTo, int time) {
+  r = brightness*r;
+  g = brightness*g;
+  b = brightness*b;
+  if(fadeTo) {
+    for(t = 0; t < time; t++) {
+      for(int i=0;i<NUMPIXELS;i++){
+         pixels.setPixelColor(i, pixels.Color((((r-this.r)/time)*t)+this.r, 
+                                              (((g-this.g)/time)*t)+this.g,
+                                              (((b-this.b)/time)*t)+this.b);
          pixels.show();
       }
+    }
+  } else {
+    for(int i=0;i<NUMPIXELS;i++){
+         pixels.setPixelColor(i, pixels.Color(r, g, b));
+         pixels.show();
+    }
+  }
+  this.r = r;
+  this.g = g;
+  this.b = b;
 }
+
+
 
