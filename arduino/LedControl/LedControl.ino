@@ -18,7 +18,7 @@ int r = 255;
 int g = 0;
 int b = 0;
 
-int c = 0;
+int c[2];
 
 void setup() {
   // put your setup code here, to run once:
@@ -37,19 +37,21 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if(c != 0) {
-    if(c == 1) {
-      updateLeds(255*0.5, 0, 0);
-    } else if(c == 2) {
-      updateLeds(0, 255*0.5, 0);
-    } else if(c == 3) {
-      updateLeds(0, 0, 255*0.5);
-    } else if(c == 4) {
-      updateLeds(255*0.5, 255*0.5, 0);
-    } else if(c == 5) {
-      updateLeds(255*0.5, 69*0.5, 0);
-    } else if(c == 6) {
-      updateLeds(255, 0, 255);
+  if(c[0] == 0) {
+    if(c[1] == 0) {
+      updateLeds(0, 0, 0); //Off, 0
+    } else if(c[1] == 1) {
+      updateLeds(255, 0, 0); //RED, 1
+    } else if(c[1] == 2) {
+      updateLeds(0, 255, 0); //GREEN, 2
+    } else if(c[1] == 3) {
+      updateLeds(0, 0, 255); //BLUE, 3
+    } else if(c[1] == 4) {
+      updateLeds(255, 255, 0); //YELLOW, 4
+    } else if(c[1] == 5) {
+      updateLeds(255, 69, 0); //ORANGE, 5
+    } else if(c[1] == 6) {
+      updateLeds(255, 0, 255); //PURPLE, 6
     }
   } else {
     updateLeds(0, 0, 0);
@@ -58,8 +60,8 @@ void loop() {
 }
 
 void onReceive(int howMany) {
-  while(Wire.available()) {
-    c = Wire.read();
+  for(int i = 0; Wire.available(); i++) {
+    c[i] = Wire.read();
   }
 }
 
