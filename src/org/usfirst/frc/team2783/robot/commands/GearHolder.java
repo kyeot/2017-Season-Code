@@ -49,10 +49,6 @@ public class GearHolder extends Command {
     		Robot.retriever.moveGearHolder(-liftValue);
     		
     	}
-    	
-    	if(Robot.limitSwitches[0].get()){
-    		new AutoActiveGear(1, 0.25);
-    	}
 
     	
     }
