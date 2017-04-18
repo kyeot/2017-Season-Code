@@ -3,15 +3,12 @@ package org.usfirst.frc.team2783.robot;
 
 import org.opencv.core.Rect;
 import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team2783.robot.commands.MoveGear;
-import org.usfirst.frc.team2783.robot.commands.autonomous.modes.Gear;
-import org.usfirst.frc.team2783.robot.commands.autonomous.modes.LeftSideGear;
-import org.usfirst.frc.team2783.robot.commands.autonomous.modes.RightSideGear;
-import org.usfirst.frc.team2783.robot.commands.autonomous.modes.ShootFromBlue;
-import org.usfirst.frc.team2783.robot.commands.autonomous.modes.ShootFromRed;
+import org.usfirst.frc.team2783.robot.commands.autonomous.modes.MiddleGear;
+import org.usfirst.frc.team2783.robot.commands.autonomous.modes.ShootHigh;
+import org.usfirst.frc.team2783.robot.commands.autonomous.modes.SideGear;
 import org.usfirst.frc.team2783.robot.leds.LedStrip;
-import org.usfirst.frc.team2783.robot.subsystems.GearRollerBase;
-import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
+import org.usfirst.frc.team2783.robot.subsystems.ActiveGearBase;
+import org.usfirst.frc.team2783.robot.subsystems.ClimberBase;
 import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
 import org.usfirst.frc.team2783.robot.triggers.LimitSwitch;
@@ -39,9 +36,9 @@ import edu.wpi.first.wpilibj.vision.VisionThread;
 public class Robot extends IterativeRobot {
 
 	public static final ShooterBase shooterBase = new ShooterBase();
-	public static final RetrieverClimberBase retriever = new RetrieverClimberBase();
+	public static final ClimberBase climberBase = new ClimberBase();
 	public static final SwerveDriveBase swerveBase = new SwerveDriveBase();
-	public static final GearRollerBase rollerBase = new GearRollerBase();
+	public static final ActiveGearBase activeGearBase = new ActiveGearBase();
 	public static OI oi;
 	public static Command autonomous;
 	//public static NetworkTable smartDashTable;
@@ -55,6 +52,7 @@ public class Robot extends IterativeRobot {
 	
 	public static final int IMG_WIDTH = 320;
 	public static final int IMG_HEIGHT = 240;
+	public UsbCamera visionCamera = CameraServer.getInstance().startAutomaticCapture(1);
 	public UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
 	private VisionThread visionThread;
 	public static double centerX = 0.0;
@@ -101,10 +99,10 @@ public class Robot extends IterativeRobot {
         
         ledStrip = new LedStrip();
         
-        camera.setExposureManual(10);
-    	camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+        visionCamera.setExposureManual(10);
+    	visionCamera.setResolution(IMG_WIDTH, IMG_HEIGHT);
         
-        visionThread = new VisionThread(this.camera, new GripPipeline(), pipeline -> {
+        visionThread = new VisionThread(this.visionCamera, new GripPipeline(), pipeline -> {
 		
         	switch (pipeline.filterContoursOutput().size()){
         		
@@ -159,7 +157,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
-		ledStrip.ledMode(LedStrip.LedPattern.SOLID_PURPLE);
+		ledStrip.solid(LedStrip.Color.PURPLE, false);
 		Scheduler.getInstance().run();
 	}
 
@@ -180,24 +178,22 @@ public class Robot extends IterativeRobot {
     	//Gets the autonomous selector value from the dashboard
     	String autoSelected = SmartDashboard.getString("Auto Selector", "None");
     	
-    	autonomous = new RightSideGear();
-    	
     	//Switches the autonomous mode based on the value from the SmartDashboard
 		switch(autoSelected) {
 			case "Gear":
-				autonomous = new Gear();
+				autonomous = new MiddleGear();
 				break;
 			case "RedShoot":
-				autonomous = new ShootFromRed();
+				autonomous = new ShootHigh(ShootHigh.Alliance.RED);
 				break;
 			case "BlueShoot":
-				autonomous = new ShootFromBlue();
+				autonomous = new ShootHigh(ShootHigh.Alliance.BLUE);
 				break;
 			case "RightSideGear":
-				autonomous = new RightSideGear();
+				autonomous = new SideGear(SideGear.Side.RIGHT);
 				break;
 			case "LeftSideGear":
-				autonomous = new LeftSideGear();
+				autonomous = new SideGear(SideGear.Side.LEFT);
 				break;
 			case "None":
 			default:
@@ -216,7 +212,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		ledStrip.ledMode(LedStrip.LedPattern.SOLID_ORANGE);
+		ledStrip.solid(LedStrip.Color.ORANGE, false);
 		Scheduler.getInstance().run();
 	}
 
@@ -228,22 +224,6 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		
-//		camera.setExposureManual(3);
-//    	camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-//		
-//		visionThread = new VisionThread(this.camera, new GripPipeline(), pipeline -> {
-//			//System.out.println(pipeline.filterContoursOutput().size());
-//	        if (pipeline.filterContoursOutput().size() == 2) {	
-//	        	synchronized (imgLock) {
-//	        		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-//	        		Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
-//	        		centerX = ((r.x + (r.width))/2 + (r2.x + (r2.width))/2);
-//	        		//System.out.println(centerX);
-//	        	}	        	
-//	        }
-//		});
-//		visionThread.start();
 	}
 
 	/**
@@ -253,13 +233,14 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 
-    	System.out.println("Limit 8: " + Robot.limitSwitches[0].get());
-    	System.out.println("Limit 9: " + Robot.limitSwitches[1].get());
-			
+//    	System.out.println("Limit 8: " + Robot.limitSwitches[0].get());
+//    	System.out.println("Limit 9: " + Robot.limitSwitches[1].get());
+    	System.out.println("Analog0:" + Robot.usSensor1.getValue());
+    	
     	if(limitSwitches[0].get()) {
-    		ledStrip.ledMode(LedStrip.LedPattern.SOLID_YELLOW);
+    		ledStrip.solid(LedStrip.Color.YELLOW, false);
     	} else {
-    		ledStrip.ledMode(LedStrip.LedPattern.SOLID_RED);
+    		ledStrip.solid(LedStrip.Color.RED, false);
     	}
 	}
 

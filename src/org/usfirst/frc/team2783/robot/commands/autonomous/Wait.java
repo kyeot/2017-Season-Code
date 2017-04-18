@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2783.robot.commands.autonomous;
 
 import org.usfirst.frc.team2783.robot.Robot;
-import org.usfirst.frc.team2783.robot.commands.MoveGear;
-import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase.RetrieverDirection;
+import org.usfirst.frc.team2783.robot.commands.CollectGear;
+import org.usfirst.frc.team2783.robot.subsystems.ClimberBase.RetrieverDirection;
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase.SwerveModule;
 
 import edu.wpi.first.wpilibj.Utility;
@@ -38,13 +38,12 @@ public class Wait extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	//Run command for 6 seconds
         return Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt);
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	new MoveGear();
+    	new CollectGear();
     }
 
     // Called when another command which requires one or more of the same

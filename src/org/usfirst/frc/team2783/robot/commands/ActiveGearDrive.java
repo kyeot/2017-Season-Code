@@ -8,44 +8,51 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class GearRoller extends Command {
+public class ActiveGearDrive extends Command {
 
 	
-    public GearRoller() {
+    public ActiveGearDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	
-    	requires(Robot.rollerBase);
+    	requires(Robot.activeGearBase);
     	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
-    	
+    	double liftValue = -OI.manipulator.getRawAxis(1);
     	double rollValue = -OI.manipulator.getRawAxis(5);
     	
-    	if(rollValue > -.2 && rollValue < .2){
-    		Robot.rollerBase.rollRoller(0);
+    	if(Math.abs(rollValue) > .2) {
+    		Robot.activeGearBase.spinRoller(rollValue);
+    	} else {
+    		Robot.activeGearBase.spinRoller(0);
     	}
     	
-    	else{
-    		Robot.rollerBase.rollRoller(rollValue);
+    	if(Math.abs(liftValue) > .2){
+    		Robot.activeGearBase.setLifterSpeedVbus(liftValue);
+    	} else {
+    		Robot.activeGearBase.setLifterSpeedVbus(0);
     	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
+    	double liftValue = -OI.manipulator.getRawAxis(1);
     	double rollValue = -OI.manipulator.getRawAxis(5);
-    	if(rollValue > -.2 && rollValue < .2){
-    		Robot.rollerBase.rollRoller(0);
+    	
+    	if(Math.abs(rollValue) > .2) {
+    		Robot.activeGearBase.spinRoller(rollValue);
+    	} else {
+    		Robot.activeGearBase.spinRoller(0);
     	}
     	
-    	else{
-    		Robot.rollerBase.rollRoller(rollValue);
+    	if(Math.abs(liftValue) > .2){
+    		Robot.activeGearBase.setLifterSpeedVbus(liftValue);
+    	} else {
+    		Robot.activeGearBase.setLifterSpeedVbus(0);
     	}
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -55,7 +62,7 @@ public class GearRoller extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.rollerBase.rollRoller(0);
+    	Robot.activeGearBase.spinRoller(0);
     }
 
     // Called when another command which requires one or more of the same

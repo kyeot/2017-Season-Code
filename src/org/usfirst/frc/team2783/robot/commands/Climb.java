@@ -13,7 +13,7 @@ public class Climb extends Command {
     public Climb() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.retriever);
+    	requires(Robot.climberBase);
     	
     }
 
@@ -23,7 +23,7 @@ public class Climb extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.retriever.setGathererSpeedVbus(-OI.manipulator.getRawAxis(3));
+    	Robot.climberBase.setClimberSpeedVbus(-OI.manipulator.getRawAxis(3));
     }
 
     // Make this return true when this Command no longer needs to run execute()

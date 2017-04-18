@@ -107,11 +107,6 @@ public class AdjustRotationToTarget extends PIDCommand {
 
 	@Override
 	protected void usePIDOutput(double output) {
-
-
-			
-		
-		
 		// TODO Auto-generated method stub
 		Robot.swerveBase.swerveDrive(0, 0, direction.getModifier()*output, false);
 	}

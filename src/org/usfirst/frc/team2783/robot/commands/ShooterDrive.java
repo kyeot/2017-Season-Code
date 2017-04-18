@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class ShooterDrive extends Command {
 	
-	double loop;
-	
     public ShooterDrive() {
     	requires(Robot.shooterBase);
     	
@@ -29,11 +27,7 @@ public class ShooterDrive extends Command {
     protected void execute() {
     	if(OI.manipulator.getRawButton(8)) {
     		Robot.shooterBase.setShooterSpeedVbus(0.9);
-    		Robot.shooterBase.setAgitatorSpeedVbus(0.95);
-    	} 
-    	
-    	else{
-    		Robot.shooterBase.setAgitatorSpeedVbus(0);
+    	} else {
     		Robot.shooterBase.setShooterSpeedVbus(0);
     	}
     	

@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.AnalogInput;
 
 public class UltrasonicConverter {
 
-	
 	AnalogInput analog;
 	
 	public UltrasonicConverter(int port){
@@ -14,12 +13,4 @@ public class UltrasonicConverter {
 	public double getCentimeters(){
 		return analog.getValue()/20;
 	}
-	
-	
-	//92.7
-	//132.08
-	
-	//39.38
-	
-	//
 }

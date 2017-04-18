@@ -1,23 +1,21 @@
 package org.usfirst.frc.team2783.robot.commands.autonomous.modes;
 
 import org.usfirst.frc.team2783.robot.Robot;
-import org.usfirst.frc.team2783.robot.commands.autonomous.AutoShoot;
+import org.usfirst.frc.team2783.robot.commands.GyroSwerveDrive;
+import org.usfirst.frc.team2783.robot.commands.autonomous.AutoActiveGear;
+import org.usfirst.frc.team2783.robot.subsystems.ClimberBase.GearHolderLift;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class AutoShooting extends CommandGroup {
+public class MiddleGear extends CommandGroup {
 
-    public AutoShooting() {
+    public MiddleGear() {
     	requires(Robot.swerveBase);
-    	requires(Robot.shooterBase);
     	
-    	addSequential(new AutoShoot(1, 0, 1));
-    	
-    	addSequential(new AutoShoot(1, 1, 8));
-    	
+    	addSequential(new GyroSwerveDrive(180, 0.33, true, 3.5, false));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
