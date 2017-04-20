@@ -2,8 +2,6 @@ package org.usfirst.frc.team2783.robot.commands.autonomous.modes;
 
 import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.commands.GyroSwerveDrive;
-import org.usfirst.frc.team2783.robot.commands.autonomous.AutoActiveGear;
-import org.usfirst.frc.team2783.robot.subsystems.ClimberBase.GearHolderLift;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

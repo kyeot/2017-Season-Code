@@ -2,6 +2,7 @@ package org.usfirst.frc.team2783.robot.commands;
 
 import org.usfirst.frc.team2783.robot.OI;
 import org.usfirst.frc.team2783.robot.Robot;
+import org.usfirst.frc.team2783.robot.leds.LedStrip;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -52,6 +53,11 @@ public class ActiveGearDrive extends Command {
     		Robot.activeGearBase.setLifterSpeedVbus(liftValue);
     	} else {
     		Robot.activeGearBase.setLifterSpeedVbus(0);
+    	}
+    		Robot.ledStrip.fadeWith(LedStrip.Color.YELLOW, LedStrip.Color.RED, Robot.activeGearBase.lifterEnc.getDistance(), 0, 135);
+    	} else {
+    		Robot.ledStrip.fadeWith(LedStrip.Color.YELLOW, LedStrip.Color.GREEN, Robot.activeGearBase.lifterEnc.getDistance(), 0, 135);
+    		
     	}
     }
 

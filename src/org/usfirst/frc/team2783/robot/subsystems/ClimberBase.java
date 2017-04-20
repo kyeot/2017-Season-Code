@@ -1,12 +1,8 @@
 package org.usfirst.frc.team2783.robot.subsystems;
 
 import org.usfirst.frc.team2783.robot.RobotMap;
-import org.usfirst.frc.team2783.robot.commands.UpdateRetriever;
-import org.usfirst.frc.team2783.robot.util.DiscreteToggle;
+import org.usfirst.frc.team2783.robot.commands.Climb;
 
-import com.ctre.CANTalon;
-
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -26,6 +22,7 @@ public class ClimberBase extends Subsystem {
 	}
 
     public void initDefaultCommand() {
+    	setDefaultCommand(new Climb());
     }
 }
 

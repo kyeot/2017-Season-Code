@@ -65,7 +65,7 @@ public class Robot extends IterativeRobot {
 	public LimitSwitch holderPos;
 	public static LimitSwitch[] limitSwitches;
 	
-	public LedStrip ledStrip;
+	public static LedStrip ledStrip;
 										
 
 	/**
@@ -82,19 +82,23 @@ public class Robot extends IterativeRobot {
 		//usbCameraServer.startAutomaticCapture("cam1", 1);
 		//usbCameraServer.startAutomaticCapture("cam2", 2);
 		
-		gearChecker = new LimitSwitch(8);
-		holderPos = new LimitSwitch(9);
+		gearChecker = new LimitSwitch(0);
+		holderPos = new LimitSwitch(1);
 		limitSwitches = new LimitSwitch[]{gearChecker, holderPos};
 		
 		oi = new OI();
 		
-		usSensor1 = new AnalogInput(0);
-		usSensor2 = new AnalogInput(1);
+//		usSensor1 = new AnalogInput(0);
+//		usSensor2 = new AnalogInput(1);
 		
 		this.smartDashTable = NetworkTable.getTable("SmartDashboard");
 		//this.visionControl = NetworkTable.getTable("Usage");
 		
-		String[] autonomousList = {"Gear", "RightSideGear", "LeftSideGear", "BlueShoot", "RedShoot"};
+		String[] autonomousList = {"Middle Gear",
+									"Right Side Gear",
+									"Left Side Gear",
+									"Blue Shoot",
+									"Red Shoot"};
         this.smartDashTable.putStringArray("Auto List", autonomousList);
         
         ledStrip = new LedStrip();
@@ -157,7 +161,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
-		ledStrip.solid(LedStrip.Color.PURPLE, false);
+		ledStrip.solid(LedStrip.Color.PURPLE);
 		Scheduler.getInstance().run();
 	}
 
@@ -180,19 +184,19 @@ public class Robot extends IterativeRobot {
     	
     	//Switches the autonomous mode based on the value from the SmartDashboard
 		switch(autoSelected) {
-			case "Gear":
+			case "Middle Gear":
 				autonomous = new MiddleGear();
 				break;
-			case "RedShoot":
+			case "Red Shoot":
 				autonomous = new ShootHigh(ShootHigh.Alliance.RED);
 				break;
-			case "BlueShoot":
+			case "Blue Shoot":
 				autonomous = new ShootHigh(ShootHigh.Alliance.BLUE);
 				break;
-			case "RightSideGear":
+			case "Right Side Gear":
 				autonomous = new SideGear(SideGear.Side.RIGHT);
 				break;
-			case "LeftSideGear":
+			case "Left Side Gear":
 				autonomous = new SideGear(SideGear.Side.LEFT);
 				break;
 			case "None":
@@ -212,7 +216,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		ledStrip.solid(LedStrip.Color.ORANGE, false);
+		ledStrip.solid(LedStrip.Color.ORANGE);
 		Scheduler.getInstance().run();
 	}
 
@@ -235,13 +239,13 @@ public class Robot extends IterativeRobot {
 
 //    	System.out.println("Limit 8: " + Robot.limitSwitches[0].get());
 //    	System.out.println("Limit 9: " + Robot.limitSwitches[1].get());
-    	System.out.println("Analog0:" + Robot.usSensor1.getValue());
+    	//System.out.println("Analog0:" + Robot.limitSwitches[0].limitSwitch.getValue());
     	
-    	if(limitSwitches[0].get()) {
-    		ledStrip.solid(LedStrip.Color.YELLOW, false);
-    	} else {
-    		ledStrip.solid(LedStrip.Color.RED, false);
-    	}
+//    	if(limitSwitches[0].get()) {
+//    		ledStrip.solid(LedStrip.Color.YELLOW);
+//    	} else {
+//    		ledStrip.solid(LedStrip.Color.RED);
+//    	}
 	}
 
 	/**

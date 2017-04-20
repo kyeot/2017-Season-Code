@@ -5,23 +5,48 @@ import edu.wpi.first.wpilibj.I2C;
 public class LedStrip {
 	
 	public enum Color {
-		RED((byte) 1),
-		GREEN((byte) 2),
-		BLUE((byte) 3),
-		YELLOW((byte) 4),
-		ORANGE((byte) 5),
-		PURPLE((byte) 6);
+		RED(255, 0, 0),
+		GREEN(0, 255, 0),
+		BLUE(0, 0, 255),
+		YELLOW(255, 255, 0),
+		ORANGE(255, 69, 0),
+		PURPLE(255, 0, 255);
 		
-		byte data;
+		int r;
+		int g;
+		int b;
 		
-		Color(byte data) {
-			this.data = data;
+		Color(int r, int g, int b) {
+			this.r = r;
+			this.g = g;
+			this.b = b;
 		}
 		
-		public byte getByte() {
-			return data;
+		public int getR() {
+			return r;
 		}
-	}
+
+		public int getG() {
+			return g;
+		}
+
+		public int getB() {
+			return b;
+		}
+		
+		public int[] getRGB() {
+			return new int[]{r, g, b};
+		}
+		
+		public byte[] getRGBByte() {
+			return new byte[] {
+								(byte) (r & 0xFF),
+								(byte) (g & 0xFF),
+								(byte) (b & 0xFF)
+							};
+			}
+		}
+	
 	
 	I2C i2c;
 	byte[] toSend;
@@ -30,11 +55,11 @@ public class LedStrip {
 		i2c = new I2C(I2C.Port.kOnboard, 1);
 	}
 	
-	public void solid(Color color, boolean fadeTo) {
-		toSend = new byte[3];
-		toSend[0] = (byte) 0;
-		toSend[1] = color.getByte();
-		toSend[2] = (byte) (fadeTo ? 1 : 0);
+	public void solid(Color color) {
+		toSend = color.getRGBByte();
+		i2cSend(toSend);
+	}
+	
 		i2cSend(toSend);
 	}
 	
