@@ -5,6 +5,7 @@ import org.usfirst.frc.team2783.robot.commands.ActiveGearDrive;
 
 import com.ctre.CANTalon;
 
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -18,7 +19,7 @@ public class ActiveGearBase extends Subsystem {
 	private VictorSP gearRoller;
 	private CANTalon gearLifter;
 	
-	private Encoder lifterEnc;
+	public Encoder lifterEnc;
 	
 	public ActiveGearBase(){
 		gearRoller = new VictorSP(RobotMap.GEAR_ROLLER_ID);
@@ -26,7 +27,9 @@ public class ActiveGearBase extends Subsystem {
 		
 		lifterEnc = new Encoder(
 							new DigitalInput(8),
-							new DigitalInput(9));
+							new DigitalInput(9),
+							false,
+							EncodingType.k4X);
 		lifterEnc.setDistancePerPulse(0.875);
 	}
 	
@@ -35,7 +38,7 @@ public class ActiveGearBase extends Subsystem {
 	}
 	
 	public void setLifterSpeedVbus(double speed) {
-		if(getLifterAngle() < 90 && getLifterAngle() > 0) {
+		if((lifterEnc.getDistance() > 0.0 && speed < 0) || (lifterEnc.getDistance() < 150.0 && speed > 0)) {
 			gearLifter.set(speed);
 		} else {
 			gearLifter.set(0);

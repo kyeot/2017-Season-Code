@@ -7,6 +7,7 @@ import org.usfirst.frc.team2783.robot.commands.ShooterDrive;
 import org.usfirst.frc.team2783.robot.triggers.AxisButton;
 import org.usfirst.frc.team2783.robot.triggers.Dpad;
 import org.usfirst.frc.team2783.robot.triggers.LimitSwitch;
+import org.usfirst.frc.team2783.robot.util.DiscreteToggle;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -22,7 +23,10 @@ public class OI {
 	public static Joystick manipulator = new Joystick(RobotMap.MANIPULATOR_CONTROLLER_ID);
 	public static Joystick driver = new Joystick(RobotMap.XBOX_CONTROLLER_ID);
 	
+	public static DiscreteToggle switchOverride = new DiscreteToggle();
+	
 	Button shooter = new JoystickButton(manipulator, 8);
+	Button toggleOverride = new JoystickButton(manipulator, 5);
 	
 	AxisButton climber = new AxisButton(manipulator, 3);
 	
@@ -41,9 +45,13 @@ public class OI {
 	public OI() {
 		//visionButton.toggleWhenPressed(new AdjustRotationToTarget(AdjustRotationToTarget.Direction.LOOK_LEFT));
 		
+		if(toggleOverride.get()){
+			switchOverride.toggle();
+		}
+		
 		shooter.toggleWhenPressed(new ShooterDrive());
 		
-		climber.whileActive(new Climb());
+		//climber.whileActive(new Climb());
 		
 		gearCheck.whenActive(new CollectGear());
 		

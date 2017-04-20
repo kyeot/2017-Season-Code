@@ -54,6 +54,7 @@ public class ActiveGearDrive extends Command {
     	} else {
     		Robot.activeGearBase.setLifterSpeedVbus(0);
     	}
+    	if(!Robot.limitSwitches[0].get()){
     		Robot.ledStrip.fadeWith(LedStrip.Color.YELLOW, LedStrip.Color.RED, Robot.activeGearBase.lifterEnc.getDistance(), 0, 135);
     	} else {
     		Robot.ledStrip.fadeWith(LedStrip.Color.YELLOW, LedStrip.Color.GREEN, Robot.activeGearBase.lifterEnc.getDistance(), 0, 135);
