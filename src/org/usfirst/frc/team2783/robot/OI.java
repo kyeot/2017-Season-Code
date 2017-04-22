@@ -24,18 +24,11 @@ public class OI {
 	public static Joystick manipulator = new Joystick(RobotMap.MANIPULATOR_CONTROLLER_ID);
 	public static Joystick driver = new Joystick(RobotMap.XBOX_CONTROLLER_ID);
 	
-<<<<<<< HEAD
 	public static DiscreteToggle overrideToggle = new DiscreteToggle();
 	
 	Button shooter = new JoystickButton(manipulator, 8);
 	Button switchOverride = new JoystickButton(manipulator, 5);
-=======
-	public static DiscreteToggle switchOverride = new DiscreteToggle();
-	
-	Button shooter = new JoystickButton(manipulator, 8);
-	Button toggleOverride = new JoystickButton(manipulator, 5);
->>>>>>> origin/led-indicators
-	
+		
 	AxisButton climber = new AxisButton(manipulator, 3);
 	
 	AxisButton gearLift = new AxisButton(manipulator, 5);
