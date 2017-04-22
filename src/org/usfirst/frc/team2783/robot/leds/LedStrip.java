@@ -5,23 +5,48 @@ import edu.wpi.first.wpilibj.I2C;
 public class LedStrip {
 	
 	public enum Color {
-		RED((byte) 1),
-		GREEN((byte) 2),
-		BLUE((byte) 3),
-		YELLOW((byte) 4),
-		ORANGE((byte) 5),
-		PURPLE((byte) 6);
+		RED(255, 0, 0),
+		GREEN(0, 255, 0),
+		BLUE(0, 0, 255),
+		YELLOW(255, 255, 0),
+		ORANGE(255, 69, 0),
+		PURPLE(255, 0, 255);
 		
-		byte data;
+		int r;
+		int g;
+		int b;
 		
-		Color(byte data) {
-			this.data = data;
+		Color(int r, int g, int b) {
+			this.r = r;
+			this.g = g;
+			this.b = b;
 		}
 		
-		public byte getByte() {
-			return data;
+		public int getR() {
+			return r;
 		}
-	}
+
+		public int getG() {
+			return g;
+		}
+
+		public int getB() {
+			return b;
+		}
+		
+		public int[] getRGB() {
+			return new int[]{r, g, b};
+		}
+		
+		public byte[] getRGBByte() {
+			return new byte[] {
+								(byte) (r & 0xFF),
+								(byte) (g & 0xFF),
+								(byte) (b & 0xFF)
+							};
+			}
+		}
+	
 	
 	I2C i2c;
 	byte[] toSend;
@@ -30,11 +55,31 @@ public class LedStrip {
 		i2c = new I2C(I2C.Port.kOnboard, 1);
 	}
 	
-	public void solid(Color color, boolean fadeTo) {
-		toSend = new byte[3];
-		toSend[0] = (byte) 0;
-		toSend[1] = color.getByte();
-		toSend[2] = (byte) (fadeTo ? 1 : 0);
+	public void solid(Color color) {
+		toSend = color.getRGBByte();
+		i2cSend(toSend);
+	}
+	
+	public void fadeWith(Color color1, Color color2, double value, int min, int max) {
+		double r1 = (double) color1.getR(), g1 = (double) color1.getG(), b1 = (double) color1.getB();
+		double r2 = (double) color2.getR(), g2 = (double) color2.getG(), b2 = (double) color2.getB();
+		
+		int intervals = Math.abs(max-min);
+		
+		if(Math.floor(value) < min) {
+			toSend = color1.getRGBByte();
+		} else if(Math.floor(value) > max) {
+			toSend = color2.getRGBByte();
+		} else {
+			toSend = new byte[] {
+									((byte) ((int) ((((r2-r1)/intervals)*Math.floor(value))+r1) & 0xFF)),
+									((byte) ((int) ((((g2-g1)/intervals)*Math.floor(value))+g1) & 0xFF)),
+									((byte) ((int) ((((b2-b1)/intervals)*Math.floor(value))+b1) & 0xFF))
+								};
+		}
+		
+		System.out.println("r: " + ((((r2-r1)/intervals)*Math.floor(value))+r1) + " g: " + ((((g2-g1)/intervals)*Math.floor(value))+g1) + " b: " + toSend[2] + " value: " + value + " intervals: " + intervals);
+		//System.out.println(value);
 		i2cSend(toSend);
 	}
 	

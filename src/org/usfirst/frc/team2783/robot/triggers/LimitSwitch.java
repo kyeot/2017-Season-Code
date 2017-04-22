@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.buttons.Button;
 
 public class LimitSwitch extends Button {
 	
-	AnalogInput limitSwitch;
+	public AnalogInput limitSwitch;
 	
 	public LimitSwitch(int id){
 		limitSwitch = new AnalogInput(id);
@@ -16,8 +16,8 @@ public class LimitSwitch extends Button {
 	@Override
 	public boolean get() {
 		// TODO Auto-generated method stub
-		
 		if(Robot.oi.overrideToggle.getValue()){
+
 			return false;
 		}
 		

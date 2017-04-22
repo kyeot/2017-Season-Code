@@ -76,10 +76,11 @@ public class GyroSwerveDrive extends PIDCommand {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	System.out.println(Robot.usSensor1.getValue());
-    	return timed && 
-    				((Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt)) || 
-    				((Robot.usSensor1.getValue() < 325) && usStop));
+    	//System.out.println(Robot.usSensor1.getValue());
+//    	return timed && 
+//    				((Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt)) || 
+//    				((Robot.usSensor1.getValue() < 325) && usStop));
+    	return false;
    
     }
 
