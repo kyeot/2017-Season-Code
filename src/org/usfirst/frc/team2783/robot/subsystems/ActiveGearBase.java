@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2783.robot.subsystems;
 
+import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.RobotMap;
 import org.usfirst.frc.team2783.robot.commands.ActiveGearDrive;
 
@@ -30,7 +31,7 @@ public class ActiveGearBase extends Subsystem {
 							new DigitalInput(9),
 							false,
 							EncodingType.k4X);
-		lifterEnc.setDistancePerPulse(0.875);
+		lifterEnc.setDistancePerPulse(0.737);
 	}
 	
 	public void spinRoller(double vbusOutput){
@@ -38,20 +39,25 @@ public class ActiveGearBase extends Subsystem {
 	}
 	
 	public void setLifterSpeedVbus(double speed) {
-		if((lifterEnc.getDistance() > 0.0 && speed < 0) || (lifterEnc.getDistance() < 150.0 && speed > 0)) {
+		if((getLifterAngle() > 0.0 && speed < 0) || (!Robot.limitSwitches[1].get() && speed > 0)) {
 			gearLifter.set(speed);
 		} else {
 			gearLifter.set(0);
 		}
+//		gearLifter.set(speed);
     	
     }
 	
 	public double getLifterAngle() {
 		if(lifterEnc != null) {
-			return lifterEnc.getDistance();
+			return lifterEnc.getDistance() + 92;
 		} else {
 			return -1.0;
 		}
+	}
+	
+	public void resetTop() {
+		lifterEnc.reset();
 	}
 
     public void initDefaultCommand() {

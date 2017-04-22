@@ -22,7 +22,7 @@ public class LimitSwitch extends Button {
 		}
 		
 		else{
-			return limitSwitch.getValue() < 100;
+			return limitSwitch.getValue() < 10;
 		}
 	}
 
