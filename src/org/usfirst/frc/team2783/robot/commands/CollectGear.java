@@ -19,7 +19,7 @@ public class CollectGear extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.activeGearBase.setLifterSpeedVbus(1);
+    	Robot.activeGearBase.setLifterSpeedVbus(0.65);
     	
     }
 
@@ -27,9 +27,8 @@ public class CollectGear extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(!Robot.limitSwitches[1].get()) {
-    		Robot.activeGearBase.setLifterSpeedVbus(1);
+    		Robot.activeGearBase.setLifterSpeedVbus(0.65);
     	}
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -39,11 +38,13 @@ public class CollectGear extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	System.out.println("die jackson");
     	Robot.activeGearBase.setLifterSpeedVbus(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	System.out.println("die jackson");
     }
 }

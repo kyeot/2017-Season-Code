@@ -78,7 +78,7 @@ public class LedStrip {
 								};
 		}
 		
-		System.out.println("r: " + ((((r2-r1)/intervals)*Math.floor(value))+r1) + " g: " + ((((g2-g1)/intervals)*Math.floor(value))+g1) + " b: " + toSend[2] + " value: " + value + " intervals: " + intervals);
+		//System.out.println("r: " + ((((r2-r1)/intervals)*Math.floor(value))+r1) + " g: " + ((((g2-g1)/intervals)*Math.floor(value))+g1) + " b: " + toSend[2] + " value: " + value + " intervals: " + intervals);
 		//System.out.println(value);
 		i2cSend(toSend);
 	}
