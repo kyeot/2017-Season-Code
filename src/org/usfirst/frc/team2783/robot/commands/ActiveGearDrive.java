@@ -40,24 +40,28 @@ public class ActiveGearDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double liftValue = -OI.manipulator.getRawAxis(1);
-    	double rollValue = -OI.manipulator.getRawAxis(5);
+    	if(Robot.limitSwitches[1].get()) {
+    		Robot.activeGearBase.lifterEnc.reset();
+    	}
     	
+    	double liftValue = -OI.manipulator.getRawAxis(1)*0.6;
+    	double rollValue = -OI.manipulator.getRawAxis(5);
+   
     	if(Math.abs(rollValue) > .2) {
     		Robot.activeGearBase.spinRoller(rollValue);
     	} else {
     		Robot.activeGearBase.spinRoller(0);
     	}
     	
-    	if(Math.abs(liftValue) > .2){
+    	if(Math.abs(liftValue) > .12){
     		Robot.activeGearBase.setLifterSpeedVbus(liftValue);
     	} else {
     		Robot.activeGearBase.setLifterSpeedVbus(0);
     	}
     	if(!Robot.limitSwitches[0].get()){
-    		Robot.ledStrip.fadeWith(LedStrip.Color.YELLOW, LedStrip.Color.RED, Robot.activeGearBase.lifterEnc.getDistance(), 0, 135);
+    		Robot.ledStrip.fadeWith(LedStrip.Color.YELLOW, LedStrip.Color.RED, Robot.activeGearBase.getLifterAngle(), 0, 90);
     	} else {
-    		Robot.ledStrip.fadeWith(LedStrip.Color.YELLOW, LedStrip.Color.GREEN, Robot.activeGearBase.lifterEnc.getDistance(), 0, 135);
+    		Robot.ledStrip.fadeWith(LedStrip.Color.YELLOW, LedStrip.Color.GREEN, Robot.activeGearBase.lifterEnc.getDistance(), 0, 90);
     		
     	}
     }
