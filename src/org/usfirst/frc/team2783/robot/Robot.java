@@ -103,7 +103,7 @@ public class Robot extends IterativeRobot {
         
         ledStrip = new LedStrip();
         
-        visionCamera.setExposureManual(10);
+        visionCamera.setExposureManual(24);
     	visionCamera.setResolution(IMG_WIDTH, IMG_HEIGHT);
         
         visionThread = new VisionThread(this.visionCamera, new GripPipeline(), pipeline -> {
