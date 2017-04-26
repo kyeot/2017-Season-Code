@@ -23,7 +23,7 @@ public class ActiveGearDrive extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	double liftValue = -OI.manipulator.getRawAxis(1);
-    	double rollValue = -OI.manipulator.getRawAxis(5);
+    	double rollValue = OI.manipulator.getRawAxis(5);
     	
     	if(Math.abs(rollValue) > .2) {
     		Robot.activeGearBase.spinRoller(rollValue);
@@ -45,7 +45,7 @@ public class ActiveGearDrive extends Command {
     	}
     	
     	double liftValue = -OI.manipulator.getRawAxis(1)*0.6;
-    	double rollValue = -OI.manipulator.getRawAxis(5);
+    	double rollValue = OI.manipulator.getRawAxis(5);
    
     	if(Math.abs(rollValue) > .2) {
     		Robot.activeGearBase.spinRoller(rollValue);
@@ -58,12 +58,16 @@ public class ActiveGearDrive extends Command {
     	} else {
     		Robot.activeGearBase.setLifterSpeedVbus(0);
     	}
+    	
+    	System.out.println(Robot.limitSwitches[0].get());
+    	
     	if(!Robot.limitSwitches[0].get()){
     		Robot.ledStrip.fadeWith(LedStrip.Color.YELLOW, LedStrip.Color.RED, Robot.activeGearBase.getLifterAngle(), 0, 90);
     	} else {
     		Robot.ledStrip.fadeWith(LedStrip.Color.YELLOW, LedStrip.Color.GREEN, Robot.activeGearBase.lifterEnc.getDistance(), 0, 90);
     		
     	}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -74,10 +78,13 @@ public class ActiveGearDrive extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.activeGearBase.spinRoller(0);
+    	Robot.activeGearBase.setLifterSpeedVbus(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.activeGearBase.setLifterSpeedVbus(0);
+    	Robot.activeGearBase.spinRoller(0);
     }
 }
