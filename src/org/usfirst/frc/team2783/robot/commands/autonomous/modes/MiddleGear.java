@@ -2,6 +2,7 @@ package org.usfirst.frc.team2783.robot.commands.autonomous.modes;
 
 import org.usfirst.frc.team2783.robot.Robot;
 import org.usfirst.frc.team2783.robot.commands.GyroSwerveDrive;
+import org.usfirst.frc.team2783.robot.vision.VisionSwerveDrive;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -13,7 +14,7 @@ public class MiddleGear extends CommandGroup {
     public MiddleGear() {
     	requires(Robot.swerveBase);
     	
-    	addSequential(new GyroSwerveDrive(180, 0.33, true, 3.5, false));
+    	addSequential(new VisionSwerveDrive(0.3, 10, true));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
