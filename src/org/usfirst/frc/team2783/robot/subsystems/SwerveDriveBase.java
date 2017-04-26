@@ -305,6 +305,15 @@ public class SwerveDriveBase extends Subsystem {
     	rlMod.setModule(rlAng, rlSpd);
     }
     
+    public void polarSwerveDrive(double angle, double speed, double rotation, boolean fieldOriented) {
+    	swerveDrive(
+    			cosDeg(angle)*speed,
+    			sinDeg(angle)*speed,
+    			rotation,
+    			fieldOriented);
+    	
+    }
+    
     //Returns navX sensor ?
     public AHRS getNavSensor() {
     	if (navSensor != null) {
@@ -318,8 +327,9 @@ public class SwerveDriveBase extends Subsystem {
     public double getGyroAngle(boolean reversed) {
     	if(reversed) {
     		return ((getNavSensor().getAngle()+180.0)%360) - angleOffset;
-    	} else
-    		return (getNavSensor().getAngle()) - angleOffset;
+    	} else {
+    		return getNavSensor().getAngle()%360 - angleOffset;
+    	}
     }
     
     public void resetGyroNorth(double angle, double north) {
