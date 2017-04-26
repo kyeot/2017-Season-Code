@@ -4,18 +4,19 @@ package org.usfirst.frc.team2783.robot.vision;
 import java.util.List;
 
 import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfInt;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
-import edu.wpi.cscore.AxisCamera;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.vision.VisionThread;
-
-import org.opencv.core.*;
 
 /**
 * GripPipeline class.
@@ -40,7 +41,6 @@ public class GripPipeline implements VisionPipeline {
 	private double area = 0.0;
 	private double theta;
 	private final Object imgLock = new Object();
-	private AxisCamera camera = CameraServer.getInstance().addAxisCamera("axis-camera.local");
 	private VisionThread visionThread;
 	private Rect r2;
 
@@ -78,9 +78,9 @@ public class GripPipeline implements VisionPipeline {
 
 		// Step HSV_Threshold0:
 		Mat hsvThresholdInput = cvDilateOutput;
-		double[] hsvThresholdHue = {0.0, 180.0};
-		double[] hsvThresholdSaturation = {82.55395683453236, 255.0};
-		double[] hsvThresholdValue = {199.50539568345323, 255.0};
+		double[] hsvThresholdHue = {50.17985611510791, 93.99317406143345};
+		double[] hsvThresholdSaturation = {100.34892086330936, 255.0};
+		double[] hsvThresholdValue = {200, 255};
 		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
 		// Step Find_Contours0:
@@ -100,7 +100,7 @@ public class GripPipeline implements VisionPipeline {
 		double filterContoursMaxVertices = 1000000;
 		double filterContoursMinVertices = 0;
 		double filterContoursMinRatio = 0.0;
-		double filterContoursMaxRatio = 0.5;
+		double filterContoursMaxRatio = 4.0;
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
 
 	}
@@ -226,16 +226,7 @@ public class GripPipeline implements VisionPipeline {
 	}
 
 	public void startThread(){
-		camera.setResolution(IMG_WIDTH, IMG_HEIGHT);
-		visionThread = new VisionThread(this.camera, this, pipeline -> {
-	        if (!pipeline.findContoursOutput().isEmpty()) {	       
-	        	Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-	        	synchronized (imgLock) {
-	        		centerX = r.x + (r.width / 2);
-	        		area = r.area();	 
-	        }
-	    }
-	});
+		
 		visionThread.start();
 	}
 	

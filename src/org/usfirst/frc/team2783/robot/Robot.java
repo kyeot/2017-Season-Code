@@ -1,20 +1,30 @@
 
 package org.usfirst.frc.team2783.robot;
 
-import org.usfirst.frc.team2783.robot.commands.autonomous.modes.DriveTest;
-import org.usfirst.frc.team2783.robot.commands.autonomous.modes.GetGearAndShoot;
-import org.usfirst.frc.team2783.robot.subsystems.RetrieverClimberBase;
+import org.opencv.core.Rect;
+import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team2783.robot.commands.autonomous.modes.MiddleGear;
+import org.usfirst.frc.team2783.robot.commands.autonomous.modes.ShootHigh;
+import org.usfirst.frc.team2783.robot.commands.autonomous.modes.SideGear;
+import org.usfirst.frc.team2783.robot.leds.LedStrip;
+import org.usfirst.frc.team2783.robot.subsystems.ActiveGearBase;
+import org.usfirst.frc.team2783.robot.subsystems.ClimberBase;
 import org.usfirst.frc.team2783.robot.subsystems.ShooterBase;
 import org.usfirst.frc.team2783.robot.subsystems.SwerveDriveBase;
+import org.usfirst.frc.team2783.robot.triggers.LimitSwitch;
+import org.usfirst.frc.team2783.robot.vision.GripPipeline;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.VisionThread;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,38 +36,116 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public static final ShooterBase shooterBase = new ShooterBase();
-	public static final RetrieverClimberBase retriever = new RetrieverClimberBase();
+	public static final ClimberBase climberBase = new ClimberBase();
 	public static final SwerveDriveBase swerveBase = new SwerveDriveBase();
+	public static final ActiveGearBase activeGearBase = new ActiveGearBase();
 	public static OI oi;
 	public static Command autonomous;
-	public static AnalogInput usSensor; 
+	//public static NetworkTable smartDashTable;
+	//public static GripPipeline pipeline = new GripPipeline();
+	
+	public static AnalogInput usSensor1;
+	public static AnalogInput usSensor2;
 
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
+	
+	public static final int IMG_WIDTH = 320;
+	public static final int IMG_HEIGHT = 240;
+	public UsbCamera visionCamera = CameraServer.getInstance().startAutomaticCapture(1);
+	public UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
+	private VisionThread visionThread;
+	public static double centerX = 0.0;
+	public final static Object imgLock = new Object();
+	
+	public static NetworkTable smartDashTable;
+	public static NetworkTable visionControl;
+	
+	public LimitSwitch gearChecker;
+	public LimitSwitch holderPos;
+	public static LimitSwitch[] limitSwitches;
+	
+	public static LedStrip ledStrip;
+										
 
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
-		oi = new OI();
+		
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		//SmartDashboard.putData("Auto mode", chooser);
 		
-		CameraServer usbCameraServer = CameraServer.getInstance();
-		usbCameraServer.startAutomaticCapture("cam0", 0);
-		usbCameraServer.startAutomaticCapture("cam1", 1);
-		usbCameraServer.startAutomaticCapture("cam2", 2);
+//		CameraServer usbCameraServer = CameraServer.getInstance();
+//		usbCameraServer.startAutomaticCapture("cam0", 0);
+		//usbCameraServer.startAutomaticCapture("cam1", 1);
+		//usbCameraServer.startAutomaticCapture("cam2", 2);
 		
-		usSensor = new AnalogInput(0);
+		gearChecker = new LimitSwitch(0);
+		holderPos = new LimitSwitch(1);
+		limitSwitches = new LimitSwitch[]{gearChecker, holderPos};
 		
+		oi = new OI();
 		
-		//this.smartDashTable = NetworkTable.getTable("SmartDashboard");
+//		usSensor1 = new AnalogInput(0);
+//		usSensor2 = new AnalogInput(1);
 		
-		String[] autonomousList = {"DriveTest"};
-        //this.smartDashTable.putStringArray("Auto List", autonomousList);
+		this.smartDashTable = NetworkTable.getTable("SmartDashboard");
+		//this.visionControl = NetworkTable.getTable("Usage");
+		
+		String[] autonomousList = {"Middle Gear",
+									"Right Side Gear",
+									"Left Side Gear",
+									"Blue Shoot",
+									"Red Shoot"};
+        this.smartDashTable.putStringArray("Auto List", autonomousList);
         
+        ledStrip = new LedStrip();
+        
+        visionCamera.setExposureManual(24);
+    	visionCamera.setResolution(IMG_WIDTH, IMG_HEIGHT);
+        
+        visionThread = new VisionThread(this.visionCamera, new GripPipeline(), pipeline -> {
 		
+        	switch (pipeline.filterContoursOutput().size()){
+        		
+        	case 1:
+        		synchronized (imgLock) {
+	        		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+	        		centerX = r.x + (r.width/2);
+	        		//System.out.println(centerX);
+	        	}
+        		
+        		System.out.println(centerX);
+        		
+        		break;
+        	
+        	case 2:
+        		synchronized (imgLock) {
+	        		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+	        		Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
+	        		centerX = ((r.x + (r.width/2)) + (r2.x + (r2.width/2)))/2;
+	        		System.out.println(centerX);
+	        	}	  
+        		break;
+        		
+        	default:
+        		centerX = IMG_WIDTH/2.2;
+        		System.out.println(pipeline.filterContoursOutput().size() + " contours found; outside of accepted range of 1-2");
+        		break;
+        	}
+        	
+//	        if (pipeline.filterContoursOutput().size() == 2) {	
+//	        	synchronized (imgLock) {
+//	        		Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
+//	        		Rect r2 = Imgproc.boundingRect(pipeline.filterContoursOutput().get(1));
+//	        		centerX = ((r.x + (r.width))/2 + (r2.x + (r2.width))/2);
+//	        		//System.out.println(centerX);
+//	        	}	        	
+//	        }
+		});
+		visionThread.start();
 		
 	}
 
@@ -73,6 +161,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		ledStrip.solid(LedStrip.Color.PURPLE);
 		Scheduler.getInstance().run();
 	}
 
@@ -95,11 +184,21 @@ public class Robot extends IterativeRobot {
     	
     	//Switches the autonomous mode based on the value from the SmartDashboard
 		switch(autoSelected) {
-			case "DriveTest":
-				autonomous = new DriveTest();
+			case "Middle Gear":
+				autonomous = new MiddleGear();
 				break;
-			case "GetGearAndShoot":
-				autonomous = new GetGearAndShoot();
+			case "Red Shoot":
+				autonomous = new ShootHigh(ShootHigh.Alliance.RED);
+				break;
+			case "Blue Shoot":
+				autonomous = new ShootHigh(ShootHigh.Alliance.BLUE);
+				break;
+			case "Right Side Gear":
+				autonomous = new SideGear(SideGear.Side.RIGHT);
+				break;
+			case "Left Side Gear":
+				autonomous = new SideGear(SideGear.Side.LEFT);
+				break;
 			case "None":
 			default:
 				autonomous = null;
@@ -117,6 +216,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		ledStrip.solid(LedStrip.Color.ORANGE);
 		Scheduler.getInstance().run();
 	}
 
@@ -136,6 +236,16 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
+//    	System.out.println("Limit 8: " + Robot.limitSwitches[0].get());
+//    	System.out.println("Limit 9: " + Robot.limitSwitches[1].get());
+    	//System.out.println("Analog0:" + Robot.limitSwitches[0].limitSwitch.getValue());
+    	
+//    	if(limitSwitches[0].get()) {
+//    		ledStrip.solid(LedStrip.Color.YELLOW);
+//    	} else {
+//    		ledStrip.solid(LedStrip.Color.RED);
+//    	}
 	}
 
 	/**

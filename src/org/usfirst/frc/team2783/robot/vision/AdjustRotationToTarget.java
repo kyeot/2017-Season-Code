@@ -1,54 +1,91 @@
 package org.usfirst.frc.team2783.robot.vision;
 
 import org.usfirst.frc.team2783.robot.Robot;
-import org.usfirst.frc.team2783.tools.MovingAverage;
+import org.usfirst.frc.team2783.robot.util.MovingAverage;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
 
 
 public class AdjustRotationToTarget extends PIDCommand {
-
-	final public static double kp = 0.1;
-	final public static double ki = 0.01;
-	final public static double kd = 0.0;
-
-	GripPipeline pipeline;
 	
-	private Double centerX;
-	MovingAverage rotationTarget;
-	MovingAverage error;
+	public enum Direction {
+		LOOK_RIGHT(1),
+		LOOK_LEFT(-1);
+		
+		int modifier;
+		
+		Direction(int modifier) {
+			this.modifier = modifier;
+		}
+		
+		public int getModifier() {
+			return modifier;
+		}
+		
+	}
+
+	public static double kp = 0.5;
+	public static double ki = 0.01;
+	public static double kd = 0.0;
+
+//	public static double kp = Robot.visionControl.getNumber("pVal", 0.5);
+//	public static double ki = Robot.visionControl.getNumber("iVal", 0.01);
+//	public static double kd = Robot.visionControl.getNumber("dVal", 0.0);
 	
-    public AdjustRotationToTarget() {
+	private MovingAverage error;
+	private MovingAverage rotationTarget;	
+	
+	public static final int IMG_WIDTH = 320;
+	public static final int IMG_HEIGHT = 240;
+	
+	private double centerX = 0.0;
+	
+	private Direction direction;
+	
+    public AdjustRotationToTarget(Direction direction) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	super(kp, ki, kd);
     	
     	requires(Robot.swerveBase);
-    	this.rotationTarget = new MovingAverage(3);
-    	this.error = new MovingAverage(5);
-    	this.pipeline = new GripPipeline();
     	
-    	setSetpoint(0.5);
+    	this.direction = direction;
+    	
+    	this.error = new MovingAverage(3);
+    	this.rotationTarget = new MovingAverage(5);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	rotationTarget.clearValues();
-    	Robot.swerveBase.setZero();
-    	pipeline.startThread();
+    	this.error.clearValues();
     	
+    	this.rotationTarget.clearValues();
+    	Robot.swerveBase.setZero();
+    	
+    	setSetpoint(0.5);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	centerX = pipeline.getCenterX();
-    	rotationTarget.addValue(centerX);
+    	
+    	synchronized(Robot.imgLock){
+    		this.centerX = Robot.centerX;
+    	}
+    	
+    	this.error.addValue(getPIDController().getError());
+    	this.rotationTarget.addValue(this.centerX);
+    	
+    	System.out.println("p: " + kp + "; i: " + ki + "; d: " + kd + "; input: " + 
+    					   IMG_WIDTH/centerX + "; error: " + error.getAverage()); 
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
 
-        return Math.abs(error.addValue(getPIDController().getError())) < 0.20;
+    	//return false;
+    	System.out.println(error.getAverage());
+        return Math.abs(error.getAverage()) < 0.03 && Math.abs(getPIDController().getError()) < 0.03;
     }
 
     // Called once after isFinished returns true
@@ -64,23 +101,15 @@ public class AdjustRotationToTarget extends PIDCommand {
 	@Override
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub
-		//return rotationTarget.getAverage() / Robot.pipeline.IMG_WIDTH;
-		return 0;
+		return rotationTarget.getAverage()/IMG_WIDTH;
+		
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
-    	System.out.println(pipeline.getCenterX());
-		if (Math.abs(output) < 0.4) {
-			Robot.swerveBase.tankDrive(-output, output);
-		} else {
-			Robot.swerveBase.tankDrive(-0.65, 0.65);
-		}
-		
+		Robot.swerveBase.swerveDrive(0, 0, direction.getModifier()*output, false);
 	}
-	
-	
 }
 
 

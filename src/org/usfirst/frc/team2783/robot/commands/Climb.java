@@ -8,11 +8,13 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SwerveTankDrive extends Command {
+public class Climb extends Command {
 
-	//Makes SwerveTankDrive require the subsystem swerveBase
-    public SwerveTankDrive() {
-        requires(Robot.swerveBase);
+    public Climb() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	requires(Robot.climberBase);
+    	
     }
 
     // Called just before this Command runs the first time
@@ -21,13 +23,7 @@ public class SwerveTankDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    
-    	//Gets the raw axis of both sticks
-    	Robot.swerveBase.tankDrive(
-    			OI.driver.getRawAxis(2),
-    			OI.driver.getRawAxis(3)
-    		);
-    	
+    	Robot.climberBase.setClimberSpeedVbus(-OI.manipulator.getRawAxis(3));
     }
 
     // Make this return true when this Command no longer needs to run execute()

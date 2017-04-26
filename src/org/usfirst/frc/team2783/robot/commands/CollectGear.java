@@ -1,46 +1,50 @@
 package org.usfirst.frc.team2783.robot.commands;
 
-import org.usfirst.frc.team2783.robot.vision.GripPipeline;
+import org.usfirst.frc.team2783.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class VisionTrigger extends Command {
+public class CollectGear extends Command {
 
-	GripPipeline pipeline;
-	
-    public VisionTrigger() {
+    public CollectGear() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	pipeline = new GripPipeline();
+    	
+    	requires(Robot.activeGearBase);
+    	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	pipeline.startThread();
+    	Robot.activeGearBase.setLifterSpeedVbus(0.65);
+    	
     }
+
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//System.out.println(pipeline.getCenterX());
+    	if(!Robot.limitSwitches[1].get()) {
+    		Robot.activeGearBase.setLifterSpeedVbus(0.65);
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.limitSwitches[1].get();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	pipeline.stopThread();
+    	System.out.println("die jackson");
+    	Robot.activeGearBase.setLifterSpeedVbus(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	System.out.println("die jackson");
     }
-    
-    
 }

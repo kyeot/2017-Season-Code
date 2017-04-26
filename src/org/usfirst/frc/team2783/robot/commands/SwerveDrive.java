@@ -115,10 +115,9 @@ public class SwerveDrive extends Command {
     	}
     	
     	if(controlType.getDockingModeButton()) {
-    		rlValue = -rlValue;
     		System.out.println("Docking Mode");
     		
-    		Robot.swerveBase.swerveDrive(fbValue, rlValue, rotValue, false);
+    		Robot.swerveBase.swerveDrive(rlValue, fbValue, rotValue, false);
     	} else {
     		Robot.swerveBase.swerveDrive(fbValue, rlValue, rotValue, true);
     	}

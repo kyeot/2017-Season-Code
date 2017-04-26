@@ -2,6 +2,7 @@ package org.usfirst.frc.team2783.robot.subsystems;
 
 import org.usfirst.frc.team2783.robot.RobotMap;
 import org.usfirst.frc.team2783.robot.commands.SwerveDrive;
+import org.usfirst.frc.team2783.robot.commands.SwerveDrive.ControlType;
 
 import com.ctre.CANTalon;
 import com.kauailabs.navx.frc.AHRS;
@@ -52,9 +53,6 @@ public class SwerveDriveBase extends Subsystem {
 	
 	//Class used for making and controlling Swerve Modules
 	public class SwerveModule {
-		  
-
-
 		CANTalon driveMot;
 		VictorSP swivelMot;
 		Encoder enc;
@@ -193,40 +191,40 @@ public class SwerveDriveBase extends Subsystem {
     	
     	//Creates the front right Swerve Module
     	flMod = new SwerveModule(
-    					new VictorSP(RobotMap.FRONT_RIGHT_SWIVEL),
-    					new CANTalon(RobotMap.FRONT_RIGHT_WHEEL),
-    					new Encoder(new DigitalInput(2), 
-    								new DigitalInput(3),
+    					new VictorSP(RobotMap.FRONT_LEFT_SWIVEL),
+    					new CANTalon(RobotMap.FRONT_LEFT_WHEEL),
+    					new Encoder(new DigitalInput(4), 
+    								new DigitalInput(5),
     								false,
     								EncodingType.k4X)
     				);
     	
     	//Creates the front left Swerve Module
     	rlMod = new SwerveModule(
-    					new VictorSP(RobotMap.FRONT_LEFT_SWIVEL),
-    					new CANTalon(RobotMap.FRONT_LEFT_WHEEL),
-    					new Encoder(new DigitalInput(0), 
-    								new DigitalInput(1),
+    					new VictorSP(RobotMap.REAR_LEFT_SWIVEL),
+    					new CANTalon(RobotMap.REAR_LEFT_WHEEL),
+    					new Encoder(new DigitalInput(6), 
+    								new DigitalInput(7),
     								false,
     								EncodingType.k4X)
     				);
     	
     	//Creates the rear right Swerve Module
     	frMod = new SwerveModule(
-    					new VictorSP(RobotMap.REAR_RIGHT_SWIVEL),
-    					new CANTalon(RobotMap.REAR_RIGHT_WHEEL),
-    					new Encoder(new DigitalInput(6), 
-    								new DigitalInput(7),
+    					new VictorSP(RobotMap.FRONT_RIGHT_SWIVEL),
+    					new CANTalon(RobotMap.FRONT_RIGHT_WHEEL),
+    					new Encoder(new DigitalInput(0), 
+    								new DigitalInput(1),
     								false,
     								EncodingType.k4X)
     				);
     			
     	//Creates the rear left Swerve Module
     	rrMod = new SwerveModule(
-    					new VictorSP(RobotMap.REAR_LEFT_SWIVEL),
-    					new CANTalon(RobotMap.REAR_LEFT_WHEEL),
-    					new Encoder(new DigitalInput(4), 
-    								new DigitalInput(5),
+    					new VictorSP(RobotMap.REAR_RIGHT_SWIVEL),
+    					new CANTalon(RobotMap.REAR_RIGHT_WHEEL),
+    					new Encoder(new DigitalInput(2), 
+    								new DigitalInput(3),
     								false,
     								EncodingType.k4X)
     				); // ):
@@ -235,7 +233,7 @@ public class SwerveDriveBase extends Subsystem {
 
     //Initiates SwerveDrive as the Default Command
     public void initDefaultCommand() {
-        setDefaultCommand(new SwerveDrive());
+        setDefaultCommand(new SwerveDrive(ControlType.CONTROLLER));
     }
     
     //Small, simple tank drive method
@@ -307,6 +305,15 @@ public class SwerveDriveBase extends Subsystem {
     	rlMod.setModule(rlAng, rlSpd);
     }
     
+    public void polarSwerveDrive(double angle, double speed, double rotation, boolean fieldOriented) {
+    	swerveDrive(
+    			cosDeg(angle)*speed,
+    			sinDeg(angle)*speed,
+    			rotation,
+    			fieldOriented);
+    	
+    }
+    
     //Returns navX sensor ?
     public AHRS getNavSensor() {
     	if (navSensor != null) {
@@ -320,8 +327,9 @@ public class SwerveDriveBase extends Subsystem {
     public double getGyroAngle(boolean reversed) {
     	if(reversed) {
     		return ((getNavSensor().getAngle()+180.0)%360) - angleOffset;
-    	} else
-    		return (getNavSensor().getAngle()) - angleOffset;
+    	} else {
+    		return getNavSensor().getAngle()%360 - angleOffset;
+    	}
     }
     
     public void resetGyroNorth(double angle, double north) {
