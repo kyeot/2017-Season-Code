@@ -74,8 +74,7 @@ public class VisionSwerveDrive extends PIDCommand {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return timed && 
-				((Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt)) || 
+    	return	(timed && ((Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt))) || 
 				((Robot.usSensor1.getValue() < 300) && usStop));
     }
 
