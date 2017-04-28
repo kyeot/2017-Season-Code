@@ -80,11 +80,8 @@ public class MoveToCenter extends PIDCommand {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	System.out.println(Math.abs((centerX/Robot.IMG_WIDTH)-0.5));
-    	//System.out.println(Robot.usSensor1.getValue());
-    	return Math.abs((centerX/Robot.IMG_WIDTH)-0.5) < 0.1;
-//    	return timed &&  Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt);
-    	//return false;
+    	return (timed && (Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt)) || 
+    			Math.abs((centerX/Robot.IMG_WIDTH)-0.5) < 0.1);
     }
 
     // Called once after isFinished returns true
