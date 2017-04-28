@@ -88,7 +88,7 @@ public class Robot extends IterativeRobot {
 		
 		oi = new OI();
 		
-//		usSensor1 = new AnalogInput(0);
+		usSensor1 = new AnalogInput(2);
 //		usSensor2 = new AnalogInput(1);
 		
 		this.smartDashTable = NetworkTable.getTable("SmartDashboard");
@@ -102,8 +102,8 @@ public class Robot extends IterativeRobot {
         this.smartDashTable.putStringArray("Auto List", autonomousList);
         
         ledStrip = new LedStrip();
-        
-        visionCamera.setExposureManual(24);
+         
+        visionCamera.setExposureManual(20);
     	visionCamera.setResolution(IMG_WIDTH, IMG_HEIGHT);
         
         visionThread = new VisionThread(this.visionCamera, new GripPipeline(), pipeline -> {
@@ -131,7 +131,7 @@ public class Robot extends IterativeRobot {
         		break;
         		
         	default:
-        		centerX = IMG_WIDTH/2.2;
+        		centerX = 1.0;
         		System.out.println(pipeline.filterContoursOutput().size() + " contours found; outside of accepted range of 1-2");
         		break;
         	}
@@ -178,6 +178,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		
+		visionCamera.setExposureManual(1);
     	
     	//Gets the autonomous selector value from the dashboard
     	String autoSelected = SmartDashboard.getString("Auto Selector", "None");
@@ -236,6 +238,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		
+		System.out.println(Robot.swerveBase.getGyroAngle(false));
 
 //    	System.out.println("Limit 8: " + Robot.limitSwitches[0].get());
 //    	System.out.println("Limit 9: " + Robot.limitSwitches[1].get());
