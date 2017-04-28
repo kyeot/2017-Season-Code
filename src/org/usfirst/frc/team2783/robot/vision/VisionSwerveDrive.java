@@ -99,7 +99,12 @@ public class VisionSwerveDrive extends PIDCommand {
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
 		System.out.println(output);
-		Robot.swerveBase.swerveDrive(output, -speed, gyroPidOutput, false);
+		if(this.centerX != 1.0) {
+			Robot.swerveBase.swerveDrive(output, -speed, gyroPidOutput, false);
+		} else {
+			Robot.swerveBase.swerveDrive(0, 0, 0, false);
+		}
+		
 		
 	}
 }
