@@ -35,7 +35,7 @@ public class SideGear extends CommandGroup {
 //    												AdjustRotationToTarget.Direction.LOOK_RIGHT));
 //    	addSequential(new GyroSwerveDrive(270, 0.3, false, 4, false));
 		
-		addSequential(new MoveToCenter(180, 0.35, true, 5, false));
+		addSequential(new MoveToCenter(180, 0.3, true, 5, false));
 		addSequential(new VisionSwerveDrive(0.3, 10, true));
     }
 }
