@@ -74,8 +74,7 @@ public class VisionSwerveDrive extends PIDCommand {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return timed && 
-				((Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt)) || 
+    	return	(timed && (Utility.getFPGATime() > (runTime * 1000000 + commandStartedAt)) || 
 				((Robot.usSensor1.getValue() < 300) && usStop));
     }
 
@@ -100,7 +99,12 @@ public class VisionSwerveDrive extends PIDCommand {
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
 		System.out.println(output);
-		Robot.swerveBase.swerveDrive(output, -speed, gyroPidOutput, false);
+		if(this.centerX != 1.0) {
+			Robot.swerveBase.swerveDrive(output, -speed, gyroPidOutput, false);
+		} else {
+			Robot.swerveBase.swerveDrive(0, 0, 0, false);
+		}
+		
 		
 	}
 }
